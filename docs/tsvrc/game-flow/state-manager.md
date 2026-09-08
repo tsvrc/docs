@@ -1,0 +1,63 @@
+---
+id: state-manager
+title: StateManager
+sidebar_position: 1
+---
+
+# StateManager
+
+`Tsvrc.StateMachine.StateManager` is a generic, local-only (unsynced) finite state machine:
+states are plain integers, each with optional enter/exit method dispatch on a chosen target
+behaviour. Its generated shadow is `TsStateManager`. It has no dependency on any other
+TsVRC module beyond `TsvrcBehaviour`.
+
+## Usage
+
+```csharp
+manager.RegisterState(StateIdle, this, exitMethod: nameof(OnExitIdle));
+manager.RegisterState(StateActive, this, enterMethod: nameof(OnEnterActive));
+manager.SetState(StateActive);
+```
+
+`RegisterState(state, target, enterMethod, exitMethod)` associates a state integer with a
+target `UdonSharpBehaviour` and up to two method names, dispatched via `SendCustomEvent` —
+use `nameof()` for the method names so a rename doesn't silently break the wiring. Pass
+`this` as the target for a `StateManager` subclass that hosts its own enter/exit methods.
+Either method name is optional; a state can register only an exit, only an enter, or
+neither (useful if you only need to react through `OnStateChanged` instead).
+`UnregisterState` removes an entry entirely — a later transition into or out of an
+unregistered state simply skips dispatch for it, without throwing.
+
+`SetState(newState)` runs the transition: calls the current state's registered exit method
+(skipped if no state has been entered yet — the initial state is `-1`), calls the virtual
+`OnStateChanged(oldState, newState)` hook and emits a `"OnStateChanged"` event via `TsEmit`,
+then calls the new state's registered enter method. Calling `SetState` with the state already
+current is a no-op — no dispatch happens at all, not even a redundant exit/enter of the same
+state.
+
+## Reentrant SetState calls are queued, not interleaved
+
+Calling `SetState` again from inside `OnStateChanged`, from an external subscriber to the
+`OnStateChanged` event, or from an enter/exit method itself doesn't run that new transition
+immediately — it's queued (only the most recently queued state survives if several arrive
+before the current transition finishes) and runs only after the in-progress transition
+completes in full. This guarantees a transition's exit → `OnStateChanged` → enter sequence
+is never interrupted partway through by a reentrant call jumping the queue.
+
+## Failure mode worth knowing
+
+If `OnStateChanged` (or a dispatched enter/exit method) throws, the transition's own
+`_isTransitioning = true` never gets reset back to `false` — the exception unwinds past that
+reset. Every subsequent `SetState` call is then permanently treated as reentrant: it queues
+its state instead of running it, and nothing ever processes the queue again, since nothing
+completes the transition that's stuck "in progress." A `StateManager` instance that hits this
+is stuck for good; if your enter/exit methods or `OnStateChanged` override can throw, catch
+inside them rather than letting an exception escape into `SetState`.
+
+## Dispatch target lifetime
+
+A registered target whose `GameObject` was destroyed after `RegisterState` is treated the
+same as a `null` target — its dispatch is skipped silently rather than throwing, using the
+same "compare to `null` through Unity's overridden equality" check used elsewhere in the
+framework. A destroyed target for one state doesn't affect dispatch for any other
+registered state.

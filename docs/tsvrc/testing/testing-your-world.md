@@ -1,0 +1,135 @@
+---
+id: testing-your-world
+title: Testing your world
+sidebar_position: 1
+---
+
+# Testing your world
+
+TsVRC ships a small set of testing helpers your own project can use to write real,
+ClientSim-backed Play Mode tests (and plain reflection-based Edit Mode tests) against your
+own `UdonSharpBehaviour`s, without hand-rolling VRChat SDK setup and working around its Play
+Mode quirks yourself.
+
+## Adding it to your project
+
+Reference `Tsvrc.Testing.Framework` from a test assembly's `references` to get the core
+helpers. Nothing in it does anything to your project just by being referenced — every piece
+of behavior only activates when you actually use it. `PrivateFieldAccess` is a set of plain
+static methods with no base class requirement; `TsPlayModeTestBase` and its ClientSim
+machinery only run for a test class that actually extends it.
+
+## Reflection helpers: PrivateFieldAccess
+
+`SetField`/`GetField`/`InvokeStatic`/`InvokeInstance` reach private fields and methods on
+any object or static type from a test — useful for asserting on internal state a
+behaviour's public surface doesn't expose. Standalone, works in either Edit Mode or Play
+Mode.
+
+## Play Mode tests: TsPlayModeTestBase
+
+Extend `TsPlayModeTestBase` instead of setting up ClientSim by hand. It exposes `Players`
+(a `ClientSimPlayerEnvironment`, for spawning, removing, or finding real `VRCPlayerApi`
+instances in the test), `StartClientSim(...)` to begin a session, and
+`BuildTsRoot<TRoot>()` to construct your project's generated composition root from code.
+
+```csharp
+public class MyManagerTests : TsPlayModeTestBase
+{
+    [UnityTest]
+    public IEnumerator MyManager_DoesTheThing()
+    {
+        yield return StartClientSim();
+
+        var builder = BuildTsRoot<TsGenerated>();
+        var myManager = builder.WithNew<MyManager>("MyManager");
+        builder.Build();
+
+        myManager.DoTheThing();
+        // Assert...
+    }
+}
+```
+
+`BuildTsRoot` composes your generated root with `AddComponent` rather than loading a saved
+scene, then drives the same `_TsLogStart`/`_TsMemoryStart`/`_TsGlobalStart`/`_TsPoolStart`/
+`_TsConstructStart`/`_TsInstanceStart` sequence a real client only gets from Unity
+dispatching `Start()` on a scene-loaded object. This isn't a shortcut taken for convenience:
+an `AddComponent`-created object is plain C#, never compiled to Udon bytecode, so there's no
+VM gating `Start()`/`SendCustomEvent` dispatch the way there is for a real, saved scene's
+baked-in Udon behaviours — composing this way is what makes the sequence actually run at all
+in a test. `TsPlayModeTestBase` tracks and tears down everything the builder creates
+automatically.
+
+A known catalogue of VRChat SDK and Unity Test Framework Play Mode testing defects is
+patched automatically for any class extending `TsPlayModeTestBase`. Most of them go through
+`FixupRegistry`, which runs every registered `IPlayModeEnvironmentFixup`'s hooks at the
+matching lifecycle point — if a future SDK version fixes one of them upstream, disable it
+with `FixupRegistry.Disable<TFixup>()` rather than forking the testing framework itself. One
+fixup (the one restoring Unity Test Framework's own Play Mode result reporting, which VRChat
+SDK's event-listener filter otherwise strips) isn't registered there: it patches itself in
+via its own domain-load-time static constructor the first time it detects a
+`TsPlayModeTestBase` subclass anywhere in the project, before `FixupRegistry` or any test
+lifecycle hook ever runs — `FixupRegistry.Disable<TFixup>()` has no effect on it, since it's
+never part of the registry's own list to begin with.
+
+Stopping TsVRC's own reactive codegen from regenerating against a test's temporary scene
+during a test run (see [`TsGenerator`](../codegen-internals/ts-generator)'s
+`SuppressAutomaticTriggers`) requires reaching an `internal` editor API from outside the
+package — granted once, package-wide, via an `InternalsVisibleTo` attribute, rather than
+something you need to configure yourself.
+
+That suppression itself isn't automatic per test class the way the `TsPlayModeTestBase`
+fixups are — it has to be armed once per test assembly, for the assembly's entire run, via
+`AutomaticTriggersSetUpFixtureBase`. NUnit only discovers a `[SetUpFixture]` in the assembly
+it's physically compiled into, so a base class living in `Tsvrc.Testing.Framework` isn't
+enough by itself: every test assembly (yours included) needs its own one-line subclass,
+typically added once and forgotten about:
+
+```csharp
+[SetUpFixture]
+public class AutomaticTriggersSetUpFixture : AutomaticTriggersSetUpFixtureBase { }
+```
+
+Without it, a test that creates or mutates scene objects can trigger a real regenerate pass
+against your project's actual `TsConfig` mid-test-run, since nothing is holding
+`TsGenerator`'s reactive triggers back.
+
+## Two companion assemblies, and why they're separate
+
+`Tsvrc.Testing.Framework` is a plain C# library — none of its own types are meant to be
+`AddComponent`'d as real Udon components. Two more pieces need to actually run as
+`UdonSharpBehaviour`s, so they live in their own sibling assemblies instead:
+
+- **`Tsvrc.Testing.Behaviours`** provides `TsCallbackRecorder`, a generic `TsSubscribe`/
+  `TsEmit` listener double that records how many times each callback fired (and, via an
+  optional shared log, cross-listener firing order).
+- **`Tsvrc.Testing.UI`** provides `TestListItem` (a generic `ListItem` double) and
+  `TsvrcListTestBuilder.Build(...)`, which wires a bare `TsvrcList`'s private fields the same
+  way you'd otherwise have to by hand.
+
+The split exists because of an UdonSharp constraint: `AddComponent` only works for scripts
+in an assembly registered as a U# assembly, and once registered, UdonSharp Udon-compiles
+*every* source file in that assembly. Keeping the reflection/ClientSim helpers in a
+separate, non-U#-registered assembly is what stops them from being dragged into a
+compilation context they were never meant to run under — some of them reach `internal`
+editor APIs that Udon's compiler simply can't resolve. Add whichever companion assembly a
+given test actually needs, alongside `Tsvrc.Testing.Framework`; none of the three depend on
+each other beyond that.
+
+## Setting up your own project's assemblies
+
+TsVRC's generated code declares the base types your world scripts extend (`TsBehaviour`,
+`TsInstance`, and so on), and in turn references concrete types from your own scripts —
+a Construct or Factory entry generates a field typed as whatever class you registered.
+That's a two-way dependency, and Unity doesn't allow two assembly definitions to reference
+each other. So your own scripts and your generated output folder need to compile into
+**one** assembly: give your project's own scripts folder a single `asmdef` placed high
+enough in the folder tree to cover both your hand-written scripts and wherever your
+`TsConfig`'s generated-folder setting points (they don't need to be nested inside each
+other, just both under that one asmdef's root), referencing `Tsvrc.Runtime` plus whatever
+VRChat SDK/UdonSharp assemblies your scripts use.
+
+From there, add your own EditMode/PlayMode test assemblies referencing your project's
+runtime asmdef, `Tsvrc.Runtime`, and (for PlayMode/ClientSim tests) `Tsvrc.Testing.Framework`
+— every helper above becomes available immediately, with nothing else to register.
