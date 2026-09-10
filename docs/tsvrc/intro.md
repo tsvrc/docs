@@ -33,7 +33,7 @@ Already using it and looking for something specific:
   [Codegen instead of reflection](./explanations/codegen-vs-reflection) and the other pages
   under Explanations.
 
-## This site
+## This site {/* #this-site */}
 
 Docs for the `tsvrc` org live under `docs/tsvrc/`. A project joining the org later gets its
 own folder next to this one (`docs/<other-project>/`) — same repo, same site, no cross-repo

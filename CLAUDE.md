@@ -13,6 +13,51 @@ docs repo per project.
 - Writing style — grammar, tone, avoiding AI-sounding prose, avoiding noise — is defined in
   `.claude/rules/writing-style.md`. Read it before writing or editing any `.md`/`.mdx` file.
 
+## Internationalization (i18n)
+
+This site is set up for `en` (default), `es`, `ja`, and `zh-Hans`, but only `en` has
+real content right now — the other three currently cover only the two marketing pages
+(`src/pages/index.tsx`, `src/pages/framework.tsx`), not the docs.
+
+- **Docs content** (`docs/<project>/`): stays English-only, unversioned, exactly where
+  it is. This is deliberate, not a gap to fill by default — per Docusaurus's own i18n
+  convention, the default locale's docs live directly under `docs/`, and a
+  translation is added later as a parallel tree at
+  `i18n/<locale>/docusaurus-plugin-content-docs/current/<project>/`, mirroring the
+  same relative paths and filenames. Adding a language never touches the English
+  files. Sidebar category labels (`_category_.json`) translate the same way, via
+  `i18n/<locale>/docusaurus-plugin-content-docs/current.json` — currently absent on
+  purpose, so the docs sidebar renders in English for every locale until real
+  translations exist (a half-translated sidebar over English content would be worse
+  than an English one).
+- **The two marketing pages**: translated today via `@docusaurus/Translate`/
+  `translate()` in the component source, with per-locale strings in
+  `i18n/<locale>/code.json`. Adding a language means running
+  `docusaurus write-translations --locale <code>` and filling in that locale's
+  `code.json` — the component code itself doesn't change.
+- **Theme chrome** (pagination, admonition labels, sidebar buttons, etc.): never
+  override these in this site's own `code.json`. Docusaurus ships its own
+  professionally translated defaults per locale; only `homepage.*`/`framework.*` keys
+  belong in this site's `code.json`.
+- Adding a fifth locale: add it to `i18n.locales` (and `localeConfigs`) in
+  `docusaurus.config.ts`, run `write-translations`, translate `code.json` plus
+  `docusaurus-theme-classic/{navbar,footer}.json`. Docs stay English until someone
+  actually translates them into the new `i18n/<locale>/docusaurus-plugin-content-docs/current/`
+  tree.
+- **Worked example**: `docs/tsvrc/intro.md` has a real Spanish translation at
+  `i18n/es/docusaurus-plugin-content-docs/current/tsvrc/intro.md` — same filename,
+  same relative path, translated content. Copy that pattern for any other doc page.
+  Verified in-browser: the translated page renders correctly, links from it to
+  still-untranslated pages fall back to English cleanly under the same `/es/` prefix,
+  and cross-page anchor links keep working even after a heading's text changes
+  between languages (see the `{/* #id */}` note below).
+- **Headings that other pages link to by anchor** (e.g. `/docs/tsvrc/intro#this-site`,
+  linked from the homepage) need an explicit, language-stable id, or translating the
+  heading text breaks the anchor. Docusaurus's MDX v3 syntax for this is a comment,
+  not `{#id}` (that's the old, now-invalid MDX v1/v2 form and fails the build):
+  `## This site {/* #this-site */}`. Keep the same id across every language's version
+  of that heading.
+
 ## Commands
 
 - `npm start` — dev server at http://localhost:3000, hot-reloads content but not
