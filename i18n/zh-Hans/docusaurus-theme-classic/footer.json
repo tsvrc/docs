@@ -1,0 +1,18 @@
+{
+  "link.item.label.Framework": {
+    "message": "框架",
+    "description": "The label of footer link with label=Framework linking to /framework"
+  },
+  "link.item.label.Docs": {
+    "message": "文档",
+    "description": "The label of footer link with label=Docs linking to /docs/tsvrc/intro"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/tsvrc"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 TsVRC。与 VRChat Inc. 无关联，也未获得其认可。",
+    "description": "The footer copyright"
+  }
+}

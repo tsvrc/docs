@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -27,7 +27,13 @@ const config: Config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'es', 'ja', 'zh-Hans'],
+    localeConfigs: {
+      en: { label: 'English', htmlLang: 'en' },
+      es: { label: 'Español', htmlLang: 'es' },
+      ja: { label: '日本語', htmlLang: 'ja' },
+      'zh-Hans': { label: '中文', htmlLang: 'zh-Hans' },
+    },
   },
 
   plugins: ['./src/plugins/plugin-tailwind.ts'],
@@ -74,6 +80,10 @@ const config: Config = {
         {
           href: 'https://github.com/tsvrc',
           label: 'GitHub',
+          position: 'right',
+        },
+        {
+          type: 'localeDropdown',
           position: 'right',
         },
       ],

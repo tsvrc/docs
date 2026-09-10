@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import Link from '@docusaurus/Link';
 import CodeBlock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
+import Translate, { translate } from '@docusaurus/Translate';
 
 const exampleCode = `using Tsvrc.Core.Generated;
 
@@ -20,24 +21,28 @@ function Hero() {
         <div>
           <p className="text-sm font-medium text-accent">TsVRC Core</p>
           <h1 className="mt-2 font-heading text-4xl font-semibold tracking-tight text-fg">
-            A framework for VRChat worlds built on UdonSharp
+            <Translate id="framework.hero.title">
+              A framework for VRChat worlds built on UdonSharp
+            </Translate>
           </h1>
           <p className="mt-4 text-lg text-fg-muted">
-            Structured initialization, dependency wiring, and editor codegen, so your
-            world scripts extend a typed base class instead of hand-wiring references
-            every time you add a behaviour.
+            <Translate id="framework.hero.subtitle">
+              Structured initialization, dependency wiring, and editor codegen, so your world
+              scripts extend a typed base class instead of hand-wiring references every time
+              you add a behaviour.
+            </Translate>
           </p>
           <p className="mt-2 font-mono text-xs text-fg-muted">com.tsvrc.core</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               to="/docs/tsvrc/intro"
               className="rounded-md bg-accent-emphasis px-5 py-2.5 font-medium text-white no-underline hover:no-underline hover:opacity-90">
-              Read the docs
+              <Translate id="framework.hero.cta.docs">Read the docs</Translate>
             </Link>
             <Link
               href="https://github.com/tsvrc/tsvrc-core"
               className="rounded-md border border-border px-5 py-2.5 font-medium text-fg no-underline hover:no-underline hover:border-accent">
-              View on GitHub
+              <Translate id="framework.hero.cta.github">View on GitHub</Translate>
             </Link>
           </div>
         </div>
@@ -54,24 +59,33 @@ function Hero() {
 function ProblemSolution() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-16">
-      <h2 className="font-heading text-2xl font-semibold text-fg">Why it exists</h2>
+      <h2 className="font-heading text-2xl font-semibold text-fg">
+        <Translate id="framework.why.title">Why it exists</Translate>
+      </h2>
       <p className="mt-4 leading-relaxed text-fg-muted">
-        Raw UdonSharp gives you a scene full of behaviours with no shared way to find each
-        other, no ordering guarantee for setup, and no help resolving which concrete class
-        a given slot in your project should use. Every world ends up hand-rolling the same
-        answers: manager singletons wired by drag-and-drop, an ad hoc load order, references
-        assigned in the inspector and hoped-for at runtime.
+        <Translate id="framework.why.paragraph1">
+          Raw UdonSharp gives you a scene full of behaviours with no shared way to find each
+          other, no ordering guarantee for setup, and no help resolving which concrete class a
+          given slot in your project should use. Every world ends up hand-rolling the same
+          answers: manager singletons wired by drag-and-drop, an ad hoc load order, references
+          assigned in the inspector and hoped-for at runtime.
+        </Translate>
       </p>
       <p className="mt-4 leading-relaxed text-fg-muted">
-        TsVRC replaces that with one root object (<code>_ts</code>) every behaviour holds a
-        reference to, a defined construction order, and a generation step that resolves your
-        project's own types once, in the editor, instead of at runtime. See{' '}
-        <Link
-          to="/docs/tsvrc/core-concepts/how-it-fits-together"
-          className="text-accent no-underline hover:underline">
-          how TsVRC fits together
-        </Link>{' '}
-        for the full shape.
+        <Translate
+          id="framework.why.paragraph2"
+          values={{
+            link: (
+              <Link
+                to="/docs/tsvrc/core-concepts/how-it-fits-together"
+                className="text-accent no-underline hover:underline">
+                <Translate id="framework.why.linkText">how TsVRC fits together</Translate>
+              </Link>
+            ),
+            code: <code>_ts</code>,
+          }}>
+          {'TsVRC replaces that with one root object ({code}) every behaviour holds a reference to, a defined construction order, and a generation step that resolves your project\'s own types once, in the editor, instead of at runtime. See {link} for the full shape.'}
+        </Translate>
       </p>
     </section>
   );
@@ -83,32 +97,55 @@ type Advantage = {
   href: string;
 };
 
-const advantages: Advantage[] = [
-  {
-    title: 'Structured initialization',
-    description:
-      'A defined construction order and a single TsStart hook, so setup order stops being a per-project guess.',
-    href: '/docs/tsvrc/core-concepts/how-it-fits-together',
-  },
-  {
-    title: 'Dependency wiring',
-    description:
-      'Every behaviour reaches the rest of the framework through one typed _ts reference (Memory, Log, Instance) instead of separately hunting down each one.',
-    href: '/docs/tsvrc/core-concepts/ts-root',
-  },
-  {
-    title: 'Editor codegen, not runtime reflection',
-    description:
-      "Type resolution happens once in the editor, while C# reflection is still available, and bakes into generated code, because compiled Udon can't do reflection at all.",
-    href: '/docs/tsvrc/explanations/codegen-vs-reflection',
-  },
-];
+function useAdvantages(): Advantage[] {
+  return [
+    {
+      title: translate({
+        id: 'framework.advantages.init.title',
+        message: 'Structured initialization',
+      }),
+      description: translate({
+        id: 'framework.advantages.init.description',
+        message:
+          'A defined construction order and a single TsStart hook, so setup order stops being a per-project guess.',
+      }),
+      href: '/docs/tsvrc/core-concepts/how-it-fits-together',
+    },
+    {
+      title: translate({
+        id: 'framework.advantages.wiring.title',
+        message: 'Dependency wiring',
+      }),
+      description: translate({
+        id: 'framework.advantages.wiring.description',
+        message:
+          'Every behaviour reaches the rest of the framework through one typed _ts reference (Memory, Log, Instance) instead of separately hunting down each one.',
+      }),
+      href: '/docs/tsvrc/core-concepts/ts-root',
+    },
+    {
+      title: translate({
+        id: 'framework.advantages.codegen.title',
+        message: 'Editor codegen, not runtime reflection',
+      }),
+      description: translate({
+        id: 'framework.advantages.codegen.description',
+        message:
+          "Type resolution happens once in the editor, while C# reflection is still available, and bakes into generated code, because compiled Udon can't do reflection at all.",
+      }),
+      href: '/docs/tsvrc/explanations/codegen-vs-reflection',
+    },
+  ];
+}
 
 function Advantages() {
+  const advantages = useAdvantages();
   return (
     <section className="border-t border-border bg-canvas-subtle">
       <div className="mx-auto max-w-5xl px-6 py-16">
-        <h2 className="font-heading text-2xl font-semibold text-fg">Advantages</h2>
+        <h2 className="font-heading text-2xl font-semibold text-fg">
+          <Translate id="framework.advantages.title">Advantages</Translate>
+        </h2>
         <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
           {advantages.map((item) => (
             <div key={item.title} className="rounded-lg border border-border bg-canvas p-6">
@@ -117,7 +154,7 @@ function Advantages() {
               <Link
                 to={item.href}
                 className="mt-4 inline-block text-sm font-medium text-accent no-underline hover:underline">
-                Details →
+                <Translate id="framework.advantages.detailsLink">Details →</Translate>
               </Link>
             </div>
           ))}
@@ -130,16 +167,20 @@ function Advantages() {
 function FinalCta() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-16 text-center">
-      <h2 className="font-heading text-2xl font-semibold text-fg">Start building</h2>
+      <h2 className="font-heading text-2xl font-semibold text-fg">
+        <Translate id="framework.cta.title">Start building</Translate>
+      </h2>
       <p className="mx-auto mt-3 max-w-xl text-fg-muted">
-        Add the package through VCC and have a behaviour running in play mode by the end of
-        the first tutorial page.
+        <Translate id="framework.cta.subtitle">
+          Add the package through VCC and have a behaviour running in play mode by the end of
+          the first tutorial page.
+        </Translate>
       </p>
       <div className="mt-6">
         <Link
           to="/docs/tsvrc/first-behaviour"
           className="rounded-md bg-accent-emphasis px-5 py-2.5 font-medium text-white no-underline hover:no-underline hover:opacity-90">
-          Build your first behaviour
+          <Translate id="framework.cta.button">Build your first behaviour</Translate>
         </Link>
       </div>
     </section>
@@ -149,8 +190,12 @@ function FinalCta() {
 export default function Framework(): ReactNode {
   return (
     <Layout
-      title="TsVRC Core"
-      description="TsVRC Core is a framework for building VRChat worlds with UdonSharp: structured initialization, dependency wiring, and editor codegen.">
+      title={translate({ id: 'framework.meta.title', message: 'TsVRC Core' })}
+      description={translate({
+        id: 'framework.meta.description',
+        message:
+          'TsVRC Core is a framework for building VRChat worlds with UdonSharp: structured initialization, dependency wiring, and editor codegen.',
+      })}>
       <Hero />
       <ProblemSolution />
       <Advantages />

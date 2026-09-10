@@ -1,0 +1,18 @@
+{
+  "link.item.label.Framework": {
+    "message": "フレームワーク",
+    "description": "The label of footer link with label=Framework linking to /framework"
+  },
+  "link.item.label.Docs": {
+    "message": "ドキュメント",
+    "description": "The label of footer link with label=Docs linking to /docs/tsvrc/intro"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/tsvrc"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 TsVRC. VRChat Inc.とは提携・承認関係にありません。",
+    "description": "The footer copyright"
+  }
+}

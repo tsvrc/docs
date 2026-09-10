@@ -1,0 +1,113 @@
+{
+  "homepage.hero.title": {
+    "message": "Herramientas para crear mundos y avatares de VRChat"
+  },
+  "homepage.hero.subtitle": {
+    "message": "TsVRC crea herramientas de código abierto para creadores de VRChat, empezando con un framework para estructurar código de mundos en UdonSharp."
+  },
+  "homepage.hero.cta.explore": {
+    "message": "Explorar TsVRC"
+  },
+  "homepage.hero.cta.github": {
+    "message": "Ver en GitHub"
+  },
+  "homepage.trust.starsAlt": {
+    "message": "Estrellas de GitHub de tsvrc/tsvrc-core"
+  },
+  "homepage.trust.lastCommitAlt": {
+    "message": "Último commit de tsvrc/tsvrc-core"
+  },
+  "homepage.trust.licenseAlt": {
+    "message": "Licencia de tsvrc/tsvrc-core"
+  },
+  "homepage.projects.tsvrc.description": {
+    "message": "Una forma estructurada de crear mundos de VRChat con UdonSharp: arranque consistente, dependencias ya conectadas y código generado en vez de conectarlo todo a mano."
+  },
+  "homepage.projects.learnMore": {
+    "message": "Más información"
+  },
+  "homepage.projects.status.available": {
+    "message": "Disponible"
+  },
+  "homepage.projects.status.planned": {
+    "message": "Planeado"
+  },
+  "homepage.projects.title": {
+    "message": "Proyectos"
+  },
+  "homepage.projects.description": {
+    "message": "Cada proyecto de TsVRC vive en este mismo sitio. Descubre por qué en {intro}. Por ahora solo hay uno; más llegarán aquí a medida que se publiquen."
+  },
+  "homepage.projects.introLinkText": {
+    "message": "la introducción"
+  },
+  "homepage.meta.title": {
+    "message": "TsVRC"
+  },
+  "homepage.meta.description": {
+    "message": "TsVRC crea herramientas de código abierto para creadores de mundos y avatares de VRChat."
+  },
+  "framework.hero.title": {
+    "message": "Un framework para mundos de VRChat construido sobre UdonSharp"
+  },
+  "framework.hero.subtitle": {
+    "message": "Inicialización estructurada, conexión de dependencias y generación de código en el editor, para que tus scripts de mundo extiendan una clase base tipada en vez de conectar referencias a mano cada vez que agregas un behaviour."
+  },
+  "framework.hero.cta.docs": {
+    "message": "Leer la documentación"
+  },
+  "framework.hero.cta.github": {
+    "message": "Ver en GitHub"
+  },
+  "framework.why.title": {
+    "message": "Por qué existe"
+  },
+  "framework.why.paragraph1": {
+    "message": "UdonSharp puro te da una escena llena de behaviours sin una forma compartida de encontrarse entre sí, sin garantía de orden en la configuración, y sin ayuda para resolver qué clase concreta debe usar cada lugar de tu proyecto. Cada mundo termina resolviendo lo mismo a mano: singletons de gestor conectados arrastrando y soltando, un orden de carga improvisado, referencias asignadas en el inspector con la esperanza de que funcionen en tiempo de ejecución."
+  },
+  "framework.why.paragraph2": {
+    "message": "TsVRC reemplaza eso con un objeto raíz ({code}) al que cada behaviour tiene una referencia, un orden de construcción definido, y un paso de generación que resuelve los tipos propios de tu proyecto una sola vez, en el editor, en vez de en tiempo de ejecución. Consulta {link} para ver el panorama completo."
+  },
+  "framework.why.linkText": {
+    "message": "cómo encaja TsVRC"
+  },
+  "framework.advantages.init.title": {
+    "message": "Inicialización estructurada"
+  },
+  "framework.advantages.init.description": {
+    "message": "Un orden de construcción definido y un único hook TsStart, para que el orden de configuración deje de ser una suposición en cada proyecto."
+  },
+  "framework.advantages.wiring.title": {
+    "message": "Conexión de dependencias"
+  },
+  "framework.advantages.wiring.description": {
+    "message": "Cada behaviour llega al resto del framework a través de una única referencia tipada _ts (Memory, Log, Instance) en vez de buscar cada una por separado."
+  },
+  "framework.advantages.codegen.title": {
+    "message": "Generación de código en el editor, no reflexión en tiempo de ejecución"
+  },
+  "framework.advantages.codegen.description": {
+    "message": "La resolución de tipos ocurre una sola vez en el editor, mientras la reflexión de C# todavía está disponible, y queda integrada en el código generado, porque Udon compilado no puede usar reflexión en absoluto."
+  },
+  "framework.advantages.title": {
+    "message": "Ventajas"
+  },
+  "framework.advantages.detailsLink": {
+    "message": "Detalles →"
+  },
+  "framework.cta.title": {
+    "message": "Empieza a construir"
+  },
+  "framework.cta.subtitle": {
+    "message": "Agrega el paquete mediante VCC y ten un behaviour funcionando en modo Play al final de la primera página del tutorial."
+  },
+  "framework.cta.button": {
+    "message": "Construye tu primer behaviour"
+  },
+  "framework.meta.title": {
+    "message": "TsVRC Core"
+  },
+  "framework.meta.description": {
+    "message": "TsVRC Core es un framework para crear mundos de VRChat con UdonSharp: inicialización estructurada, conexión de dependencias y generación de código en el editor."
+  }
+}

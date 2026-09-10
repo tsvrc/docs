@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "TsVRC",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Logotipo de TsVRC",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Framework": {
+    "message": "Framework",
+    "description": "Navbar item with label Framework"
+  },
+  "item.label.Docs": {
+    "message": "Documentación",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
