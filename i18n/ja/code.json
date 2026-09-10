@@ -1,4 +1,13 @@
 {
+  "framework.notice.title": {
+    "message": "利用の前に知っておいてほしいこと"
+  },
+  "framework.notice.vrchat": {
+    "message": "TsVRCはVRChat Inc.とは提携しておらず、その承認も受けていません。"
+  },
+  "framework.notice.body": {
+    "message": "また、TsVRCはまだ発展途上です。それぞれの部分に専用のテストがあり、リリースのたびに必ず実行していますが、すべてのケースを見つけられているとは正直言い切れません。念のため、TsVRCをプロジェクトに追加するときも、アップデートするときも、プロジェクトのバックアップを取っておいてください。何か問題が起きた場合、こちらで直接直すことはできませんが、ぜひ教えてほしいと思っています。GitHubでissueを立てていただければ、必ず確認します。"
+  },
   "homepage.hero.title": {
     "message": "VRChatのワールドとアバターを作るためのツール"
   },

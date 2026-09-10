@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import Link from '@docusaurus/Link';
 import CodeBlock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
+import Admonition from '@theme/Admonition';
 import Translate, { translate } from '@docusaurus/Translate';
 
 const exampleCode = `using Tsvrc.Core.Generated;
@@ -53,6 +54,35 @@ function Hero() {
         </div>
       </div>
     </header>
+  );
+}
+
+function DevNotice() {
+  return (
+    <section className="mx-auto max-w-3xl px-6 pt-12">
+      <Admonition
+        type="warning"
+        title={translate({
+          id: 'framework.notice.title',
+          message: 'Before you build on this',
+        })}>
+        <p>
+          <Translate id="framework.notice.vrchat">
+            TsVRC is not affiliated with or endorsed by VRChat Inc.
+          </Translate>
+        </p>
+        <p>
+          <Translate id="framework.notice.body">
+            It&apos;s also still a work in progress. Every part of it has its own tests,
+            and we run them before every release, but we can&apos;t promise
+            we&apos;ve caught every case. Keep a backup of your project before adding
+            TsVRC to it or updating it, just to be safe. If something breaks on your end, we
+            can&apos;t fix it for you, but we&apos;d really like to know about it.
+            Open an issue on GitHub and we&apos;ll take a look.
+          </Translate>
+        </p>
+      </Admonition>
+    </section>
   );
 }
 
@@ -197,6 +227,7 @@ export default function Framework(): ReactNode {
           'TsVRC Core is a framework for building VRChat worlds with UdonSharp: structured initialization, dependency wiring, and editor codegen.',
       })}>
       <Hero />
+      <DevNotice />
       <ProblemSolution />
       <Advantages />
       <FinalCta />

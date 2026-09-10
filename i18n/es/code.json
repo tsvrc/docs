@@ -1,4 +1,13 @@
 {
+  "framework.notice.title": {
+    "message": "Antes de construir sobre esto"
+  },
+  "framework.notice.vrchat": {
+    "message": "TsVRC no está afiliado ni respaldado por VRChat Inc."
+  },
+  "framework.notice.body": {
+    "message": "Además, sigue siendo un trabajo en curso. Cada parte tiene sus propios tests, y los ejecutamos antes de cada versión, pero no podemos prometer haber cubierto todos los casos. Guarda una copia de seguridad de tu proyecto antes de añadir TsVRC o de actualizarlo, solo por si acaso. Si algo se rompe de tu lado, no podemos arreglarlo por ti, pero nos gustaría mucho saberlo. Abre un issue en GitHub y le echaremos un vistazo."
+  },
   "homepage.hero.title": {
     "message": "Herramientas para crear mundos y avatares de VRChat"
   },

@@ -1,4 +1,13 @@
 {
+  "framework.notice.title": {
+    "message": "在你基于它构建之前"
+  },
+  "framework.notice.vrchat": {
+    "message": "TsVRC 与 VRChat Inc. 没有关联，也未获得其认可。"
+  },
+  "framework.notice.body": {
+    "message": "另外，它目前仍在持续完善中。每一部分都配有自己的测试，我们会在每次发布前运行这些测试，但没办法保证覆盖到所有情况。无论是把 TsVRC 添加到项目里，还是之后更新它，都建议先备份一下你的项目，以防万一。如果在你那边出了问题，我们没办法帮你直接修复，但我们真的很想知道这件事。在 GitHub 上提一个 issue，我们会去看看。"
+  },
   "homepage.hero.title": {
     "message": "构建 VRChat 世界与角色的工具"
   },
