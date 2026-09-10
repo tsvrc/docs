@@ -20,15 +20,15 @@ docs repo per project.
 - `npm run build` — production build. Run this before calling a doc change done;
   `onBrokenLinks: 'throw'` means a broken link fails the build.
 
-## Cross-repo: tsvrc/tsvrc and tsvrc/docs
+## Cross-repo: tsvrc/tsvrc-core and tsvrc/docs
 
-This repo documents code that lives in the separate `tsvrc/tsvrc` repo. The two are not
+This repo documents code that lives in the separate `tsvrc/tsvrc-core` repo. The two are not
 wired together technically — no submodule, no build-time fetch (see below for why). Nothing
 keeps them in sync automatically:
 
-- Changed public API, behavior, or the package description in `tsvrc/tsvrc`? Check whether
+- Changed public API, behavior, or the package description in `tsvrc/tsvrc-core`? Check whether
   `docs/tsvrc/` needs a matching update.
-- Changed something in `docs/tsvrc/`? Check it still matches what `tsvrc/tsvrc` actually
+- Changed something in `docs/tsvrc/`? Check it still matches what `tsvrc/tsvrc-core` actually
   does before publishing.
 
 A global hook flags this when either repo's docs-relevant files change. It's a nudge to go
@@ -36,7 +36,7 @@ check, not proof the two are actually in sync.
 
 ## Why there's no cross-repo build wiring
 
-We evaluated pulling `tsvrc/tsvrc`'s docs into this site via a git submodule at build time
+We evaluated pulling `tsvrc/tsvrc-core`'s docs into this site via a git submodule at build time
 and rejected it. Surveying large community projects — Kubernetes, React, Vue, Python,
 Node.js, Docker — shows the dominant patterns are docs-in-the-code-repo (single product) or
 a fully self-contained docs repo, and for multi-product orgs, one consolidated repo

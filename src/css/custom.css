@@ -1,30 +1,83 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
 
-/* You can override the default Infima variables here. */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ts-canvas-default: #ffffff;
+  --ts-canvas-subtle: #f6f8fa;
+  --ts-canvas-inset: #f6f8fa;
+  --ts-border-default: #d0d7de;
+  --ts-border-muted: #d8dee4;
+  --ts-fg-default: #1f2328;
+  --ts-fg-muted: #59636e;
+  --ts-accent-fg: #0969da;
+  --ts-accent-emphasis: #0969da;
+  --ts-success-fg: #1a7f37;
+  --ts-danger-fg: #d1242f;
+  --ts-attention-fg: #9a6700;
+
+  --ifm-color-primary: #0969da;
+  --ifm-color-primary-dark: #085ec4;
+  --ifm-color-primary-darker: #0758b9;
+  --ifm-color-primary-darkest: #064998;
+  --ifm-color-primary-light: #0a74ee;
+  --ifm-color-primary-lighter: #1b7cf0;
+  --ifm-color-primary-lightest: #3d90f2;
+  --ifm-code-font-size: 90%;
+  --ifm-font-family-base: 'IBM Plex Sans', system-ui, sans-serif;
+  --ifm-heading-font-family: 'Space Grotesk', var(--ifm-font-family-base);
+  --ifm-font-family-monospace: 'IBM Plex Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  --docusaurus-highlighted-code-line-bg: rgba(9, 105, 218, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ts-canvas-default: #0d1117;
+  --ts-canvas-subtle: #161b22;
+  --ts-canvas-inset: #010409;
+  --ts-border-default: #30363d;
+  --ts-border-muted: #21262d;
+  --ts-fg-default: #e6edf3;
+  --ts-fg-muted: #8b949e;
+  --ts-accent-fg: #58a6ff;
+  --ts-accent-emphasis: #1f6feb;
+  --ts-success-fg: #3fb950;
+  --ts-danger-fg: #f85149;
+  --ts-attention-fg: #d29922;
+
+  --ifm-color-primary: #58a6ff;
+  --ifm-color-primary-dark: #3994ff;
+  --ifm-color-primary-darker: #298cff;
+  --ifm-color-primary-darkest: #0770f2;
+  --ifm-color-primary-light: #77b8ff;
+  --ifm-color-primary-lighter: #86c0ff;
+  --ifm-color-primary-lightest: #b0d6ff;
+  --docusaurus-highlighted-code-line-bg: rgba(88, 166, 255, 0.15);
+}
+
+@theme {
+  --color-canvas: var(--ts-canvas-default);
+  --color-canvas-subtle: var(--ts-canvas-subtle);
+  --color-canvas-inset: var(--ts-canvas-inset);
+  --color-border: var(--ts-border-default);
+  --color-border-muted: var(--ts-border-muted);
+  --color-fg: var(--ts-fg-default);
+  --color-fg-muted: var(--ts-fg-muted);
+  --color-accent: var(--ts-accent-fg);
+  --color-accent-emphasis: var(--ts-accent-emphasis);
+  --color-success: var(--ts-success-fg);
+  --color-danger: var(--ts-danger-fg);
+
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', SFMono-Regular, Menlo, Consolas, monospace;
 }

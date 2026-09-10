@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'TsVRC',
   tagline: 'A community-maintained framework for building VRChat worlds',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/tsvrc-logo.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -15,7 +15,7 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://docs.tsvrc.com',
+  url: 'https://tsvrc.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   baseUrl: '/',
 
@@ -29,6 +29,8 @@ const config: Config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+
+  plugins: ['./src/plugins/plugin-tailwind.ts'],
 
   presets: [
     [
@@ -54,10 +56,15 @@ const config: Config = {
     navbar: {
       title: 'TsVRC',
       logo: {
-        alt: 'TsVRC Logo',
-        src: 'img/logo.svg',
+        alt: 'TsVRC logo',
+        src: 'img/tsvrc-logo.png',
       },
       items: [
+        {
+          to: '/framework',
+          position: 'left',
+          label: 'Framework',
+        },
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
@@ -75,25 +82,19 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Getting started',
-              to: '/',
-            },
-          ],
+          label: 'Framework',
+          to: '/framework',
         },
         {
-          title: 'More',
-          items: [
-            {
-              label: 'GitHub',
-              href: 'https://github.com/tsvrc',
-            },
-          ],
+          label: 'Docs',
+          to: '/docs/tsvrc/intro',
+        },
+        {
+          label: 'GitHub',
+          href: 'https://github.com/tsvrc',
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} TsVRC.`,
+      copyright: `Copyright © ${new Date().getFullYear()} TsVRC. Not affiliated with or endorsed by VRChat Inc.`,
     },
     prism: {
       theme: prismThemes.github,
