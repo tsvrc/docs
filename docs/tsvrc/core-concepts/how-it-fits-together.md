@@ -53,9 +53,10 @@ shadow is what carries your project's own concrete types.
 ## What the root object bootstraps
 
 `TsRoot` is the framework's own root type: an abstract class exposing `Instance`,
-`Memory`, and `Log`. It's not something you extend yourself. The generator's scaffold
-module generates a concrete subclass for your project and creates the scene object that
-carries it. Every `TsvrcBehaviour` in your world holds a reference to that one object
+`Memory`, and `Log`. It's not something you extend yourself.
+[`ScaffoldModule`](../codegen-configuring/scaffold-module), one of the codegen modules,
+generates a concrete subclass for your project and creates the scene object that carries
+it. Every `TsvrcBehaviour` in your world holds a reference to that one object
 (`_ts`), assigned once when the behaviour is constructed, and reaches the rest of the
 framework through it: `_ts.Memory` for shared state, `_ts.Log` for logging, `_ts.Instance`
 for instance-level concerns like master detection.
