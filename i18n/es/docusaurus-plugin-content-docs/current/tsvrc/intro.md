@@ -11,6 +11,12 @@ VRChat con UdonSharp: inicialización estructurada, conexión de dependencias y
 generación de código en el editor (codegen) que escribe ese código de conexión por ti,
 sobre el VRChat Worlds SDK.
 
+:::note
+TsVRC todavía es pre-1.0. Todo lo documentado aquí, incluyendo el comportamiento de
+casos límite en las páginas de referencia, describe lo que el código hace hoy, no un
+contrato de API cerrado.
+:::
+
 ## ¿Eres nuevo en TsVRC?
 
 Empieza por [Añade TsVRC a tu proyecto](./add-to-your-project) y luego

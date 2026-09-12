@@ -10,6 +10,11 @@ TsVRC is an independent, community-maintained framework for building VRChat worl
 UdonSharp: structured initialization, dependency wiring, and an editor tool that generates
 the code for both automatically (codegen), on top of the VRChat Worlds SDK.
 
+:::note
+TsVRC is still pre-1.0. Everything documented here, including edge-case behavior on
+reference pages, describes what the code does today, not a locked API contract.
+:::
+
 ## New to TsVRC?
 
 Start with [Add TsVRC to your project](./add-to-your-project), then
