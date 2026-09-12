@@ -9,7 +9,10 @@ sidebar_position: 6
 `Tsvrc.Player.HeadClipGuard` stops a VR player's head from clipping through solid geometry
 by teleporting them back out along the axis their body most likely entered from. Its
 generated shadow is `TsHeadClipGuard`. It's a local-only, per-client behaviour (no network
-sync) that runs every frame in `PostLateUpdate`, after tracking and IK have settled.
+sync) that runs every frame in
+[`PostLateUpdate`](https://udonsharp.docs.vrchat.com/events/#udon-update-events), fired
+"near the end of the frame after IK has been calculated," so tracking and IK have
+already settled by the time it runs.
 
 ## Usage
 
@@ -19,27 +22,27 @@ guard.Begin(solidColliders, count);
 guard.End();
 ```
 
-`Begin` bakes each `BoxCollider`'s world-space center, rotation, and half-extents once —
-this is a one-time cost, not repeated per frame — and starts the guard. Null entries in the
+`Begin` bakes each `BoxCollider`'s world-space center, rotation, and half-extents once
+(a one-time cost, not repeated per frame) and starts the guard. Null entries in the
 array are skipped rather than rejected. `End` fully resets all runtime state and is safe to
 call before a later `Begin` on the same instance, so one `HeadClipGuard` can be reused
 across multiple guarded sessions rather than requiring a fresh instance each time.
 
 ## How it decides which way to push
 
-Detection happens in world space against oriented bounding boxes (not axis-aligned — each
+Detection happens in world space against oriented bounding boxes (not axis-aligned: each
 collider's own rotation is respected), each expanded by a configurable `_margin` so the head
 stays a small distance from the wall surface instead of resting exactly on it. When the head
 is inside a violated box, the push direction is chosen by which axis the player's *body*
-(the VRChat capsule position, not the head) most exceeds the box's raw extents on — the
-assumption being that whichever direction the body is pushing from is the direction the
+(the VRChat capsule position, not the head) most exceeds the box's raw extents on. The
+assumption is that whichever direction the body is pushing from is the direction the
 head entered through, and the correct way to eject it. If the body is also fully inside the
 same box (both head and body clipped, a rarer case), it falls back to pushing the head
 toward its own single nearest face instead, since there's no body-direction signal to use.
 Multiple simultaneous violations (a corner, where two OBBs overlap) accumulate their push
-vectors; if two pushes happen to cancel out exactly — head trapped symmetrically between two
-opposing walls — the guard falls back to the last known safe capsule position instead of
-teleporting to a net-zero displacement.
+vectors. If two pushes happen to cancel out exactly (the head trapped symmetrically
+between two opposing walls), the guard falls back to the last known safe capsule
+position instead of teleporting to a net-zero displacement.
 
 ## Performance design
 
