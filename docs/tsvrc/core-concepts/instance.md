@@ -7,11 +7,12 @@ sidebar_position: 3
 # Instance
 
 `Tsvrc.Core.Instance` is the `TsvrcBehaviour` subclass representing the running world
-instance itself — the thing you'd reach for to ask "am I the master of this instance?" or
-to hook world-instance-level startup logic. Its generated shadow class is `TsInstance`;
-your project's actual instance type is a subclass of that shadow, discovered and wired by
-`InstanceModule` (there's exactly one per project — see that module's own reference page
-for how it's found).
+instance itself. It's what you'd reach for to ask "am I the [instance
+master](https://creators.vrchat.com/worlds/udon/networking/ownership/#the-instance-master)?" or to hook
+startup logic that should run once for the instance as a whole. Its generated
+shadow class is `TsInstance`. Your project's actual instance type is a subclass of that
+shadow, discovered and wired automatically by `InstanceModule`. There's exactly one per
+project; see that module's own reference page for how it's found.
 
 ## Usage
 
@@ -31,27 +32,36 @@ public class GameInstance : TsInstance
 
 ## Public surface
 
-- **`IsTsMaster`** — a `virtual bool`, defaulting to VRChat's own
-  `Networking.IsMaster`. Override it if your world needs custom master logic (for example,
-  a designated "host" that isn't necessarily VRChat's instance master). The base
-  implementation is a real default, not a placeholder that throws — a project with no
-  special master logic doesn't need to touch this at all.
+- **`IsTsMaster`** — a `virtual bool`, currently a thin wrapper over VRChat's own
+  [`Networking.IsMaster`](https://udonsharp.docs.vrchat.com/vrchat-api/#networking). It's
+  a real, working default today, not a stub that throws, so a project with no special
+  master logic doesn't need to touch it. Treat the name and the logic behind it as a
+  placeholder, though: TsVRC's plan is real master management of its own, independent of
+  VRChat's instance master, and this property will change to reflect that before 1.0.
+  Override it now if your world needs different master logic in the meantime, but expect
+  to revisit that override later. Before gating any world feature on master status at
+  all, note that [VRChat itself recommends against
+  it](https://creators.vrchat.com/worlds/udon/networking/ownership/#best-practices): prefer an ownership
+  check where one is available.
 - **`OnInstanceStart()`** — a `virtual void`, empty by default. This is where
   instance-level startup logic goes.
 
 ## How OnInstanceStart differs from TsStart
 
-`Instance` does **not** override `TsvrcBehaviour.TsStart()`. That's deliberate, not an
-oversight: `TsConstruct` only ever calls `TsStart`, so if `Instance` used `TsStart` for its
-own startup hook, every `TsConstruct` call would automatically trigger instance startup
-logic with no separate signal. Instead, generated code calls `OnInstanceStart()` explicitly,
-as its own step, after construction — the two are separate calls on purpose, not two names
-for the same event. Calling `OnInstanceStart()` yourself outside of that generated call path
-does nothing useful; it's a plain method, not something wired to fire automatically.
+`Instance` deliberately doesn't override `TsvrcBehaviour.TsStart()`. Here's why that
+matters: `TsConstruct` only ever calls `TsStart`, so if `Instance` reused it for its own
+startup hook, every `TsConstruct` call anywhere would accidentally trigger instance
+startup too, with no way to tell the two apart. Generated code calls `OnInstanceStart()`
+as a separate, explicit step instead, right after construction. They're two different
+events on purpose, not two names for the same thing.
+
+That also means calling `OnInstanceStart()` yourself, outside the generated call path,
+does nothing useful. It's a plain method like any other, not something wired to fire on
+its own.
 
 ## Edge cases worth knowing
 
-`IsTsMaster`'s default implementation reads live VRChat networking state, so calling it
-outside of an actual running instance (for example, directly in an editor test with no
-network context) doesn't throw, but doesn't reflect anything meaningful either — the
-property is safe to call, not necessarily meaningful, in non-runtime environments.
+`IsTsMaster`'s default implementation reads live VRChat networking state. Call it outside
+a real running instance, say directly in an editor test with no network context, and it
+won't throw. It also won't mean anything: the property is safe to call in a non-runtime
+environment, just not meaningful there.
