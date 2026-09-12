@@ -1,7 +1,7 @@
 ---
 id: data-sender-receiver
 title: DataSenderReceiver
-sidebar_position: 8
+sidebar_position: 5
 ---
 
 # DataSenderReceiver
@@ -9,10 +9,14 @@ sidebar_position: 8
 `Tsvrc.DataTransfer.DataSenderReceiver` sits on top of
 [DataChunkReceiver](./data-chunk-receiver) and is purely an ergonomics layer: it turns the
 receiver's raw hooks (`OnTransferStarted`, `OnChunksAssembled`, `OnChunkStored`, ...) into a
-clean, receiver-focused public API — `LastData`, `LastChunkIndex`, `LastTotalChunks`, and
+clean, receiver-focused public API: `LastData`, `LastChunkIndex`, `LastTotalChunks`, and
 four events (`OnDataReceptionStartedEvent`, `...StoppedEvent`, `...CompletedEvent`,
 `OnDataChunkReceivedEvent`) with matching `protected virtual` hooks a subclass overrides
-without ever touching the raw chunk arrays underneath.
+without ever touching the raw chunk arrays underneath. `OnDataReceptionStartedEvent` and
+`...StoppedEvent` don't update any `Last*` property; `LastChunkIndex`/`LastTotalChunks` are
+set before `OnDataChunkReceivedEvent` fires, and `LastData` is set before
+`OnDataReceptionCompletedEvent` fires, so both are always safe to read from inside their
+matching subscriber.
 
 ## The same deferred-emission pattern, one layer up
 
@@ -22,8 +26,8 @@ reason: at the point these fire, `ExecuteStop`/`ExecuteComplete` is still on the
 so a subscriber that reacts by immediately starting a new transfer would corrupt the new
 transfer's state if the emission happened synchronously. The assembled data itself is
 staged in a private field (`_pendingCompletionData`) rather than written straight to
-`LastData`, specifically so a new transfer starting inside that one-frame gap — which resets
-receiver state — can't clobber it before the deferred emit reads it. `LastData` is only ever
+`LastData`, specifically so a new transfer starting inside that one-frame gap, which resets
+receiver state, can't clobber it before the deferred emit reads it. `LastData` is only ever
 assigned atomically with the deferred completion event actually firing.
 
 Both pending flags (`_pendingCompletion`, `_pendingStop`) are cleared by
@@ -41,7 +45,7 @@ repeated here.
 
 Most consumers use [`DataTransferer`](./data-transferer) directly and never touch this layer.
 Subclass `DataSenderReceiver` itself only if you want the sender/receiver plumbing without
-`DataTransferer`'s transfer-specific event names — override `OnDataReceptionCompleted` and
+`DataTransferer`'s transfer-specific event names. Override `OnDataReceptionCompleted` and
 read `LastData`:
 
 ```csharp

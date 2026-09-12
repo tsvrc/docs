@@ -1,21 +1,21 @@
 ---
 id: data-transferer
 title: DataTransferer
-sidebar_position: 9
+sidebar_position: 6
 ---
 
 # DataTransferer
 
 `Tsvrc.DataTransfer.DataTransferer` is the end of the chain and the type you actually use.
 Its generated shadow is `TsDataTransferer`. Everything it does is inherited from
-[DataChunker](./data-chunker) through [DataSenderReceiver](./data-sender-receiver) — read
+[DataChunker](./data-chunker) through [DataSenderReceiver](./data-sender-receiver). Read
 those pages first if you haven't; this page only covers what `DataTransferer` itself adds.
 
 ## What it adds
 
 Four public event constants that simply forward `DataSenderReceiver`'s reception-focused
-events under transfer-focused names — `OnTransferStartedEvent`, `OnTransferStoppedEvent`,
-`OnTransferCompletedEvent`, `OnTransferChunkEvent` — plus one small piece of defensive
+events under transfer-focused names (`OnTransferStartedEvent`, `OnTransferStoppedEvent`,
+`OnTransferCompletedEvent`, `OnTransferChunkEvent`), plus one small piece of defensive
 history: `DataTransferer` still overrides `OnOwnerAbandonedProcess`, but the override's body
 is now just a call to `base`. The base chain (`ChunkedTransferSession`'s
 `OnOwnerAbandonedProcess`, inherited unchanged through `DataSender`, `DataChunkReceiver`, and
@@ -41,14 +41,14 @@ public void OnTransferDone()
 
 `LastPlayerIds` (inherited from `PlayerTracker`, several layers down) is populated on
 `OnTransferStarted`/`Stopped`/`Completed`, carried over from the corresponding
-`OnTracking*` broadcast underneath — read it if you need to know who the transfer targeted,
+`OnTracking*` broadcast underneath. Read it if you need to know who the transfer targeted,
 alongside `LastData`, `LastChunkIndex`, and `LastTotalChunks` for the reception-specific
 details.
 
 ## Where the real behavior lives
 
-Every failure mode worth knowing about — what happens when a target player leaves
+Every failure mode worth knowing about, what happens when a target player leaves
 mid-transfer, what happens across an ownership handover, why chunks are validated the way
-they are, why events are deferred by a frame — is documented on the layer that actually
-implements it. Start from [the chain overview](./data-transfer-overview) if you're
+they are, why events are deferred by a frame, is documented on the layer that actually
+implements it. Start from [the chain overview](../data-transfer-overview) if you're
 debugging something that doesn't match this page's description of the surface.

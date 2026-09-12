@@ -7,7 +7,7 @@ sidebar_position: 3
 # Send a string payload to other players
 
 How to move an arbitrary string from one client to a set of others, using
-[`DataTransferer`](../networking-data/data-transferer) to handle chunking, sequencing, and
+[`DataTransferer`](../networking-data/data-transfer/data-transferer) to handle chunking, sequencing, and
 reassembly for you. See [the chain overview](../networking-data/overview.md) if you want to
 understand what's happening underneath this API.
 
@@ -45,7 +45,7 @@ understand what's happening underneath this API.
    }
    ```
 
-That's the whole public surface — `DataTransferer` is the type you interact with regardless
+That's the whole public surface. `DataTransferer` is the type you interact with regardless
 of how large the payload is or how many chunks it takes to arrive.
 
 ## Serializing structured data
@@ -73,7 +73,7 @@ public void _OnScoresReceived()
 
 ## Handling a target player leaving mid-transfer
 
-You don't need to — `DataTransferer` already handles a target player leaving, getting
+You don't need to: `DataTransferer` already handles a target player leaving, getting
 suspended, or the sending object changing owners mid-transfer. See
 [the chain overview](../networking-data/overview.md) and the individual layer pages if you need
 the exact guarantees (what "completed" means when the recipient list shrank, for instance).

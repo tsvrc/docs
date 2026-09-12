@@ -110,7 +110,7 @@ name isn't familiar yet:
 | [`PlayerTracker`](../players-tracking/player-tracker) | `TsPlayerTracker` |
 | [`AutoPlayerTracker`](../players-tracking/auto-player-tracker) | `TsAutoPlayerTracker` |
 | [`ReadyCheckProcess`](../players-tracking/ready-check-process) | `TsReadyCheckProcess` |
-| [`DataTransferer`](../networking-data/data-transferer) | `TsDataTransferer` |
+| [`DataTransferer`](../networking-data/data-transfer/data-transferer) | `TsDataTransferer` |
 | [`HeadClipGuard`](../players-tracking/head-clip-guard) | `TsHeadClipGuard` |
 | [`StateManager`](../game-flow/state-manager) | `TsStateManager` |
 | [`TsvrcList`](../ui-components/tsvrc-list) | `TsList` |
