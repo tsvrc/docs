@@ -1,9 +1,9 @@
 {
   "framework.notice.title": {
-    "message": "Antes de construir sobre esto"
+    "message": "Antes de construir con esto"
   },
   "framework.notice.vrchat": {
-    "message": "TsVRC no está afiliado ni respaldado por VRChat Inc."
+    "message": "TsVRC no está afiliado a VRChat Inc. ni cuenta con su respaldo."
   },
   "framework.notice.body": {
     "message": "Además, sigue siendo un trabajo en curso. Cada parte tiene sus propios tests, y los ejecutamos antes de cada versión, pero no podemos prometer haber cubierto todos los casos. Guarda una copia de seguridad de tu proyecto antes de añadir TsVRC o de actualizarlo, solo por si acaso. Si algo se rompe de tu lado, no podemos arreglarlo por ti, pero nos gustaría mucho saberlo. Abre un issue en GitHub y le echaremos un vistazo."
@@ -30,7 +30,7 @@
     "message": "Licencia de tsvrc/tsvrc-core"
   },
   "homepage.projects.tsvrc.description": {
-    "message": "Una forma estructurada de crear mundos de VRChat con UdonSharp: arranque consistente, dependencias ya conectadas y código generado en vez de conectarlo todo a mano."
+    "message": "Una forma estructurada de crear mundos de VRChat con UdonSharp: inicio consistente, dependencias ya conectadas y código generado en vez de conectarlo todo a mano."
   },
   "homepage.projects.learnMore": {
     "message": "Más información"
@@ -45,10 +45,7 @@
     "message": "Proyectos"
   },
   "homepage.projects.description": {
-    "message": "Cada proyecto de TsVRC vive en este mismo sitio. Descubre por qué en {intro}. Por ahora solo hay uno; más llegarán aquí a medida que se publiquen."
-  },
-  "homepage.projects.introLinkText": {
-    "message": "la introducción"
+    "message": "Cada proyecto de TsVRC vive en este mismo sitio. Por ahora solo hay uno; más llegarán aquí a medida que se publiquen."
   },
   "homepage.meta.title": {
     "message": "TsVRC"
@@ -60,7 +57,7 @@
     "message": "Un framework para mundos de VRChat construido sobre UdonSharp"
   },
   "framework.hero.subtitle": {
-    "message": "Inicialización estructurada, conexión de dependencias y generación de código en el editor, para que tus scripts de mundo extiendan una clase base tipada en vez de conectar referencias a mano cada vez que agregas un behaviour."
+    "message": "Inicialización estructurada, conexión de dependencias y generación de código en el editor, para que tus scripts de mundo hereden de una clase base tipada en vez de conectar referencias a mano cada vez que agregas un behaviour."
   },
   "framework.hero.cta.docs": {
     "message": "Leer la documentación"
@@ -68,47 +65,107 @@
   "framework.hero.cta.github": {
     "message": "Ver en GitHub"
   },
+  "framework.hero.jumpToLabel": {
+    "message": "Ir a:"
+  },
+  "framework.hero.jump.why": {
+    "message": "Por qué existe"
+  },
+  "framework.hero.jump.blocks": {
+    "message": "Las piezas fundamentales"
+  },
+  "framework.hero.jump.start": {
+    "message": "Empezar"
+  },
+  "framework.hero.scrollCue": {
+    "message": "Desplázate para saber más"
+  },
+  "framework.hero.annotation.behaviour.title": {
+    "message": "TsBehaviour"
+  },
+  "framework.hero.annotation.behaviour.description": {
+    "message": "La clase generada de la que hereda cada script. Es lo que le da a este behaviour su referencia _ts."
+  },
+  "framework.hero.annotation.globals.title": {
+    "message": "Globals"
+  },
+  "framework.hero.annotation.globals.description": {
+    "message": "Cualquier objeto de la escena con nombre, accesible como _ts.Name desde cualquier behaviour, sin arrastrar referencias a mano."
+  },
+  "framework.hero.annotation.memory.title": {
+    "message": "Memory"
+  },
+  "framework.hero.annotation.memory.description": {
+    "message": "El almacén de clave-valor compartido, accesible como _ts.Memory desde cualquier parte."
+  },
+  "framework.hero.annotation.more.title": {
+    "message": "Y eso no es todo"
+  },
+  "framework.hero.annotation.more.description": {
+    "message": "Y hay más de donde vino eso. Mira el resto de las piezas fundamentales de TsVRC más abajo."
+  },
   "framework.why.title": {
     "message": "Por qué existe"
   },
   "framework.why.paragraph1": {
-    "message": "UdonSharp puro te da una escena llena de behaviours sin una forma compartida de encontrarse entre sí, sin garantía de orden en la configuración, y sin ayuda para resolver qué clase concreta debe usar cada lugar de tu proyecto. Cada mundo termina resolviendo lo mismo a mano: singletons de gestor conectados arrastrando y soltando, un orden de carga improvisado, referencias asignadas en el inspector con la esperanza de que funcionen en tiempo de ejecución."
+    "message": "Cada script de UdonSharp se inicia por su cuenta, sin garantía de en qué orden pasan las cosas y sin una forma fácil de llegar a otro script en tu mundo. La mayoría de los creadores lo resuelve a mano: arrastrando referencias entre objetos en el Inspector, y con la esperanza de que todo siga conectado cuando el mundo carga."
   },
   "framework.why.paragraph2": {
-    "message": "TsVRC reemplaza eso con un objeto raíz ({code}) al que cada behaviour tiene una referencia, un orden de construcción definido, y un paso de generación que resuelve los tipos propios de tu proyecto una sola vez, en el editor, en vez de en tiempo de ejecución. Consulta {link} para ver el panorama completo."
+    "message": "TsVRC le da a cada script una única referencia compartida, {code}, para llegar a cualquier otra cosa de tu proyecto. La configuración ocurre en un orden que tú controlas, y TsVRC descubre de antemano cuál de tus propias clases usar, en el editor de Unity. Consulta {link} para ver el panorama completo."
   },
   "framework.why.linkText": {
     "message": "cómo encaja TsVRC"
   },
-  "framework.advantages.init.title": {
-    "message": "Inicialización estructurada"
+  "framework.features.constructs.title": {
+    "message": "Constructs"
   },
-  "framework.advantages.init.description": {
-    "message": "Un orden de construcción definido y un único hook TsStart, para que el orden de configuración deje de ser una suposición en cada proyecto."
+  "framework.features.constructs.description": {
+    "message": "Registra un TsvrcBehaviour una vez y TsVRC lo inicializa por ti, en un orden fijo, mediante TsStart, en vez de que tengas que encargarte tú de iniciarlo a mano."
   },
-  "framework.advantages.wiring.title": {
-    "message": "Conexión de dependencias"
+  "framework.features.globals.title": {
+    "message": "Globals"
   },
-  "framework.advantages.wiring.description": {
-    "message": "Cada behaviour llega al resto del framework a través de una única referencia tipada _ts (Memory, Log, Instance) en vez de buscar cada una por separado."
+  "framework.features.globals.description": {
+    "message": "Señala un objeto de la escena una vez y cualquier behaviour puede leerlo de vuelta por su nombre, en vez de arrastrar la misma referencia a una docena de campos del Inspector."
   },
-  "framework.advantages.codegen.title": {
-    "message": "Generación de código en el editor, no reflexión en tiempo de ejecución"
+  "framework.features.memory.title": {
+    "message": "Memory"
   },
-  "framework.advantages.codegen.description": {
-    "message": "La resolución de tipos ocurre una sola vez en el editor, mientras la reflexión de C# todavía está disponible, y queda integrada en el código generado, porque Udon compilado no puede usar reflexión en absoluto."
+  "framework.features.memory.description": {
+    "message": "Un almacén de clave-valor compartido con niveles efímero, persistente y sincronizado, para que llevar un valor a todos los jugadores no signifique escribir tu propia capa de red."
   },
-  "framework.advantages.title": {
-    "message": "Ventajas"
+  "framework.features.factories.title": {
+    "message": "Factories"
   },
-  "framework.advantages.detailsLink": {
+  "framework.features.factories.description": {
+    "message": "Instancia un prefab bajo demanda con una llamada _ts.Create... generada, para cualquier cosa que no necesite mantenerse sincronizada entre jugadores."
+  },
+  "framework.features.pools.title": {
+    "message": "Pools"
+  },
+  "framework.features.pools.description": {
+    "message": "Pre-instancia y conecta exactamente las instancias que un prefab en red necesita, en tiempo de edición, porque VRChat no puede sincronizar un objeto creado mientras el mundo está en ejecución."
+  },
+  "framework.features.instance.title": {
+    "message": "Instance"
+  },
+  "framework.features.instance.description": {
+    "message": "Un behaviour por proyecto que representa la instancia de mundo en ejecución, encontrado y conectado automáticamente, para que comprobaciones como \"¿soy el master?\" tengan un único lugar obvio."
+  },
+  "framework.features.title": {
+    "message": "Las piezas fundamentales"
+  },
+  "framework.features.subtitle": {
+    "message": "Seis piezas generadas cubren la mayor parte de lo que necesita un mundo. Registra o señala algo una vez, y luego alcánzalo de la misma forma desde cualquier behaviour."
+  },
+  "framework.features.detailsLink": {
     "message": "Detalles →"
   },
   "framework.cta.title": {
     "message": "Empieza a construir"
   },
   "framework.cta.subtitle": {
-    "message": "Agrega el paquete mediante VCC y ten un behaviour funcionando en modo Play al final de la primera página del tutorial."
+    "message": "Agrega el paquete mediante VCC y ten un behaviour funcionando en Play Mode al final de la primera página del tutorial."
   },
   "framework.cta.button": {
     "message": "Construye tu primer behaviour"

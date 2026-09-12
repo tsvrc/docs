@@ -6,12 +6,12 @@ sidebar_position: 8
 
 # GlobalModule
 
-`Tsvrc.Editor.GlobalModule` generates one named field per `_ts`-exposed scene object —
-`TsConfig.GlobalEntries` and `TsBuiltinConfig.GlobalEntries` merged into a single set,
+`Tsvrc.Editor.GlobalModule` generates one named field per `_ts`-exposed scene object.
+`TsConfig.GlobalEntries` and `TsBuiltinConfig.GlobalEntries` are merged into a single set,
 scene entries resolved first so they keep an unsuffixed name on a collision with a builtin.
-This is the module behind the [tutorial](../first-behaviour)'s "register your behaviour as
-a construct" flow's sibling concept — a Global doesn't get constructed at startup the way a
-Construct does, it's purely a named reference.
+Naming is the point of a Global: it accepts any scene object, not only a `TsvrcBehaviour`,
+which is what sets it apart from [Construct](./construct-module) (initialization only, no
+name at all). See that page's "Construct vs. Global" section for the full comparison.
 
 ## Usage
 
@@ -51,8 +51,10 @@ Global entry usually is.
 
 ## Collision handling
 
-`ExcludeFieldNames` drops any Global entry whose name lost a cross-module collision (most
-commonly to a [Construct](./construct-module) registering the same object — a Construct's
-accessor always wins over a same-named Global, per its higher `FieldNamePrecedence`) and
-logs a warning naming the fix: either remove the redundant Global entry, or give one of the
-two a distinct name.
+`ExcludeFieldNames` drops any Global entry whose name lost a cross-module collision, most
+commonly two Global entries independently deriving the same name (two plain GameObjects
+both named "Manager", say), or a Global entry that happens to auto-derive a reserved name
+like `Instance` (see [`InstanceModule`](./instance-module)'s reserved-name precedence). It
+logs a warning naming the fix: give one of the conflicting entries a distinct explicit
+`Name`. A Construct entry never causes this, since a construct's field is always private and
+never claims a name at all.

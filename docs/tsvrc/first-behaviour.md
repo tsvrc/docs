@@ -62,9 +62,11 @@ Attach `HelloWorld` to a GameObject in your scene.
 
 Adding the component to the scene isn't enough by itself — TsVRC only calls `TsStart` on
 behaviours it's been told about. Back in **Tsvrc > Configure**, open the **Constructs**
-tab and add your `HelloWorld` GameObject. This does two things: it makes TsVRC call
-`TsStart` on it once at world startup, and it exposes the instance as `_ts.HelloWorld`
-everywhere else in your project.
+tab and add your `HelloWorld` GameObject. This makes TsVRC call `TsStart` on it once at
+world startup. The reference itself stays private: if another behaviour needs to reach
+`HelloWorld` directly, wire it in the Inspector like any other field, or register it as a
+[Global](./codegen-configuring/global-module) instead if you want it reachable as
+`_ts.HelloWorld`.
 
 Click **Force Regenerate** (or let the automatic regeneration pick up the change — TsVRC
 watches for edits to its config and reruns on its own in most cases).

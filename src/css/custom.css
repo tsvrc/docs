@@ -76,6 +76,7 @@
   --color-accent-emphasis: var(--ts-accent-emphasis);
   --color-success: var(--ts-success-fg);
   --color-danger: var(--ts-danger-fg);
+  --color-attention: var(--ts-attention-fg);
 
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'IBM Plex Sans', system-ui, sans-serif;

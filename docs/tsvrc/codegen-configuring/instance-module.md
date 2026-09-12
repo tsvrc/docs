@@ -52,7 +52,7 @@ so a developer's own unrelated script hand-attached to the same GameObject survi
 ## Reserved name
 
 `Instance` is reported via `ExposedFieldNames()` at `ReservedFieldNamePrecedence`
-unconditionally, so a Global or Construct entry that happens to auto-derive the exact name
-`"Instance"` (for example, referencing a plain GameObject literally named that) is caught by
-collision detection and excluded, rather than silently producing a duplicate-member compile
+unconditionally, so a Global entry that happens to auto-derive the exact name `"Instance"`
+(for example, referencing a plain GameObject literally named that) is caught by collision
+detection and excluded, rather than silently producing a duplicate-member compile
 error.

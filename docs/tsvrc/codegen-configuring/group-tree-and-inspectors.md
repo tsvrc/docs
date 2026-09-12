@@ -17,11 +17,12 @@ shared drawing helpers used across every Tsvrc editor window.
 master-detail view: a searchable `TreeView` of nested groups on the left, the selected
 group's direct entries on the right (row rendering delegated to
 [`ObjectListGUI`](#objectlistgui) below). Every grouped module's tab is this same widget
-with different parameters — `memberPrefix`/`memberSuffix` control whether a live member-name
-preview is shown at all (`"_ts."` for Globals/Constructs, `"Create"`/`"(parent)"` for
-Factories, neither for Pool), and `prefixRespectsToggle` mirrors
-[`BuildGroupPrefix`](../codegen-internals/ts-module)'s own `respectToggle` parameter — Factory
-always prefixes regardless of a group's `IncludeInName`, the others respect it per-group.
+with different parameters. `memberPrefix`/`memberSuffix` control whether a live member-name
+preview is shown at all (`"_ts."` for Globals, `"Create"`/`"(parent)"` for Factories,
+neither for Pool or Constructs, since neither generates a name at all). `prefixRespectsToggle`
+mirrors [`BuildGroupPrefix`](../codegen-internals/ts-module)'s own `respectToggle` parameter:
+Factory always prefixes regardless of a group's `IncludeInName`, Global respects it
+per-group.
 
 Its `State` class holds purely UI-local state (tree expansion, selection, search text,
 pagination) — never written back to any config asset — persisted across a domain reload via

@@ -26,9 +26,9 @@ UI popup, not anything other players need to see.
 
 ## Naming always includes the full group chain
 
-Unlike Global and Construct, where `IncludeInName` makes group-based namespacing an opt-in
-per group, a Factory entry's generated method name is **always** prefixed by its full group
-ancestor chain — a prefab named "Bolt" inside a group "Enemies" nested inside "Boss" becomes
+Unlike Global, where `IncludeInName` makes group-based namespacing an opt-in per group (and
+Construct, which has no generated name to namespace at all), a Factory entry's generated
+method name is **always** prefixed by its full group ancestor chain — a prefab named "Bolt" inside a group "Enemies" nested inside "Boss" becomes
 `CreateEnemiesBossBolt(parent)`, unconditionally. There's no toggle to opt out, since the
 whole point of Factory grouping is organizing what would otherwise be a large flat method
 namespace.

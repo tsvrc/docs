@@ -7,45 +7,61 @@ sidebar_position: 11
 # ConstructModule
 
 `Tsvrc.Editor.ConstructModule` is the generator behind the [tutorial](../first-behaviour)'s
-onboarding step — registering a `TsvrcBehaviour` on the Configure window's **Constructs**
-tab is what this module turns into a generated field, an accessor, and a startup
-`TsConstruct` call. It's the module directly responsible for `_ts.Name` reaching a
-`TsStart()` override at all.
+onboarding step. Registering a `TsvrcBehaviour` on the Configure window's **Constructs** tab
+is what this module turns into a private field and a startup `TsConstruct` call. It's the
+module directly responsible for a registered behaviour's `TsStart()` override running at
+all.
 
 ## Usage
 
-Register a `TsvrcBehaviour` on the Configure window's Constructs tab, then reach it from any
-other behaviour by its generated accessor:
+Register a `TsvrcBehaviour` on the Configure window's Constructs tab. That's the whole
+configuration step: there's no name to set, since a construct never becomes a member on
+`_ts`.
 
 ```csharp
-_ts.GameManager.StartRound();
+public class HelloWorld : TsBehaviour
+{
+    protected override void TsStart()
+    {
+        LogInfo("HelloWorld constructed.");
+    }
+}
 ```
 
-## What it generates, and why both a field and an accessor
+Registering `HelloWorld` here is what makes `TsStart` run at all. If another behaviour
+needs a direct reference to it afterward, wire it the ordinary Unity way (a
+`[SerializeField]` field assigned in the Inspector), or register the object as a
+[Global](./global-module) instead if you also want it reachable as `_ts.Name`.
+
+## What it generates
 
 Each construct entry becomes a private backing field
-(`[HideInInspector][SerializeField] private {Type} _construct{Name};`) plus, normally, a
-public accessor (`public {Type} {Name} => _construct{Name};`) — and, inside
-`_TsConstructStart()`, a `{FieldName}.TsConstruct(this);` call. The accessor is the only
-part that's ever conditionally omitted: if another module's registration collides on the
-same name (see below), the field and its `TsConstruct` call still generate — the behaviour
-still gets initialized — but the public accessor is dropped so the other registration's own
-accessor is what `_ts.Name` actually resolves to.
+(`[HideInInspector][SerializeField] private {Type} _construct{Name};`, `{Name}` derived from
+the entry's type and never user-facing) plus, inside `_TsConstructStart()`, a
+`{FieldName}.TsConstruct(this);` call. Nothing else: no public accessor, no member name to
+configure, no group-based namespacing. Registering a construct under a group in the
+Configure window's tree view is purely organizational.
 
 ## Naming and requirements
 
-A construct must be a component and must be a `TsvrcBehaviour` — `EntryPolicy` enforces both
+A construct must be a component and must be a `TsvrcBehaviour`. `EntryPolicy` enforces both
 (`RequireComponent`/`RequireTsvrcBehaviour`), unlike Global, which accepts any scene object.
-An entry with no explicit name defaults to its own component type name.
+Because the field is never exposed, its name is always derived from the component's type
+(disambiguated by `ResolveEntries`' own suffix dedup on a collision), never from an explicit
+entry name. There isn't one to set.
 
-## Precedence over Global
+## Construct vs. Global
 
-`ConstructModule` reports `FieldNamePrecedence = 100`, above Global's default `0` — so
-registering the same object as both a Global and a Construct resolves to the Construct's
-accessor, with the Global entry itself dropped by `GlobalModule.ExcludeFieldNames` and a
-warning suggesting removing the redundant registration. A tie between two Constructs (or
-between a Construct and some other same-precedence module) suppresses the accessor on both
-rather than picking an arbitrary winner — `ConstructModule.ExcludeFieldNames` handles that
-case by tracking which of *its own* entries lost the tie in `_suppressedAccessors`, keeping
-the construct's initialization but dropping its public accessor, with a warning suggesting a
-distinct name.
+Both modules can initialize a `TsvrcBehaviour`: `GlobalModule` also calls `TsConstruct` when
+a Global entry's type happens to be one. The difference is what each is actually for.
+
+- **Construct** guarantees initialization, a defined build order and a `TsStart` call, and
+  stops there. The reference stays private, so it never participates in `_ts.Name` collision
+  detection with Global, Instance, or any other module.
+- **Global** guarantees a name, `_ts.Name`, reachable from anywhere, for any scene object
+  whether or not it's a `TsvrcBehaviour`. Construction only happens as a side effect, when
+  the registered type needs it so the reference isn't left uninitialized.
+
+Register something as a Construct when you only need it initialized. Register it as a
+Global when you need to reach it by name from other behaviours. Register it as both if you
+need both: the two no longer collide, since only Global ever claims a name.

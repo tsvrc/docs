@@ -27,12 +27,10 @@ const config: Config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'es', 'ja', 'zh-Hans'],
+    locales: ['en', 'es'],
     localeConfigs: {
       en: { label: 'English', htmlLang: 'en' },
       es: { label: 'Español', htmlLang: 'es' },
-      ja: { label: '日本語', htmlLang: 'ja' },
-      'zh-Hans': { label: '中文', htmlLang: 'zh-Hans' },
     },
   },
 
@@ -109,6 +107,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ['csharp'],
     },
   } satisfies Preset.ThemeConfig,
 };

@@ -45,6 +45,36 @@ the docs.
   `docusaurus-theme-classic/{navbar,footer}.json`. Docs stay English until someone
   actually translates them into the new `i18n/<locale>/docusaurus-plugin-content-docs/current/`
   tree.
+- **Translation quality: never translate literally.** When writing or updating any
+  `code.json` (or any other translated string) for `es` or any future locale, use the
+  term a professional in that field, in that language, actually uses — not a word-for-word
+  rendering of the English. Before translating a technical or domain term (Unity/UdonSharp/
+  VRChat/GitHub concepts especially), check how it's rendered in that language's official or
+  most-trusted sources (e.g. Unity's own localized manual at `docs.unity3d.com/es/...`, VRChat's
+  Spanish-speaking creator community, GitHub's own glossary/docs) rather than guessing or
+  machine-translating. Two patterns come up constantly and cut opposite ways, so check per
+  term instead of assuming:
+  - **Many technical/proper nouns are conventionally left in English**, even in otherwise
+    fully translated prose — e.g. in Spanish, Unity's own docs never translate `GameObject`,
+    `Inspector`, `Prefab`, `Script`, or `Play Mode`; GitHub's Spanish glossary keeps `issue`
+    and `pull request` as loanwords (GitHub's own UI ships English-only, so the loanword is
+    literally what a user clicks). This repo's own code identifiers (`_ts.Memory`, `TsStart`,
+    `TsBehaviour`, class/property names inside example code or referring to it) are never
+    translated either — including inside descriptive text, e.g. `_ts.Name` must stay
+    `_ts.Name`, not become `_ts.Nombre`.
+  - **Other English phrasing has a real idiomatic equivalent that isn't the literal
+    word-for-word choice** — e.g. "extends"/inheritance reads more naturally in Spanish as
+    "hereda de" than a calque like "extiende"; Unity's Spanish manual calls `Instantiate()`
+    "instanciar", not a generic "generar/crear". Prefer the term the target community
+    actually uses in casual technical speech, not a dictionary's first hit.
+  - Also double-check direction/meaning survived translation, not just word choice — a
+    literal-sounding translation can silently invert an "A extends B" relationship if you're
+    not reading the translated sentence back for what it actually asserts.
+  - A word can be the "correct" dictionary or OS-level technical term and still not be what
+    this content's actual audience says day to day — e.g. "arranque" is standard Spanish for
+    booting an OS, but reads stiffer than "inicio"/"iniciar" for a script or behaviour starting
+    up in casual creator-facing prose. When a general web search and a native speaker's ear
+    disagree, defer to the native speaker: ask or take their correction over the search result.
 - **Worked example**: `docs/tsvrc/intro.md` has a real Spanish translation at
   `i18n/es/docusaurus-plugin-content-docs/current/tsvrc/intro.md` — same filename,
   same relative path, translated content. Copy that pattern for any other doc page.

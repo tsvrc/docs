@@ -22,7 +22,7 @@ It holds four parallel entry/group/next-id triples, one per registration kind:
 |---|---|---|
 | `GlobalEntries` | `GlobalGroups` | Scene objects exposed as named fields on the generated root (`_ts.Name`) |
 | `PoolEntries` | `PoolGroups` | `UdonSharpBehaviour` prefabs to pool (must be prefab assets, not scene objects) |
-| `ConstructEntries` | `ConstructGroups` | `TsvrcBehaviour`s always active in the scene — constructed at startup **and** exposed as `_ts.Name`, no separate Global entry needed |
+| `ConstructEntries` | `ConstructGroups` | `TsvrcBehaviour`s always active in the scene, constructed at startup. The reference stays private, never exposed as `_ts.Name` |
 | `FactoryEntries` | `FactoryGroups` | Prefabs registered for non-networked runtime instantiation via a generated `Create{Name}(Transform parent)` method |
 
 Globals and Constructs hold scene-object references specifically because only a scene
@@ -53,7 +53,9 @@ turns nesting into namespacing, prefixing an opted-in group's own name (and its
 opted-in ancestors') onto the generated member name of everything inside it — `_ts.Spawner`
 under a plain group stays `_ts.Spawner`, but under a group named "Enemies" with
 `IncludeInName` set it becomes `_ts.EnemiesSpawner`. Factory groups always prefix
-regardless of this toggle; Global and Construct groups respect it per-group.
+regardless of this toggle; Global groups respect it per-group. Construct groups have no
+member name to namespace at all, so the toggle has no effect there. Grouping a construct is
+purely organizational.
 
 ```csharp
 // A scene object registered as a Global entry named "Spawner", inside a group
