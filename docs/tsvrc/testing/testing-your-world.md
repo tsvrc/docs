@@ -72,7 +72,7 @@ lifecycle hook ever runs — `FixupRegistry.Disable<TFixup>()` has no effect on 
 never part of the registry's own list to begin with.
 
 Stopping TsVRC's own reactive codegen from regenerating against a test's temporary scene
-during a test run (see [`TsGenerator`](../codegen-internals/ts-generator)'s
+during a test run (see [`TsGenerator`](../codegen/internals/ts-generator)'s
 `SuppressAutomaticTriggers`) requires reaching an `internal` editor API from outside the
 package — granted once, package-wide, via an `InternalsVisibleTo` attribute, rather than
 something you need to configure yourself.

@@ -31,8 +31,8 @@ public MyPooledBehaviour describedSlot;
 The optional constructor argument is a free-text description of what the pool is for.
 Nothing currently reads it back: not the Configure window, not codegen. Today it's
 documentation for whoever reads the field declaration, not something surfaced anywhere
-in the UI. [`PoolModule`](../codegen-configuring/pool-module) (one of the codegen
-modules covered later, under Configuring codegen) checks every `[WirePool]` field's
+in the UI. [`PoolModule`](../codegen/modules/pool-module) (one of the codegen
+modules covered later, under Codegen > Modules) checks every `[WirePool]` field's
 type against its own configuration and
 validates the pairing at generation time, not compile time, so a mismatched or
 unregistered pool type surfaces as a codegen warning, not a C# compiler error. See that
@@ -72,7 +72,7 @@ public class FakeInstanceForTests : Instance
 
 Put `[TsWorldExtensionPoint("GeneratedName")]` on a framework base class to mark it as
 one world scripts are meant to subclass directly, and to name the generated shadow class
-that [`ScaffoldModule`](../codegen-configuring/scaffold-module) (the codegen module you
+that [`ScaffoldModule`](../codegen/modules/scaffold-module) (the codegen module you
 already met in [How TsVRC fits together](./how-it-fits-together)) writes for it. See
 that page again for why the shadow class exists at all. In short, it
 retypes the inherited `_ts` reference to your project's own concrete generated root, so

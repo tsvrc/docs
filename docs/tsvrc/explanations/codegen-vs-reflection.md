@@ -36,7 +36,7 @@ Object creation is restricted the same way: Udon's compiled `Instantiate` surfac
 exposes a plain, non-generic `GameObject Instantiate(GameObject original, ...)` — there's no
 generic `Instantiate<T>()` that hands back an arbitrary, runtime-determined component type.
 Reading a component back off a freshly instantiated object has the same limitation, which is
-part of why generated factory code (see [`FactoryModule`](../codegen-configuring/factory-module))
+part of why generated factory code (see [`FactoryModule`](../codegen/modules/factory-module))
 resolves its type at generation time and emits a concrete, non-generic
 `GetComponent<ConcreteType>()` call rather than anything parameterized.
 

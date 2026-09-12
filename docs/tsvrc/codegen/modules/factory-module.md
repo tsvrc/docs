@@ -1,7 +1,7 @@
 ---
 id: factory-module
 title: FactoryModule
-sidebar_position: 12
+sidebar_position: 8
 ---
 
 # FactoryModule
@@ -21,23 +21,24 @@ generated method from any behaviour:
 var vfx = _ts.CreateHitSpark(transform);
 ```
 
-Reach for this only for local, non-networked objects (see below) — a projectile or one-off
+Reach for this only for local, non-networked objects (see below): a projectile or one-off
 UI popup, not anything other players need to see.
 
 ## Naming always includes the full group chain
 
 Unlike Global, where `IncludeInName` makes group-based namespacing an opt-in per group (and
 Construct, which has no generated name to namespace at all), a Factory entry's generated
-method name is **always** prefixed by its full group ancestor chain — a prefab named "Bolt" inside a group "Enemies" nested inside "Boss" becomes
-`CreateEnemiesBossBolt(parent)`, unconditionally. There's no toggle to opt out, since the
+method name is **always** prefixed by its full group ancestor chain. A prefab named "Bolt"
+inside a group "Enemies" nested inside "Boss" becomes `CreateEnemiesBossBolt(parent)`,
+unconditionally. There's no toggle to opt out, since the
 whole point of Factory grouping is organizing what would otherwise be a large flat method
 namespace.
 
 The same prefab registered under two differently-named groups (for example, both an
 "Enemies" group and a "Traps" group spawning the same projectile prefab) is a legitimate,
-common case, not a mistake — so, unlike Pool's duplicate-reference detection,
-`FactoryModule` deliberately does *not* flag a prefab appearing more than once across
-different registrations.
+common case, not a mistake. Unlike Pool's duplicate-reference detection, `FactoryModule`
+deliberately does *not* flag a prefab appearing more than once across different
+registrations.
 
 ## Generated method shape
 
@@ -57,7 +58,7 @@ public {Type} Create{Name}(Transform parent)
 ```
 
 The instantiation source (`_factory{Name}`) is itself a **pre-instantiated, inactive**
-instance under a `"Factories"` scene child, not the original prefab asset — `Wire()` creates
+instance under a `"Factories"` scene child, not the original prefab asset. `Wire()` creates
 one inactive instance per registered factory once, at wire time, and `Create{Name}` clones
 *that* instance at call time via `Instantiate`, rather than instantiating the original
 prefab asset directly on every call.
@@ -67,5 +68,5 @@ prefab asset directly on every call.
 The Configure window's own tab description states this plainly: an object created through a
 Factory method never receives a VRChat network ID and can't send or receive network events.
 Use [`PoolModule`](./pool-module) instead for anything that needs to participate in
-networked gameplay — Factory exists specifically for cheap, purely local, on-demand
+networked gameplay. Factory exists specifically for cheap, purely local, on-demand
 instantiation (VFX, local UI popups) where networking would be unnecessary overhead.

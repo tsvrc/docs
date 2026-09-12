@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Decision note: the pooling pattern
 
-[`WirePoolAttribute`](../core-concepts/attributes.md) and [`PoolModule`](../codegen-configuring/pool-module)
+[`WirePoolAttribute`](../core-concepts/attributes.md) and [`PoolModule`](../codegen/modules/pool-module)
 compute how many instances of each poolable prefab a project needs, and instantiate exactly
 that many into the scene as generated content — at edit time, wired and saved as part of the
 scene, rather than instantiated on demand while the world is running. This mirrors a

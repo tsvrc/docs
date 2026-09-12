@@ -1,20 +1,20 @@
 ---
 id: translation-module
 title: TranslationModule
-sidebar_position: 16
+sidebar_position: 10
 ---
 
 # TranslationModule
 
 `Tsvrc.Editor.TranslationModule` turns the JSON language files registered in
-[`TsTranslationConfig`](./translation-config) into generated `Language`
+[`TsTranslationConfig`](../config/translation-config) into generated `Language`
 enum values, a `SetLanguage`/`Translate` API, and the batched text-application logic that
 actually updates `TextMeshProUGUI` targets in the scene.
 
 ## Usage
 
 Name a `TextMeshProUGUI` object `_greeting_`, give a language file a matching `"_greeting_"`
-entry, and it updates automatically on every language switch — nothing to wire by hand. From
+entry, and it updates automatically on every language switch, nothing to wire by hand. From
 code, switch languages and pull a translation directly:
 
 ```csharp
@@ -35,9 +35,9 @@ missing data.
 ## How translation targets are discovered
 
 A `TextMeshProUGUI` component becomes a translation target purely by its **GameObject's
-name** matching a specific pattern — a single underscore on each side, such as
-`_greeting_` — *and* that exact name (underscores included) appearing as a key in at least
-one loaded language file's `entries`. There's no component-level marker or attribute: name
+name** matching a specific pattern, a single underscore on each side, such as `_greeting_`,
+*and* that exact name (underscores included) appearing as a key in at least one loaded
+language file's `entries`. There's no component-level marker or attribute: name
 the text object `_greeting_`, give a language file an `"_greeting_"` entry, and it's picked
 up automatically. Re-scanned whenever the scene hierarchy changes or generated files settle,
 so renaming a text object in or out of the naming pattern picks up or drops it as a target
@@ -60,7 +60,7 @@ on the next pass with no manual re-registration needed.
 ## Generated code changes when targets do, not just when language files do
 
 `AfterFilesStable`/`OnSceneHierarchyChanged` both re-scan for matching `TextMeshProUGUI`
-targets and compare against the last known set (`SyncEffectiveKeys`) — a scene edit that
-adds or renames a matching text object triggers a regenerate on its own, independent of
-whether any language file itself changed, since `Wire()`'s `_translationTargets` array needs
-to include it.
+targets and compare against the last known set (`SyncEffectiveKeys`). A scene edit that adds
+or renames a matching text object triggers a regenerate on its own, independent of whether
+any language file itself changed, since `Wire()`'s `_translationTargets` array needs to
+include it.

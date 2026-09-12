@@ -29,7 +29,7 @@ compile" message while that's in progress.
 This first run also links this scene to TsVRC, since only a saved scene has a file path
 to link to. TsVRC reads its configuration from exactly that one linked scene from now on,
 no matter what else is open. If your project uses more than one scene, see
-[TsLinkedScene](./codegen-configuring/linked-scene) before you go further.
+[TsLinkedScene](./codegen/config/linked-scene) before you go further.
 
 ## Write your behaviour
 
@@ -69,7 +69,7 @@ like nothing happened.
 Registering it here is what makes TsVRC call `TsStart` on it once at world startup. The
 reference itself stays private: if another behaviour needs to reach `HelloWorld` directly,
 wire it in the Inspector like any other field, or register it as a
-[Global](./codegen-configuring/global-module) instead if you want it reachable as
+[Global](./codegen/modules/global-module) instead if you want it reachable as
 `_ts.HelloWorld`.
 
 A footer appears at the bottom of the window once you've made this change: "You have

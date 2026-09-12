@@ -8,7 +8,7 @@ sidebar_position: 2
 
 How to get a networked-safe instance of a behaviour at runtime, using
 [`[WirePool]`](../core-concepts/attributes.md#wirepoolattribute) and
-[`PoolModule`](../codegen-configuring/pool-module) instead of `Instantiate`. See
+[`PoolModule`](../codegen/modules/pool-module) instead of `Instantiate`. See
 [the pooling pattern](../explanations/pooling-pattern) for why `Instantiate` isn't an option
 here at all.
 
@@ -63,5 +63,5 @@ than failing generation outright. Registering the type and regenerating resolves
 ## Why this shape
 
 See [the pooling pattern](../explanations/pooling-pattern) for the underlying VRChat
-networking constraint this works around, and [`PoolModule`'s reference page](../codegen-configuring/pool-module)
+networking constraint this works around, and [`PoolModule`'s reference page](../codegen/modules/pool-module)
 for the exact slot-count formula and what happens on a broken compile mid-generation.

@@ -21,7 +21,7 @@ function useFeatures(): Feature[] {
         message:
           'Register a TsvrcBehaviour once and TsVRC initializes it for you, in a fixed order, through TsStart, instead of you wiring startup by hand.',
       }),
-      href: '/docs/tsvrc/codegen-configuring/construct-module',
+      href: '/docs/tsvrc/codegen/modules/construct-module',
     },
     {
       id: 'globals',
@@ -34,7 +34,7 @@ function useFeatures(): Feature[] {
         message:
           'Point at a scene object once and every behaviour can read it back by name, instead of dragging the same reference into a dozen inspector slots.',
       }),
-      href: '/docs/tsvrc/codegen-configuring/global-module',
+      href: '/docs/tsvrc/codegen/modules/global-module',
     },
     {
       id: 'memory',
@@ -60,7 +60,7 @@ function useFeatures(): Feature[] {
         message:
           "Spawn a prefab on demand with a generated _ts.Create... call, for anything that doesn't need to stay in sync across players.",
       }),
-      href: '/docs/tsvrc/codegen-configuring/factory-module',
+      href: '/docs/tsvrc/codegen/modules/factory-module',
     },
     {
       id: 'pools',
@@ -73,7 +73,7 @@ function useFeatures(): Feature[] {
         message:
           "Pre-instantiate and wire exactly the instances a networked prefab needs, at edit time, because VRChat can't sync an object created while the world is running.",
       }),
-      href: '/docs/tsvrc/codegen-configuring/pool-module',
+      href: '/docs/tsvrc/codegen/modules/pool-module',
     },
     {
       id: 'instance',

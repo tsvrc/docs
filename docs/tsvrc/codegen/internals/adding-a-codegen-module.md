@@ -8,9 +8,9 @@ sidebar_position: 1
 
 A how-to guide for contributors extending TsVRC's own generator, not for end users
 configuring a world. It assumes you've read [`TsModule`](./ts-module) and
-[`TsGenerator`](./ts-generator), and at least a couple of the existing modules
-under [Codegen modules](../codegen-configuring/log-module) — the pattern below is drawn directly
-from how those already work, not a hypothetical design.
+[`TsGenerator`](./ts-generator), and at least a couple of the existing modules under
+Codegen > Modules, for example [`LogModule`](../modules/log-module). The pattern below is
+drawn directly from how those already work, not a hypothetical design.
 
 ## Decide what your module contributes
 
@@ -23,22 +23,22 @@ some of them:
 - **Does it need its own Configure tab?** Set `TabLabel`/`TabDescription` and implement
   `DrawTab(SerializedObject)`. If your data lives on `TsConfig` as a group tree (like
   Globals, Pool, Constructs, Factories), you almost certainly want
-  [`TsGroupTreeGUI.Draw`](../codegen-configuring/group-tree-and-inspectors) rather than writing
+  [`TsGroupTreeGUI.Draw`](../config/group-tree-and-inspectors) rather than writing
   your own tree UI from scratch.
 - **Does it need to wire scene references after compile?** Implement `Wire()`. This is
   where you resolve the compiled type via `FindRoot()`, find or create whatever scene object
   your module owns, and assign serialized fields on it.
 
-## Read config, generate code, wire the scene — in that order, every pass
+## Read config, generate code, wire the scene, in that order, every pass
 
 `LoadConfig()` is where you read your config source (a `TsConfig` field, an asset, a scene
 scan) and resolve it into whatever in-memory shape `GenerateCode()`/`Wire()` will read from.
-Do this work once, in `LoadConfig()`, not lazily inside `GenerateCode()` or `Wire()` —
+Do this work once, in `LoadConfig()`, not lazily inside `GenerateCode()` or `Wire()`.
 `TsGenerator` calls every module's `LoadConfig()` before any module's `GenerateCode()`,
 specifically so cross-module concerns (field-name collision detection, most importantly)
 can look at every module's resolved state before any file gets written.
 
-`GenerateCode()` should be a pure function of what `LoadConfig()` already resolved — no
+`GenerateCode()` should be a pure function of what `LoadConfig()` already resolved: no
 further config reads, no scene queries. If you have nothing to generate (an empty entry
 list), return `BuildStub(usings, emptyMethodSignatures)` rather than `null`, so the
 generated file still declares whatever empty methods other code expects to be able to call
@@ -46,7 +46,7 @@ unconditionally.
 
 `Wire()` runs last, and only once nothing needed writing this pass (see
 [`TsGenerator`](./ts-generator) for why). Resolve the compiled root via
-`FindRoot()`, look up your field with `TryFindField`, and assign it — then call
+`FindRoot()`, look up your field with `TryFindField`, and assign it, then call
 `ApplyAndMarkDirty(so, root)` once you're done, not after every individual assignment.
 
 ## Handle a broken compile without wiping real content
@@ -63,9 +63,9 @@ an empty stub and wipe out real, working configuration on the very next domain r
 
 If your entries have a real, checkable "is this actually used" signal in project source
 (a member access, a method call), wire it into [`ApplyTreeShaking`](./ts-module)
-the way Global and Factory do — don't hand-roll your own grace-period bookkeeping. If your
-subsystem is a single on/off concern rather than a list of named entries (like Log or
-Memory), extend [`TsSingleComponentModule`](../codegen-configuring/ts-single-component-module)
+the way Global and Factory do, rather than hand-rolling your own grace-period bookkeeping.
+If your subsystem is a single on/off concern rather than a list of named entries (like Log or
+Memory), extend [`TsSingleComponentModule`](../modules/ts-single-component-module)
 instead of `TsModule` directly and get the whole thing for free.
 
 ## Report exposed names, and pick a real precedence
@@ -76,7 +76,7 @@ member compile errors, and implement `ExcludeFieldNames(names)` to drop the losi
 collision cleanly (with a warning explaining the fix, not just silently disappearing). Only
 reach for `ReservedFieldNamePrecedence` if your module declares a name unconditionally,
 regardless of any user config (`InstanceModule`'s `Instance`, `TsSingleComponentModule`'s
-`Log`/`Memory`) — an ordinary config-driven module should use the default precedence (`0`)
+`Log`/`Memory`). An ordinary config-driven module should use the default precedence (`0`)
 and let a real naming conflict resolve the normal way.
 
 ## Watch the right things
@@ -84,13 +84,14 @@ and let a real naming conflict resolve the normal way.
 Populate `WatchedAssets()` with any asset path that should trigger a rerun when it changes
 (most modules at least watch `BuiltinConfigPath`), and `WatchedComponentTypeNames()` with
 any component type name whose *field-level* modifications (not just add/remove) should
-trigger a rerun — `PoolModule` is the clearest example, since a `[WirePool]` field being
+trigger a rerun. `PoolModule` is the clearest example, since a `[WirePool]` field being
 added to some unrelated behaviour changes the pool's own slot-count math without any pool
 config itself changing.
 
 ## Write it up
 
-Once your module works, give it its own page under [Codegen modules](../codegen-configuring/log-module),
-following the shape those pages already use: what it generates and why, what's specific to
-it versus inherited from `TsModule`/`TsSingleComponentModule`, and any real edge case a
-careful reviewer would ask about — not just the happy path.
+Once your module works, give it its own page under Codegen > Modules, following the shape
+[`LogModule`](../modules/log-module) and the other pages there already use: what it
+generates and why, what's specific to it versus inherited from
+`TsModule`/`TsSingleComponentModule`, and any real edge case a careful reviewer would ask
+about, not just the happy path.

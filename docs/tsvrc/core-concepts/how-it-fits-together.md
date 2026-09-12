@@ -19,7 +19,7 @@ what you've configured through **Tsvrc > Configure**: which behaviours you've re
 as constructs, which pools exist, which globals are exposed. Then it writes plain C#
 files into your project. That configuration always comes from exactly one linked scene
 per project, never whatever scene happens to be open (see
-[TsLinkedScene](../codegen-configuring/linked-scene)). Nothing in this half ships in the
+[TsLinkedScene](../codegen/config/linked-scene)). Nothing in this half ships in the
 built world; it only ever runs while you're editing.
 
 The **runtime half** lives under `Runtime/` and is ordinary UdonSharp. Some of its types,
@@ -54,7 +54,7 @@ shadow is what carries your project's own concrete types.
 
 `TsRoot` is the framework's own root type: an abstract class exposing `Instance`,
 `Memory`, and `Log`. It's not something you extend yourself.
-[`ScaffoldModule`](../codegen-configuring/scaffold-module), one of the codegen modules,
+[`ScaffoldModule`](../codegen/modules/scaffold-module), one of the codegen modules,
 generates a concrete subclass for your project and creates the scene object that carries
 it. Every `TsvrcBehaviour` in your world holds a reference to that one object
 (`_ts`), assigned once when the behaviour is constructed, and reaches the rest of the

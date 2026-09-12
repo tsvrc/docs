@@ -1,12 +1,12 @@
 ---
 id: construct-module
 title: ConstructModule
-sidebar_position: 11
+sidebar_position: 7
 ---
 
 # ConstructModule
 
-`Tsvrc.Editor.ConstructModule` is the generator behind the [tutorial](../first-behaviour)'s
+`Tsvrc.Editor.ConstructModule` is the generator behind the [tutorial](../../first-behaviour)'s
 onboarding step. Registering a `TsvrcBehaviour` on the Configure window's **Constructs** tab
 is what this module turns into a private field and a startup `TsConstruct` call. It's the
 module directly responsible for a registered behaviour's `TsStart()` override running at

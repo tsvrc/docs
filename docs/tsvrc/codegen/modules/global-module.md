@@ -1,7 +1,7 @@
 ---
 id: global-module
 title: GlobalModule
-sidebar_position: 8
+sidebar_position: 4
 ---
 
 # GlobalModule
@@ -30,24 +30,24 @@ literal type name `"GameObject"` would be useless and collide across every ungro
 GameObject entry), an `Animator` reference is named `{GameObjectName}Animator`, and anything
 else uses its component type name directly. A group with `IncludeInName` set prefixes the
 final name with its (and its opted-in ancestors') own name, exactly as described on
-[`TsConfig`](./ts-config.md).
+[`TsConfig`](../config/ts-config).
 
 ## Generated shape
 
 Each entry becomes a `[HideInInspector][SerializeField] public {Type} {Name};` field plus,
-inside `_TsGlobalStart()`, a `{Name}.TsConstruct(this);` call — but only for entries whose
-type is actually a `TsvrcBehaviour`; a plain `GameObject` or arbitrary `Component` reference
+inside `_TsGlobalStart()`, a `{Name}.TsConstruct(this);` call, but only for entries whose
+type is actually a `TsvrcBehaviour`. A plain `GameObject` or arbitrary `Component` reference
 is exposed without ever being constructed, since construction only makes sense for
 `TsvrcBehaviour`s.
 
 ## Tree-shaking and the snapshot fallback
 
 Globals participate fully in `TreeShakeUnused` (via `TsUsageScanner.IsMemberReferenced`,
-checking for `_ts.Name` in project source) and in `ApplySnapshotFallback` — see
-[`TsModule`](../codegen-internals/ts-module) for the shared mechanics behind both. This module is
-the primary example the snapshot fallback exists for: a broken compile nulls out live scene
-references to any component declared in the broken assembly, which is exactly what a real
-Global entry usually is.
+checking for `_ts.Name` in project source) and in `ApplySnapshotFallback`. See
+[`TsModule`](../internals/ts-module) for the shared mechanics behind both. This
+module is the primary example the snapshot fallback exists for: a broken compile nulls out
+live scene references to any component declared in the broken assembly, which is exactly
+what a real Global entry usually is.
 
 ## Collision handling
 
