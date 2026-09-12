@@ -11,8 +11,8 @@ It has no dependency on any other TsVRC type, despite being used throughout the
 framework: by [`Process`](../core-concepts/process), the tracking chain
 ([`PlayerTracker`](./player-tracker), [`AutoPlayerTracker`](./auto-player-tracker),
 [`ReadyCheckProcess`](./ready-check-process)), the overlay UI
-([`PlayerPositionOverlay`](../ui-components/player-position-overlay),
-[`PlayerMarkerRenderer`](../ui-components/player-marker-renderer)), and
+([`PlayerPositionOverlay`](../ui-components/overlay/player-position-overlay),
+[`PlayerMarkerRenderer`](../ui-components/overlay/player-marker-renderer)), and
 [`PlayerColorAssigner`](./player-color-assigner).
 
 ## Why a custom player ID exists

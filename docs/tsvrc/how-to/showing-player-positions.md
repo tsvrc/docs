@@ -7,9 +7,9 @@ sidebar_position: 4
 # Show player positions on an overlay
 
 How to render a live minimap-style overlay of tracked players, using
-[`PlayerPositionOverlay`](../ui-components/player-position-overlay) (itself a
-[`PlayerTracker`](../players-tracking/player-tracker) — no separate tracker component needed) and
-[`RasterPlayerMarkerRenderer`](../ui-components/raster-player-marker-renderer).
+[`PlayerPositionOverlay`](../ui-components/overlay/player-position-overlay) (itself a
+[`PlayerTracker`](../players-tracking/player-tracker), no separate tracker component needed) and
+[`RasterPlayerMarkerRenderer`](../ui-components/overlay/raster-player-marker-renderer).
 
 ## Steps
 
@@ -48,8 +48,8 @@ How to render a live minimap-style overlay of tracked players, using
    }
    ```
 
-4. Add or remove players while it runs with the overlay's own (inherited) tracking methods —
-   `_overlay.AddTrackedPlayers(playerIds)`/`RemoveTrackedPlayers(playerIds)` — the renderer
+4. Add or remove players while it runs with the overlay's own (inherited) tracking methods,
+   `_overlay.AddTrackedPlayers(playerIds)`/`RemoveTrackedPlayers(playerIds)`. The renderer
    picks up the change on its next tick with no extra wiring.
 
 If only a subset of players should ever appear (not everyone in the instance), start the
@@ -72,13 +72,13 @@ public override void DrawMarker(Color32[] pixelBuffer, int textureWidth, int tex
 ## Skipping the raster renderer
 
 If you're not drawing to a texture at all (driving 3D world-space marker objects instead,
-for example), implement [`PlayerMarkerRenderer`](../ui-components/player-marker-renderer)
-directly rather than its raster subclass — `PlayerPositionOverlay` only ever talks to the
+for example), implement [`PlayerMarkerRenderer`](../ui-components/overlay/player-marker-renderer)
+directly rather than its raster subclass. `PlayerPositionOverlay` only ever talks to the
 base class's two methods.
 
 ## Why this shape
 
-`PlayerPositionOverlay` is a pure backend that never draws anything itself — see its
-[reference page](../ui-components/player-position-overlay) for why presentation is split out
-into a pluggable renderer, and what the two independent tick loops (position resolution vs.
-blink) cost on their own.
+`PlayerPositionOverlay` is a pure backend that never draws anything itself. See its
+[reference page](../ui-components/overlay/player-position-overlay) for why presentation is split
+out into a pluggable renderer, and what the two independent tick loops (position resolution
+vs. blink) cost on their own.

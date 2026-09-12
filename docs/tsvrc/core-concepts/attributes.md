@@ -115,7 +115,7 @@ name isn't familiar yet:
 | [`StateManager`](../game-flow/state-manager) | `TsStateManager` |
 | [`TsvrcList`](../ui-components/list/tsvrc-list) | `TsList` |
 | [`ListItem`](../ui-components/list/list-item) | `TsListItem` |
-| [`PlayerPositionOverlay`](../ui-components/player-position-overlay) | `TsPlayerPositionOverlay` |
+| [`PlayerPositionOverlay`](../ui-components/overlay/player-position-overlay) | `TsPlayerPositionOverlay` |
 | [`RankedGameSession`](../game-flow/ranked-game-session) | `TsRankedGameSession` |
 
 A class not on this list is internal plumbing you're not meant to subclass directly.

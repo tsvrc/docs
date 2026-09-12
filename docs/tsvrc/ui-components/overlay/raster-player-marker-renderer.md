@@ -1,18 +1,20 @@
 ---
 id: raster-player-marker-renderer
 title: RasterPlayerMarkerRenderer
-sidebar_position: 6
+sidebar_position: 3
 ---
 
 # RasterPlayerMarkerRenderer
 
 `Tsvrc.UI.RasterPlayerMarkerRenderer` is an optional
 [`PlayerMarkerRenderer`](./player-marker-renderer) base that paints markers into a raster
-texture displayed on a `RawImage` — a minimap-style overlay. It owns all the texture and
+texture displayed on a `RawImage`: a minimap-style overlay. It owns all the texture and
 pixel-buffer plumbing, the world-to-pixel coordinate mapping, and a flush-only-when-dirty
 optimization; you only override `DrawMarker` to decide what gets painted at each player's
-projected pixel position, typically using [`TextureGraphics2D`](./texture-graphics-2d)'s
-drawing primitives.
+projected pixel position, typically using [`TextureGraphics2D`](../texture-graphics-2d)'s
+drawing primitives. A separate public `MarkerShape` enum (`Circle`/`Triangle`) ships
+alongside this class for a subclass's own use when labeling marker styles; the class itself
+never reads it.
 
 ## Setup
 
@@ -20,14 +22,17 @@ drawing primitives.
 renderer.Setup(width: 256, height: 256, worldOrigin: someWorldPoint, unitsPerGridX: 4f, unitsPerGridZ: 4f);
 ```
 
-`Setup` allocates the texture and pixel buffer and configures the world-to-pixel mapping —
+`Setup` allocates the texture and pixel buffer and configures the world-to-pixel mapping:
 `worldOrigin` is the world-space point that maps to pixel `(0, 0)` (the bottom-left corner
 on the XZ plane), and `unitsPerGridX`/`Z` are pixels per world unit along each axis. It's
-safe to call again to reconfigure (the old texture is destroyed first); invalid arguments
-(non-positive dimensions or units-per-grid) are rejected with a logged error rather than
-producing a broken texture. `OverlayFilterMode` (default `Point`) controls whether the
-result looks crisp (good for pixel-art-style minimaps) or smooth when the `RawImage` is
-scaled up.
+safe to call again to reconfigure (the old texture is destroyed first). Three things make it
+reject the call with a logged error instead of producing a broken texture: no `OverlayImage`
+assigned, non-positive `width`/`height`, or non-positive `unitsPerGridX`/`Z`. `OverlayFilterMode`
+(default `Point`) controls whether the result looks crisp (good for pixel-art-style
+minimaps) or smooth when the `RawImage` is scaled up, but it's only read at `Setup()` time:
+changing it afterward has no effect until `Setup` runs again. Until `Setup` succeeds at
+least once, `DrawMarker` is never called and `OnPresent` never flushes; both silently no-op
+rather than throwing on an unconfigured renderer.
 
 ## Overriding DrawMarker
 
@@ -40,8 +45,8 @@ public override void DrawMarker(Color32[] pixelBuffer, int textureWidth, int tex
 ```
 
 `OnMarkerVisible` (inherited, already implemented) projects the given world position into a
-pixel coordinate — clamped to stay within the texture bounds rather than wrapping or
-throwing for a player outside the mapped world region — and calls `DrawMarker` with that
+pixel coordinate, clamped to stay within the texture bounds rather than wrapping or
+throwing for a player outside the mapped world region, and calls `DrawMarker` with that
 projected position. You draw directly into the shared pixel buffer using whichever
 `TextureGraphics2D` buffer-based primitives fit your marker shape.
 
@@ -52,5 +57,5 @@ changed. A cycle where `DrawMarker` was called at least once flushes the drawn b
 marks it dirty; the *next* cycle, if nothing was drawn (a hide cycle, or every tracked player
 left), clears the buffer once, flushes that single clear, and then stops flushing entirely
 until something is drawn again. This means an idle overlay with no visible markers costs
-nothing per cycle beyond a single flag check — the GPU only ever sees a new frame of texture
+nothing per cycle beyond a single flag check. The GPU only ever sees a new frame of texture
 data when the picture has actually changed.

@@ -1,17 +1,17 @@
 ---
 id: player-position-overlay
 title: PlayerPositionOverlay
-sidebar_position: 4
+sidebar_position: 1
 ---
 
 # PlayerPositionOverlay
 
-`Tsvrc.UI.PlayerPositionOverlay` is a [PlayerTracker](../players-tracking/player-tracker) that
-periodically reports each tracked player's world position on a blinking show/hide cycle —
+`Tsvrc.UI.PlayerPositionOverlay` is a [PlayerTracker](../../players-tracking/player-tracker) that
+periodically reports each tracked player's world position on a blinking show/hide cycle:
 think a radar sweep or a minimap that pulses rather than staying static. Its generated
 shadow is `TsPlayerPositionOverlay`. It's a pure backend: it never draws anything itself,
 only reports positions to a pluggable [`PlayerMarkerRenderer`](./player-marker-renderer).
-Everything about rendering is local and unsynced — each client runs its own independent tick
+Everything about rendering is local and unsynced: each client runs its own independent tick
 loop and decides its own presentation.
 
 ## Usage
@@ -24,7 +24,9 @@ overlay.StopOverlay();
 ```
 
 Subscribe to `OnOverlayUpdatedEvent` to react after every cycle (both a show and a hide
-count as a cycle, so this fires roughly twice per blink period).
+count as a cycle, so this fires roughly twice per blink period). It also fires once more
+when the overlay stops or completes, after the final clear, so a subscriber doesn't need a
+separate hook just to know when markers are gone for good.
 
 ## Two independent tick loops
 
@@ -53,15 +55,18 @@ can't be canceled once scheduled. Each maintains its own counter, incremented on
 schedule and decremented on every fire; a tick only actually runs its body if its counter has
 returned to zero, meaning no newer tick of the same kind is already queued behind it. This is
 what makes `StartOverlay`/`StopOverlay`/`OnTrackingDeserialization` restarting the loop
-mid-flight safe — an old, now-superseded tick fires, sees a nonzero counter, and does
+mid-flight safe: an old, now-superseded tick fires, sees a nonzero counter, and does
 nothing.
 
 ## Buffers are pre-sized to VRChat's own cap
 
 Every internal buffer (cached positions, headings, player IDs, live player references) is
-sized to 82 — VRChat's hard per-instance player cap — allocated once, lazily, on first use,
-and reused every tick rather than reallocated. `_ResolveTrackedPlayers` is zero-allocation
+sized to 82, the [worst-case absolute maximum instance
+size](https://wiki.vrchat.com/wiki/Special:MyLanguage/Instances) (80 is VRChat's
+configurable hard cap; the world author and instance creator can each still join on top of
+that), allocated once, lazily, on first use, and reused every tick rather than reallocated.
+`_ResolveTrackedPlayers` is zero-allocation
 by design: matching happens by comparing each tracked ID's parsed numeric suffix directly
 against `VRCPlayerApi.playerId`, never by calling
-[`TsPlayer.GetPlayerID`](../players-tracking/ts-player) to build a comparison string per player. A
+[`TsPlayer.GetPlayerID`](../../players-tracking/ts-player) to build a comparison string per player. A
 malformed tracked ID (no parseable numeric suffix) is skipped rather than causing an error.
