@@ -6,15 +6,13 @@ sidebar_position: 1
 
 # How TsVRC fits together
 
-An explanation of the shape of TsVRC: the split between what happens in the Unity editor
-and what happens at runtime in the world, and how the pieces you meet in
-[the first-behaviour tutorial](../first-behaviour) relate to each other. Read this once,
-then come back to it from any module's reference page instead of re-deriving the big
-picture there.
+TsVRC splits into two halves: one lives in the Unity editor while you build, the other
+runs at runtime for players. This page explains how they relate, and how the pieces from
+[the first-behaviour tutorial](../first-behaviour) fit together. Read it once: every
+module's reference page assumes you already have this picture instead of re-explaining
+it.
 
 ## Two halves: codegen-time and run-time
-
-TsVRC is really two things wearing one package name.
 
 The **codegen half** lives entirely in the Unity editor, under `Editor/CodeGen`. It reads
 what you've configured through **Tsvrc > Configure**: which behaviours you've registered
@@ -37,21 +35,20 @@ time.
 
 ## Why a generation step exists at all
 
-A framework like this usually wants two things: a container that can look up "give me the
-instance of type X that's registered right now," and typed access to whichever concrete
-subclasses a given project happens to define. Both are usually built with runtime
-reflection or dependency injection. TsVRC builds both at edit time instead: the codegen
-pass inspects your project's own types and configuration while you're still in the
-editor, then bakes the result into generated code with direct references and calls, not
-lookups.
+Most frameworks like this solve two problems at runtime: finding whichever object of a
+given type is currently registered, and giving you a typed reference to your project's
+own subclass instead of a generic base type. The usual tools for that are runtime
+reflection or a dependency injection container.
 
-This page won't assert a specific reason UdonSharp forces that choice. That claim needs
-checking against UdonSharp's own compiler behavior before it's stated as fact, and it's
-tracked as its own explanation page once enough of the runtime modules are documented to
-ground the comparison concretely. What you can rely on today: every extension point is
-generated, not resolved at runtime. That's why your own scripts extend a generated shadow
-class (`TsBehaviour`, `TsInstance`, and so on) instead of the framework class directly:
-the shadow is what carries your project's concrete types.
+TsVRC solves both while you're still in the editor instead. The codegen pass reads your
+project's types and configuration once, at edit time, and writes plain code with direct
+references already baked in. Nothing gets looked up while the world is actually running.
+
+Whether UdonSharp specifically requires this approach is a separate question this page
+doesn't try to answer. What's certain: TsVRC generates every extension point instead of
+resolving it at runtime. That's why your own scripts extend a generated shadow class
+(`TsBehaviour`, `TsInstance`, and so on) instead of the framework class directly: the
+shadow is what carries your project's own concrete types.
 
 ## What the root object bootstraps
 
