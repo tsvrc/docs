@@ -16,7 +16,8 @@ already settled by the time it runs.
 
 ## Getting an instance
 
-`HeadClipGuard` ships as one of TsVRC's own default factory entries (`TsBuiltinConfig`).
+`HeadClipGuard` ships as one of [TsVRC's own default factory
+entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** `_ts.CreateHeadClipGuard(parent)` just works, nothing to register in
   Configure first.

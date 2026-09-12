@@ -12,7 +12,8 @@ generated shadow is `TsAutoPlayerTracker`.
 
 ## Getting an instance
 
-`AutoPlayerTracker` ships as one of TsVRC's own default pool entries (`TsBuiltinConfig`).
+`AutoPlayerTracker` ships as one of [TsVRC's own default pool
+entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
   Configure first, and codegen calls `TsConstruct` for you at wire time.

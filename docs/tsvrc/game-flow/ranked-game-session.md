@@ -19,7 +19,8 @@ page before this one; its own `CurrentState` is a plain field, not a `StateManag
 ## Getting an instance
 
 `RankedGameSession` itself, not just the sub-behaviours it composes, ships as one of
-TsVRC's own default pool entries (`TsBuiltinConfig`).
+[TsVRC's own default pool entries](../explanations/builtin-registrations)
+(`TsBuiltinConfig`).
 
 - **Default:** `[WirePool][SerializeField] private RankedGameSession _session;` just
   resolves, nothing to register in Configure first, and codegen calls `TsConstruct` for

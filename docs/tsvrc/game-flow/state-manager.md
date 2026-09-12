@@ -13,7 +13,8 @@ TsVRC module beyond `TsvrcBehaviour`.
 
 ## Getting an instance
 
-`StateManager` ships as one of TsVRC's own default factory entries (`TsBuiltinConfig`).
+`StateManager` ships as one of [TsVRC's own default factory
+entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** `_ts.CreateStateManager(parent)` just works, nothing to register in
   Configure first.

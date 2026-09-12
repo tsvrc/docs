@@ -12,7 +12,8 @@ has marked themselves ready. Its generated shadow is `TsReadyCheckProcess`.
 
 ## Getting an instance
 
-`ReadyCheckProcess` ships as one of TsVRC's own default pool entries (`TsBuiltinConfig`).
+`ReadyCheckProcess` ships as one of [TsVRC's own default pool
+entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
   Configure first, and codegen calls `TsConstruct` for you at wire time.
