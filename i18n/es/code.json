@@ -165,10 +165,10 @@
     "message": "Empieza a construir"
   },
   "framework.cta.subtitle": {
-    "message": "Agrega el paquete mediante VCC y ten un behaviour funcionando en Play Mode al final de la primera página del tutorial."
+    "message": "Agrega TsVRC mediante VCC y luego sigue la guía de introducción para tener un behaviour funcionando en Play Mode."
   },
   "framework.cta.button": {
-    "message": "Construye tu primer behaviour"
+    "message": "Empezar"
   },
   "framework.meta.title": {
     "message": "TsVRC Core"

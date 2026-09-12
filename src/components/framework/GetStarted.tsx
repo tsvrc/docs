@@ -34,15 +34,15 @@ export default function GetStarted() {
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-fg-muted">
             <Translate id="framework.cta.subtitle">
-              Add the package through VCC and have a behaviour running in play mode by the end of
-              the first tutorial page.
+              Add TsVRC through VCC, then follow the getting-started guide to have a behaviour
+              running in play mode.
             </Translate>
           </p>
           <div className="mt-6">
             <Link
-              to="/docs/tsvrc/first-behaviour"
+              to="/docs/tsvrc/intro"
               className="rounded-md bg-accent-emphasis px-5 py-2.5 font-medium text-white no-underline hover:no-underline hover:opacity-90">
-              <Translate id="framework.cta.button">Build your first behaviour</Translate>
+              <Translate id="framework.cta.button">Get started</Translate>
             </Link>
           </div>
         </div>
