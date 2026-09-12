@@ -36,13 +36,16 @@ if (restored != null)
 }
 ```
 
-Always check `Deserialize`'s result for `null` before reading from it — see the failure
+Always check `Deserialize`'s result for `null` before reading from it: see the failure
 table below for why a bad string never throws instead.
 
 ## Failure handling
 
-None of these methods throw on bad input. Every failure path logs an error through
-`TsvrcLogger.Format` (tagged `[TsJson]`) and returns a safe empty value instead:
+None of these methods throw on bad input. Every failure path logs through
+[`TsvrcLogger.Format`](./tsvrc-logger) (tagged `[TsJson]`) and returns a safe empty value
+instead. These calls go straight to `Debug.LogError`, not through a `TsvrcLogger` instance,
+so unlike a normal `LogError` call they bypass the six Info/Warning/Error toggles entirely:
+a `TsJson` failure always prints, regardless of how logging is configured.
 
 | Method | On failure, returns |
 |---|---|
@@ -58,18 +61,18 @@ null dictionary rather than an exception. If you're persisting the result (for e
 
 ## Edge cases worth knowing
 
-- **`null` and empty string are rejected before ever reaching `VRCJson`** — both log
+- **`null` and empty string are rejected before ever reaching `VRCJson`**, both logging
   `"Cannot deserialize null or empty JSON string."` But a **whitespace-only** string is not
   caught by that same guard (`string.IsNullOrEmpty(" ")` is `false`), so it falls through to
   `VRCJson`, fails to parse there instead, and logs a different message
   (`"Failed to deserialize JSON string..."`). Both end in `null`/default, but if you're
   matching on the exact log message, the two cases aren't interchangeable.
 - **A bare scalar is not valid top-level JSON.** `VRCJson` requires an object or array at
-  the top level, so deserializing `"5"` fails to parse entirely — it does not succeed with a
+  the top level, so deserializing `"5"` fails to parse entirely: it does not succeed with a
   non-dictionary/non-list token.
 - **`Deserialize` additionally rejects anything that isn't a `DataDictionary`.** Valid JSON
   that parses to an array (`"[1,2,3]"`) still fails `Deserialize` (wrong shape) even though
   the same string succeeds through `DeserializeToken`.
 - **`Clone(null)` logs twice.** It's implemented as `Deserialize(Serialize(original))`, so a
   `null` input fails `Serialize` (logs once, returns `""`) and then fails `Deserialize` on
-  that empty string (logs again, returns `null`) — one call, two distinct error log lines.
+  that empty string (logs again, returns `null`): one call, two distinct error log lines.
