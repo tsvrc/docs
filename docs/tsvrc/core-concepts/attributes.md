@@ -113,8 +113,8 @@ name isn't familiar yet:
 | [`DataTransferer`](../networking-data/data-transfer/data-transferer) | `TsDataTransferer` |
 | [`HeadClipGuard`](../players-tracking/head-clip-guard) | `TsHeadClipGuard` |
 | [`StateManager`](../game-flow/state-manager) | `TsStateManager` |
-| [`TsvrcList`](../ui-components/tsvrc-list) | `TsList` |
-| [`ListItem`](../ui-components/list-item) | `TsListItem` |
+| [`TsvrcList`](../ui-components/list/tsvrc-list) | `TsList` |
+| [`ListItem`](../ui-components/list/list-item) | `TsListItem` |
 | [`PlayerPositionOverlay`](../ui-components/player-position-overlay) | `TsPlayerPositionOverlay` |
 | [`RankedGameSession`](../game-flow/ranked-game-session) | `TsRankedGameSession` |
 
