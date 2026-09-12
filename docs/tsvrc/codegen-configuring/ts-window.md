@@ -1,7 +1,7 @@
 ---
 id: ts-window
 title: TsWindow
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # TsWindow

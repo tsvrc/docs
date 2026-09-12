@@ -1,7 +1,7 @@
 ---
 id: mesh-combiner
 title: Mesh Combiner
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Mesh Combiner

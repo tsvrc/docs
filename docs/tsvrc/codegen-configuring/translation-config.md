@@ -1,7 +1,7 @@
 ---
 id: translation-config
 title: TsTranslationConfig
-sidebar_position: 2
+sidebar_position: 15
 ---
 
 # TsTranslationConfig

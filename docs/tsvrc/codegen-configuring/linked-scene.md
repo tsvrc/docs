@@ -1,7 +1,7 @@
 ---
 id: linked-scene
 title: TsLinkedScene
-sidebar_position: 1
+sidebar_position: 14
 ---
 
 # TsLinkedScene

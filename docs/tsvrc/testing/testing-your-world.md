@@ -9,13 +9,11 @@ sidebar_position: 1
 TsVRC ships a small set of testing helpers your own project can use to write real,
 ClientSim-backed Play Mode tests (and plain reflection-based Edit Mode tests) against your
 own `UdonSharpBehaviour`s, without hand-rolling VRChat SDK setup and working around its Play
-Mode quirks yourself.
+Mode quirks yourself. See [Set up automated testing](../how-to/set-up-automated-testing)
+for how to add these assemblies to your project; this page covers what they give you.
 
-## Adding it to your project
-
-Reference `Tsvrc.Testing.Framework` from a test assembly's `references` to get the core
-helpers. Nothing in it does anything to your project just by being referenced — every piece
-of behavior only activates when you actually use it. `PrivateFieldAccess` is a set of plain
+Nothing here does anything to your project just by being referenced — every piece of
+behavior only activates when you actually use it. `PrivateFieldAccess` is a set of plain
 static methods with no base class requirement; `TsPlayModeTestBase` and its ClientSim
 machinery only run for a test class that actually extends it.
 
@@ -26,7 +24,7 @@ any object or static type from a test — useful for asserting on internal state
 behaviour's public surface doesn't expose. Standalone, works in either Edit Mode or Play
 Mode.
 
-## Play Mode tests: TsPlayModeTestBase
+## Play Mode tests: TsPlayModeTestBase {/* #play-mode-tests-tsplaymodetestbase */}
 
 Extend `TsPlayModeTestBase` instead of setting up ClientSim by hand. It exposes `Players`
 (a `ClientSimPlayerEnvironment`, for spawning, removing, or finding real `VRCPlayerApi`
@@ -81,19 +79,8 @@ something you need to configure yourself.
 
 That suppression itself isn't automatic per test class the way the `TsPlayModeTestBase`
 fixups are — it has to be armed once per test assembly, for the assembly's entire run, via
-`AutomaticTriggersSetUpFixtureBase`. NUnit only discovers a `[SetUpFixture]` in the assembly
-it's physically compiled into, so a base class living in `Tsvrc.Testing.Framework` isn't
-enough by itself: every test assembly (yours included) needs its own one-line subclass,
-typically added once and forgotten about:
-
-```csharp
-[SetUpFixture]
-public class AutomaticTriggersSetUpFixture : AutomaticTriggersSetUpFixtureBase { }
-```
-
-Without it, a test that creates or mutates scene objects can trigger a real regenerate pass
-against your project's actual `TsConfig` mid-test-run, since nothing is holding
-`TsGenerator`'s reactive triggers back.
+`AutomaticTriggersSetUpFixtureBase`. See [Set up automated
+testing](../how-to/set-up-automated-testing) for the one-line subclass this requires.
 
 ## Two companion assemblies, and why they're separate
 
@@ -117,19 +104,5 @@ editor APIs that Udon's compiler simply can't resolve. Add whichever companion a
 given test actually needs, alongside `Tsvrc.Testing.Framework`; none of the three depend on
 each other beyond that.
 
-## Setting up your own project's assemblies
-
-TsVRC's generated code declares the base types your world scripts extend (`TsBehaviour`,
-`TsInstance`, and so on), and in turn references concrete types from your own scripts —
-a Construct or Factory entry generates a field typed as whatever class you registered.
-That's a two-way dependency, and Unity doesn't allow two assembly definitions to reference
-each other. So your own scripts and your generated output folder need to compile into
-**one** assembly: give your project's own scripts folder a single `asmdef` placed high
-enough in the folder tree to cover both your hand-written scripts and wherever your
-`TsConfig`'s generated-folder setting points (they don't need to be nested inside each
-other, just both under that one asmdef's root), referencing `Tsvrc.Runtime` plus whatever
-VRChat SDK/UdonSharp assemblies your scripts use.
-
-From there, add your own EditMode/PlayMode test assemblies referencing your project's
-runtime asmdef, `Tsvrc.Runtime`, and (for PlayMode/ClientSim tests) `Tsvrc.Testing.Framework`
-— every helper above becomes available immediately, with nothing else to register.
+See [Set up automated testing](../how-to/set-up-automated-testing) for how to reference
+these assemblies from your own project.

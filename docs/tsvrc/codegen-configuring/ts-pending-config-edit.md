@@ -1,7 +1,7 @@
 ---
 id: ts-pending-config-edit
 title: TsPendingConfigEdit
-sidebar_position: 4
+sidebar_position: 3
 ---
 
 # TsPendingConfigEdit

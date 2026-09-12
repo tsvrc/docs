@@ -6,32 +6,30 @@ sidebar_position: 2
 
 # Build your first behaviour
 
-This walks you through adding TsVRC to a Unity project and getting one script running in
+This walks you through initializing TsVRC in a scene and getting one script running in
 play mode. By the end you'll have a world-specific behaviour that TsVRC constructs at
 startup and that logs through the framework's own logger.
 
-## Prerequisites
-
-You need a Unity project with the VRChat Creator Companion set up and the VRChat Worlds
-SDK already added. TsVRC targets Unity 2022.3 and depends on the Worlds SDK, so add TsVRC
-through VCC rather than copying files in by hand — that's what resolves the SDK version it
-needs.
-
-## Add the package
-
-Add `com.tsvrc.core` to your project through VCC. Once it's imported, Unity gains a
-**Tsvrc** menu in the menu bar; everything below runs from there.
+This assumes TsVRC is already installed. See [Add TsVRC to your
+project](./add-to-your-project) first if your project doesn't have a **Tsvrc** menu in
+the menu bar yet.
 
 ## Initialize TsVRC in your scene
 
-Open **Tsvrc > Configure**. On a scene that hasn't used TsVRC before, the window tells you
-it isn't set up yet and offers a single button: **Initialize Tsvrc**. Click it.
+Save your scene first. Open **Tsvrc > Configure**: on a scene that hasn't used TsVRC
+before, the window tells you it isn't set up yet and offers a single button:
+**Initialize Tsvrc**. Click it.
 
 That button runs the same code generation pass you'll trigger again every time you add
 something new later (its label switches to **Force Regenerate** afterward). It writes a
 generated root script for your project and compiles it. Wait for Unity to finish
-recompiling before continuing — the Configure window shows a "waiting for scripts to
+recompiling before continuing: the Configure window shows a "waiting for scripts to
 compile" message while that's in progress.
+
+This first run also links this scene to TsVRC, since only a saved scene has a file path
+to link to. TsVRC reads its configuration from exactly that one linked scene from now on,
+no matter what else is open. If your project uses more than one scene, see
+[TsLinkedScene](./codegen-configuring/linked-scene) before you go further.
 
 ## Write your behaviour
 
@@ -60,16 +58,24 @@ Attach `HelloWorld` to a GameObject in your scene.
 
 ## Register it as a construct
 
-Adding the component to the scene isn't enough by itself — TsVRC only calls `TsStart` on
+Adding the component to the scene isn't enough by itself: TsVRC only calls `TsStart` on
 behaviours it's been told about. Back in **Tsvrc > Configure**, open the **Constructs**
-tab and add your `HelloWorld` GameObject. This makes TsVRC call `TsStart` on it once at
-world startup. The reference itself stays private: if another behaviour needs to reach
-`HelloWorld` directly, wire it in the Inspector like any other field, or register it as a
+tab and click **+ Add**. With `HelloWorld`'s GameObject selected, drag its `HelloWorld`
+component (from the Inspector, not the GameObject from the Hierarchy) into the new slot.
+TsVRC needs the actual component reference here and silently rejects anything else, a
+GameObject included, with a console warning, so dropping the GameObject by mistake looks
+like nothing happened.
+
+Registering it here is what makes TsVRC call `TsStart` on it once at world startup. The
+reference itself stays private: if another behaviour needs to reach `HelloWorld` directly,
+wire it in the Inspector like any other field, or register it as a
 [Global](./codegen-configuring/global-module) instead if you want it reachable as
 `_ts.HelloWorld`.
 
-Click **Force Regenerate** (or let the automatic regeneration pick up the change — TsVRC
-watches for edits to its config and reruns on its own in most cases).
+A footer appears at the bottom of the window once you've made this change: "You have
+unapplied changes." Click **Apply** there. That single click both saves the entry and
+runs codegen, so you don't need **Force Regenerate** afterward too, and can't: it's
+disabled while a change is still unapplied.
 
 ## Run it
 

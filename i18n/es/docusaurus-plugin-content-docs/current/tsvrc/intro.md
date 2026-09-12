@@ -8,30 +8,28 @@ sidebar_position: 1
 
 TsVRC es un framework independiente, mantenido por la comunidad, para crear mundos de
 VRChat con UdonSharp: inicialización estructurada, conexión de dependencias y
-generación de código en el editor sobre el VRChat Worlds SDK.
+generación de código en el editor (codegen) que escribe ese código de conexión por ti,
+sobre el VRChat Worlds SDK.
 
-## Empieza aquí
+## ¿Eres nuevo en TsVRC?
 
-Si eres nuevo en TsVRC, sigue [Construye tu primer behaviour](./first-behaviour) para
-tener un script funcionando en modo Play al final, apoyándote en
-[Paquete y requisitos](./package) para saber de qué depende.
+Empieza por [Añade TsVRC a tu proyecto](./add-to-your-project) y luego
+[Construye tu primer behaviour](./first-behaviour): al final tendrás un script
+funcionando en modo Play.
 
-Si ya lo usas y buscas algo concreto:
+## ¿Ya lo usas?
 
-- **Una tarea que quieres resolver** —
+Ve directo a lo que necesitas:
+
+- **Resolver una tarea concreta** —
   [agrupar un prefab en un pool](./how-to/pooling-a-prefab),
   [mostrar las posiciones de los jugadores](./how-to/showing-player-positions),
-  [transferir datos entre clientes](./how-to/transferring-data-between-clients),
+  [transferir datos entre clientes](./how-to/transferring-data-between-clients) o
   [conectar un ready check](./how-to/wiring-a-ready-check).
-- **El comportamiento de un tipo concreto** — empieza por
+- **Buscar el comportamiento de un tipo concreto** — empieza por
   [Cómo encaja TsVRC](./core-concepts/how-it-fits-together) y sigue sus enlaces, o
-  busca en la barra lateral.
-- **Por qué TsVRC funciona como funciona** —
+  explora Reference en la barra lateral, agrupado por área: jugadores, red, UI, codegen,
+  etc.
+- **Entender por qué TsVRC funciona como funciona** —
   [Codegen en vez de reflexión](./explanations/codegen-vs-reflection) y el resto de
   páginas en Explanations.
-
-## Este sitio {/* #this-site */}
-
-La documentación del framework tsvrc vive en `docs/tsvrc/`. Un proyecto que se una más
-adelante obtiene su propia carpeta junto a esta (`docs/<otro-proyecto>/`): mismo
-repositorio, mismo sitio, sin necesidad de conexión entre repos.

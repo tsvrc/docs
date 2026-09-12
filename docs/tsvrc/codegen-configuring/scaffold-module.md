@@ -26,7 +26,7 @@ discovered entirely by reflecting over that attribute rather than a hardcoded li
 
 `AfterFilesStable()` ensures the compiled scaffold type's own `UdonSharpProgramAsset`
 exists, creates or repairs the scene root object carrying it
-(`EnsureRootSceneObject`), and creates the child [`TsConfig`](../config/ts-config.md)
+(`EnsureRootSceneObject`), and creates the child [`TsConfig`](./ts-config.md)
 object (tagged `EditorOnly` so it's stripped from the actual VRChat build) if it's missing.
 Finding more than one instance of the compiled type logs a warning naming exactly which one
 survives and which are destroyed — so a puzzled "where did my duplicate's settings go"

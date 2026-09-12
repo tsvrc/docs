@@ -1,7 +1,7 @@
 ---
 id: ts-module
 title: TsModule
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # TsModule
@@ -12,7 +12,7 @@ sidebar_position: 1
 Codegen modules all extend it. This page is for
 understanding how the generator pipeline works and, eventually, for writing a new module
 yourself; if you're only *using* TsVRC rather than extending its generator, you can skip it.
-See [Adding a codegen module](../explanations/adding-a-codegen-module) for a worked example
+See [Adding a codegen module](./adding-a-codegen-module) for a worked example
 of implementing one.
 
 ## The call sequence

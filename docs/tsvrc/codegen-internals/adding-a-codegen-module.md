@@ -1,14 +1,14 @@
 ---
 id: adding-a-codegen-module
 title: Adding a new codegen module
-sidebar_position: 4
+sidebar_position: 1
 ---
 
 # Adding a new codegen module
 
 A how-to guide for contributors extending TsVRC's own generator, not for end users
-configuring a world. It assumes you've read [`TsModule`](../codegen-internals/ts-module) and
-[`TsGenerator`](../codegen-internals/ts-generator), and at least a couple of the existing modules
+configuring a world. It assumes you've read [`TsModule`](./ts-module) and
+[`TsGenerator`](./ts-generator), and at least a couple of the existing modules
 under [Codegen modules](../codegen-configuring/log-module) — the pattern below is drawn directly
 from how those already work, not a hypothetical design.
 
@@ -45,14 +45,14 @@ generated file still declares whatever empty methods other code expects to be ab
 unconditionally.
 
 `Wire()` runs last, and only once nothing needed writing this pass (see
-[`TsGenerator`](../codegen-internals/ts-generator) for why). Resolve the compiled root via
+[`TsGenerator`](./ts-generator) for why). Resolve the compiled root via
 `FindRoot()`, look up your field with `TryFindField`, and assign it — then call
 `ApplyAndMarkDirty(so, root)` once you're done, not after every individual assignment.
 
 ## Handle a broken compile without wiping real content
 
 If your module resolves entries from live scene state (rather than, say, a static list),
-protect it with [`ApplySnapshotFallback`](../codegen-internals/ts-module) exactly the way Global,
+protect it with [`ApplySnapshotFallback`](./ts-module) exactly the way Global,
 Factory, Construct, and Pool do. The scenario this protects against is real: a broken
 compile anywhere in the project can null out every scene reference to a component declared
 in the broken assembly, making your live resolution pass look like the user deleted
@@ -62,7 +62,7 @@ an empty stub and wipe out real, working configuration on the very next domain r
 ## Support tree-shaking if it's a reasonable fit
 
 If your entries have a real, checkable "is this actually used" signal in project source
-(a member access, a method call), wire it into [`ApplyTreeShaking`](../codegen-internals/ts-module)
+(a member access, a method call), wire it into [`ApplyTreeShaking`](./ts-module)
 the way Global and Factory do — don't hand-roll your own grace-period bookkeeping. If your
 subsystem is a single on/off concern rather than a list of named entries (like Log or
 Memory), extend [`TsSingleComponentModule`](../codegen-configuring/ts-single-component-module)

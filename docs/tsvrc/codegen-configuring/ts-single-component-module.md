@@ -1,7 +1,7 @@
 ---
 id: ts-single-component-module
 title: TsSingleComponentModule
-sidebar_position: 14
+sidebar_position: 5
 ---
 
 # TsSingleComponentModule

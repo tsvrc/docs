@@ -1,7 +1,7 @@
 ---
 id: group-tree-and-inspectors
 title: Group tree, inspectors, and shared UI helpers
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Group tree, inspectors, and shared UI helpers

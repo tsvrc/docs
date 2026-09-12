@@ -1,7 +1,7 @@
 ---
 id: supporting-utilities
 title: Generator support utilities
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Generator support utilities

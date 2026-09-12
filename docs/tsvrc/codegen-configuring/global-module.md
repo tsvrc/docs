@@ -30,7 +30,7 @@ literal type name `"GameObject"` would be useless and collide across every ungro
 GameObject entry), an `Animator` reference is named `{GameObjectName}Animator`, and anything
 else uses its component type name directly. A group with `IncludeInName` set prefixes the
 final name with its (and its opted-in ancestors') own name, exactly as described on
-[`TsConfig`](../config/ts-config.md).
+[`TsConfig`](./ts-config.md).
 
 ## Generated shape
 
