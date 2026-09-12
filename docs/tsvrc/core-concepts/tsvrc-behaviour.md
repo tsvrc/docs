@@ -7,7 +7,8 @@ sidebar_position: 2
 # TsvrcBehaviour
 
 `Tsvrc.Core.TsvrcBehaviour` is the base class every other TsVRC runtime type extends,
-directly or indirectly. It's an `UdonSharpBehaviour` with structured, one-time
+directly or indirectly. It's an
+[`UdonSharpBehaviour`](https://udonsharp.docs.vrchat.com/) with structured, one-time
 initialization and a small publish/subscribe event system built in. Its generated shadow
 class is `TsBehaviour`. See [How TsVRC fits together](./how-it-fits-together) for why
 your own scripts extend the shadow rather than this class directly.
@@ -98,7 +99,8 @@ subscribes to a named event, the other side emits it, and every subscriber gets 
 
 Call `TsSubscribe(listener, eventName, callbackName)` to register a listener. From then
 on, whenever this behaviour calls `TsEmit(eventName)`, `listener` gets a
-`SendCustomEvent(callbackName)` call. There's no way to unsubscribe: once a listener
+[`SendCustomEvent(callbackName)`](https://udonsharp.docs.vrchat.com/vrchat-api/#methods-5)
+call. There's no way to unsubscribe: once a listener
 signs up, it stays subscribed for the rest of the world's lifetime. Pass both
 `eventName` and `callbackName` through `nameof()` instead of a plain string, so renaming
 either one later doesn't silently break the wiring.
@@ -121,9 +123,10 @@ Two failure modes matter here, and they're handled differently on purpose:
   still gets called normally before that throw happens.
 - A listener whose GameObject got destroyed *after* subscribing is treated differently:
   `TsEmit` just skips it, and every other listener still fires. This works because
-  Unity's `==` operator treats a destroyed object as equal to `null`, but `TsEmit` casts
-  to `object` first to check whether the reference is genuinely null (never assigned)
-  versus just destroyed, and only throws for the first case.
+  Unity's [`==` operator](https://docs.unity3d.com/ScriptReference/Object-operator_eq.html)
+  treats a destroyed object as equal to `null`, but `TsEmit` casts to `object` first to
+  check whether the reference is genuinely null (never assigned) versus just destroyed,
+  and only throws for the first case.
 
 One more detail, about performance rather than behavior: the storage backing
 subscriptions grows by doubling instead of by one slot per subscription, so repeated
@@ -153,7 +156,8 @@ logging is configured elsewhere.
 
 ## Destruction
 
-`TsDestroy()` is `virtual` and defaults to calling Unity's own `Destroy(gameObject)`. In
+`TsDestroy()` is `virtual` and defaults to calling Unity's own
+[`Destroy(gameObject)`](https://docs.unity3d.com/ScriptReference/Object.Destroy.html). In
 play mode, that defers the actual removal to the end of the current frame rather than
 happening instantly. Outside play mode, in the editor, Unity refuses to run it
 synchronously at all. Override `TsDestroy()` if a behaviour needs to do something other
