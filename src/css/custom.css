@@ -12,6 +12,16 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 :root {
   --ts-canvas-default: #ffffff;
   --ts-canvas-subtle: #f6f8fa;

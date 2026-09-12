@@ -34,14 +34,16 @@ export default function Hero() {
               <Translate id="framework.hero.cta.github">View on GitHub</Translate>
             </Link>
           </div>
-          <div className="mt-8 flex flex-wrap gap-x-4 gap-y-1 text-sm text-fg-muted">
+          <div className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-fg-muted">
             <span><Translate id="framework.hero.jumpToLabel">Jump to:</Translate></span>
             <a href="#why" className="text-fg-muted no-underline hover:text-accent hover:underline">
               <Translate id="framework.hero.jump.why">Why it exists</Translate>
             </a>
+            <span aria-hidden="true">·</span>
             <a href="#building-blocks" className="text-fg-muted no-underline hover:text-accent hover:underline">
               <Translate id="framework.hero.jump.blocks">Building blocks</Translate>
             </a>
+            <span aria-hidden="true">·</span>
             <a href="#get-started" className="text-fg-muted no-underline hover:text-accent hover:underline">
               <Translate id="framework.hero.jump.start">Get started</Translate>
             </a>
