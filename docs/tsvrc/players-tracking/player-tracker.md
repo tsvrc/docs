@@ -12,12 +12,23 @@ networked, owner-managed set of tracked players, identified by
 Its generated shadow is `TsPlayerTracker`. It's the base of `AutoPlayerTracker` and
 `ReadyCheckProcess`.
 
+## Getting an instance
+
+`PlayerTracker` ships as one of TsVRC's own default pool entries (`TsBuiltinConfig`).
+
+- **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
+  Configure first, and codegen calls `TsConstruct` for you at wire time.
+- **Manual:** skip pooling entirely. Drag the shipped `PlayerTracker` prefab into your
+  scene and call `TsConstruct` on it yourself before calling anything else on it. Skipping
+  construction leaves [`Process`'s cached local-player ID](../core-concepts/process) at
+  its default, which makes `IsProcessOwner()` report `false` even for the actual owner.
+
 ## Usage
 
 ```csharp
 public class SpectatorRoster : TsBehaviour
 {
-    [SerializeField] private PlayerTracker _spectators;
+    [WirePool][SerializeField] private PlayerTracker _spectators;
 
     protected override void TsStart()
     {

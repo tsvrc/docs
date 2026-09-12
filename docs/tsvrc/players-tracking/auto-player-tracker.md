@@ -10,6 +10,17 @@ sidebar_position: 3
 every player in the instance automatically: no explicit player list to manage. Its
 generated shadow is `TsAutoPlayerTracker`.
 
+## Getting an instance
+
+`AutoPlayerTracker` ships as one of TsVRC's own default pool entries (`TsBuiltinConfig`).
+
+- **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
+  Configure first, and codegen calls `TsConstruct` for you at wire time.
+- **Manual:** skip pooling entirely. Drag the shipped `AutoPlayerTracker` prefab into your
+  scene and call `TsConstruct` on it yourself before calling anything else on it. Skipping
+  construction leaves [`Process`'s cached local-player ID](../core-concepts/process) at
+  its default, which makes `IsProcessOwner()` report `false` even for the actual owner.
+
 ## Usage
 
 Call `StartAutoTracking()` instead of `StartPlayerTracking`. The base method is
@@ -31,7 +42,7 @@ the tracked set is authoritative.
 ```csharp
 public class InstanceRoster : TsBehaviour
 {
-    [SerializeField] private AutoPlayerTracker _tracker;
+    [WirePool][SerializeField] private AutoPlayerTracker _tracker;
 
     protected override void TsStart()
     {

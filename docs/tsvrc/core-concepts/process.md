@@ -45,6 +45,14 @@ owner. Override it if the new owner needs to resume state the previous owner was
 tracking locally, like a running timer or an in-progress countdown: only synced fields
 survive the handoff automatically.
 
+None of this works until [`TsConstruct`](./tsvrc-behaviour#construction) has run on the
+instance. `Process.TsStart()` (called by `TsConstruct`) is what caches the local player's
+ID for ownership comparisons; skip construction and that cache stays at its default,
+which makes `IsProcessOwner()` report `false` even for the actual owner. Registering
+something as a Global, Construct, Pool, or Factory entry is what makes codegen call
+`TsConstruct` for you; using an instance you wired up entirely by hand means calling it
+yourself.
+
 ## Lifecycle
 
 Call `StartProcess()` to begin. It claims ownership for the local player if not already

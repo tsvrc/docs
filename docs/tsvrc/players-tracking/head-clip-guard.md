@@ -14,6 +14,18 @@ sync) that runs every frame in
 "near the end of the frame after IK has been calculated," so tracking and IK have
 already settled by the time it runs.
 
+## Getting an instance
+
+`HeadClipGuard` ships as one of TsVRC's own default factory entries (`TsBuiltinConfig`).
+
+- **Default:** `_ts.CreateHeadClipGuard(parent)` just works, nothing to register in
+  Configure first.
+- **Manual:** skip the factory entirely. `AddComponent` it (or drag the shipped
+  `HeadClipGuard` prefab into your scene) and call `Begin` directly, no `TsConstruct` call
+  needed first. `Begin` itself re-caches the local `VRCPlayerApi` reference if it's still
+  unset, the same reference `TsStart` would otherwise cache, so a never-constructed
+  instance still guards correctly.
+
 ## Usage
 
 ```csharp

@@ -10,6 +10,17 @@ sidebar_position: 4
 check: it tracks a fixed set of players and completes automatically once every one of them
 has marked themselves ready. Its generated shadow is `TsReadyCheckProcess`.
 
+## Getting an instance
+
+`ReadyCheckProcess` ships as one of TsVRC's own default pool entries (`TsBuiltinConfig`).
+
+- **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
+  Configure first, and codegen calls `TsConstruct` for you at wire time.
+- **Manual:** skip pooling entirely. Drag the shipped `ReadyCheckProcess` prefab into your
+  scene and call `TsConstruct` on it yourself before calling anything else on it. Skipping
+  construction leaves [`Process`'s cached local-player ID](../core-concepts/process) at
+  its default, which makes `IsProcessOwner()` report `false` even for the actual owner.
+
 ## Usage
 
 `StartReadyCheck(playerIds)` starts tracking the given players. Internally, this calls
@@ -28,7 +39,7 @@ constants for `TsSubscribe`. `IsPlayerReady(playerId)` checks the current ready 
 ```csharp
 public class LoadingGate : TsBehaviour
 {
-    [SerializeField] private ReadyCheckProcess _readyCheck;
+    [WirePool][SerializeField] private ReadyCheckProcess _readyCheck;
 
     protected override void TsStart()
     {

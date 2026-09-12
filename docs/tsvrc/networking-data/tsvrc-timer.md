@@ -13,24 +13,32 @@ elapsed time locally, so a running timer needs no discrete network message per t
 beyond `Process`'s own periodic [auto-resync
 heartbeat](../core-concepts/process#the-tick-loop-and-auto-resync).
 
-## Usage
+## Getting an instance
 
-Drag the shipped `TsTimer` prefab into your scene, reference it from a behaviour, and start it:
+`TsvrcTimer` ships as one of TsVRC's own default pool entries (`TsBuiltinConfig`).
 
-```csharp
-public class RoundClock : TsBehaviour
-{
-    [SerializeField] private TsvrcTimer _timer;
+- **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
+  Configure first, and codegen calls `TsConstruct` for you at wire time:
+  ```csharp
+  public class RoundClock : TsBehaviour
+  {
+      [WirePool][SerializeField] private TsvrcTimer _timer;
 
-    protected override void TsStart()
-    {
-        _timer.TsSubscribe(this, TsvrcTimer.OnTimerCompletedEvent, nameof(_OnRoundEnded));
-        _timer.StartTimer(60_000); // 60-second round
-    }
+      protected override void TsStart()
+      {
+          _timer.TsSubscribe(this, TsvrcTimer.OnTimerCompletedEvent, nameof(_OnRoundEnded));
+          _timer.StartTimer(60_000); // 60-second round
+      }
 
-    public void _OnRoundEnded() => LogInfo("Round timer finished.");
-}
-```
+      public void _OnRoundEnded() => LogInfo("Round timer finished.");
+  }
+  ```
+- **Manual:** skip pooling entirely. Drag the shipped `TsTimer` prefab into your scene and
+  reference it directly, but then call `TsConstruct` on it yourself before calling
+  anything else on it. Skipping that leaves [`Process`'s cached local-player
+  ID](../core-concepts/process) at its default, which makes `IsProcessOwner()` report
+  `false` even for the actual owner, so `StartTimer`/`StopTimer`/`PauseTimer` all behave
+  as if called by a non-owner.
 
 Anything displaying the countdown reads `_timer.GetRemainingSeconds()` on its own update
 loop rather than waiting for `OnTimerUpdatedEvent`: that event exists for reacting to state

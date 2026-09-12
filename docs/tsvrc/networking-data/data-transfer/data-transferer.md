@@ -24,6 +24,21 @@ during a handover. The override exists to carry a comment warning against re-add
 earlier version's extra `CancelDataTransfer()` call here, which would run against an
 already-stopped process and log a spurious warning.
 
+## Getting an instance
+
+`DataTransferer` ships as one of TsVRC's own default pool entries (`TsBuiltinConfig`).
+
+- **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
+  Configure first.
+  ```csharp
+  [WirePool][SerializeField] private DataTransferer _transferer;
+  ```
+- **Manual:** skip pooling entirely. Drag the shipped `DataTransferer` prefab into your
+  scene (or `AddComponent` it) and call `TsConstruct` on it yourself, since nothing does
+  that for an instance nobody registered anywhere. See
+  [`Process`](../../core-concepts/process) for why skipping construction breaks ownership
+  checks on anything this deep in the chain.
+
 ## Usage
 
 ```csharp

@@ -11,6 +11,18 @@ states are plain integers, each with optional enter/exit method dispatch on a ch
 behaviour. Its generated shadow is `TsStateManager`. It has no dependency on any other
 TsVRC module beyond `TsvrcBehaviour`.
 
+## Getting an instance
+
+`StateManager` ships as one of TsVRC's own default factory entries (`TsBuiltinConfig`).
+
+- **Default:** `_ts.CreateStateManager(parent)` just works, nothing to register in
+  Configure first.
+- **Manual:** skip the factory entirely. `AddComponent` it (or drag the shipped
+  `StateManager` prefab into your scene) and start calling `RegisterState`/`SetState`
+  directly. Unlike most other TsVRC runtime types, `StateManager` never overrides
+  `TsStart` and never touches `_ts`, so it doesn't need `TsConstruct` to have run at all:
+  first-class support for the fully manual path.
+
 ## Usage
 
 ```csharp

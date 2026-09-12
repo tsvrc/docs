@@ -16,6 +16,18 @@ built directly on [`PlayerTracker`](../players-tracking/player-tracker),
 not just related reading. It has no relationship to [`StateManager`](./state-manager) on the
 page before this one; its own `CurrentState` is a plain field, not a `StateManager` instance.
 
+## Getting an instance
+
+`RankedGameSession` itself, not just the sub-behaviours it composes, ships as one of
+TsVRC's own default pool entries (`TsBuiltinConfig`).
+
+- **Default:** `[WirePool][SerializeField] private RankedGameSession _session;` just
+  resolves, nothing to register in Configure first, and codegen calls `TsConstruct` for
+  you at wire time.
+- **Manual:** skip pooling entirely. Drag the shipped `RankedGameSession` prefab into your
+  scene and call `TsConstruct` on it yourself, since nothing does that for an instance
+  nobody registered anywhere.
+
 ## What it's built from
 
 Five pooled ([`WirePoolAttribute`](../core-concepts/core-attributes)) sub-behaviours, wired
