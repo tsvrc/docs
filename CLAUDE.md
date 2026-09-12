@@ -15,9 +15,10 @@ docs repo per project.
 
 ## Internationalization (i18n)
 
-This site is set up for `en` (default), `es`, `ja`, and `zh-Hans`, but only `en` has
-real content right now — the other three currently cover only the two marketing pages
-(`src/pages/index.tsx`, `src/pages/framework.tsx`), not the docs.
+This site is set up for `en` (default) and `es`, but only `en` has real content right
+now — `es` currently covers only the two marketing pages (`src/pages/index.tsx`,
+`src/pages/framework.tsx`) plus one worked-example doc page (see below), not the rest of
+the docs.
 
 - **Docs content** (`docs/<project>/`): stays English-only, unversioned, exactly where
   it is. This is deliberate, not a gap to fill by default — per Docusaurus's own i18n
@@ -39,7 +40,7 @@ real content right now — the other three currently cover only the two marketin
   override these in this site's own `code.json`. Docusaurus ships its own
   professionally translated defaults per locale; only `homepage.*`/`framework.*` keys
   belong in this site's `code.json`.
-- Adding a fifth locale: add it to `i18n.locales` (and `localeConfigs`) in
+- Adding a third locale: add it to `i18n.locales` (and `localeConfigs`) in
   `docusaurus.config.ts`, run `write-translations`, translate `code.json` plus
   `docusaurus-theme-classic/{navbar,footer}.json`. Docs stay English until someone
   actually translates them into the new `i18n/<locale>/docusaurus-plugin-content-docs/current/`
