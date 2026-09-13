@@ -28,7 +28,8 @@ project. Register it as both if you need both: a Global entry that happens to be
    **Force Regenerate** stays disabled while it's unapplied, and the automatic trigger
    that normally regenerates for you is suppressed for the same reason. See
    [`TsWindow`](../codegen/config/ts-window#apply--discard) for why edits made in this
-   window are batched behind Apply/Discard instead of regenerating on every keystroke.
+   window are batched behind Apply/Discard instead of regenerating on every keystroke, or
+   [try the flow on a live mockup of the window](../codegen/config/ts-window#try-it).
 3. Reach it from any script by the generated field name:
 
    ```csharp

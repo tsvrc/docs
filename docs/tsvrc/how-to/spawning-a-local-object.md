@@ -21,7 +21,8 @@ object never receives a VRChat network ID and can't send or receive network even
 2. Click **Apply** in the Configure window's pending-changes footer. **Force Regenerate**
    and the automatic trigger both stay disabled while this edit is unapplied, so Apply is
    what actually runs codegen here; see [`TsWindow`](../codegen/config/ts-window#apply--discard)
-   for why. `FactoryModule` then generates one `Create{Group}{Name}(Transform parent)`
+   for why, or [try it on a live mockup of the window](../codegen/config/ts-window#try-it).
+   `FactoryModule` then generates one `Create{Group}{Name}(Transform parent)`
    method per registered prefab.
 3. Call it wherever you need a fresh instance:
 

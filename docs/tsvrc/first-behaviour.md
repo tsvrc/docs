@@ -75,7 +75,8 @@ wire it in the Inspector like any other field, or register it as a
 A footer appears at the bottom of the window once you've made this change: "You have
 unapplied changes." Click **Apply** there. That single click both saves the entry and
 runs codegen, so you don't need **Force Regenerate** afterward too, and can't: it's
-disabled while a change is still unapplied.
+disabled while a change is still unapplied. [Try this flow on a live mockup of the
+window](./codegen/config/ts-window#try-it).
 
 ## Run it
 

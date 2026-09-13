@@ -18,7 +18,9 @@ here at all.
    by `TsConfig.PoolEntries`), then click **Apply** in the window's pending-changes
    footer. That's a direct edit to `TsConfig` made through the window, so it's batched
    behind Apply/Discard like any other Configure tab edit: see
-   [`TsWindow`](../codegen/config/ts-window#apply--discard) for why. Registration alone
+   [`TsWindow`](../codegen/config/ts-window#apply--discard) for why, or
+   [try it on a live mockup of the window](../codegen/config/ts-window#try-it).
+   Registration alone
    creates no slots yet, since nothing references the type as `[WirePool]` yet.
 2. Declare a `[WirePool]` field for it on whatever behaviour needs an instance:
 

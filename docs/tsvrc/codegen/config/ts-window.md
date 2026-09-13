@@ -4,6 +4,8 @@ title: TsWindow
 sidebar_position: 2
 ---
 
+import TsWindowMock from '@site/src/components/TsWindowMock';
+
 # TsWindow
 
 `Tsvrc.Editor.TsWindow` is **Tsvrc > Configure**: the tabbed editor window every
@@ -13,6 +15,13 @@ tab management, the linked-scene picker, status reporting, and the edit-batching
 every tab's edits go through. See [`TsPendingConfigEdit`](./ts-pending-config-edit) for how
 that batching actually works, and each module's own reference page for what a specific
 tab's fields mean.
+
+## Try it
+
+The window below is live, not a screenshot: every button does what it really does. Mock
+data only, nothing here reads from or writes to a real Unity project.
+
+<TsWindowMock />
 
 ## Tabs
 
