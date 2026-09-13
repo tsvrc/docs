@@ -49,3 +49,10 @@ GIT_USER=<Your GitHub username> npm run deploy
 ```
 
 If you are using GitHub Pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the writing style guide, the multi-project
+layout, and how to submit a change. Community conduct is covered by the
+[org-wide Code of Conduct](https://github.com/tsvrc/.github/blob/main/CODE_OF_CONDUCT.md).
+Found a security issue? See [SECURITY.md](SECURITY.md) rather than opening a public issue.

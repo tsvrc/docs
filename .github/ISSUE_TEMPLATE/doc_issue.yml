@@ -1,0 +1,35 @@
+name: Documentation issue
+description: A page is wrong, unclear, or missing something.
+labels: [documentation]
+body:
+  - type: input
+    id: page-url
+    attributes:
+      label: Page URL
+      description: The tsvrc.com URL of the page, if it exists yet.
+    validations:
+      required: false
+  - type: input
+    id: project
+    attributes:
+      label: Project
+      description: Which project's docs this is about (e.g. tsvrc).
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What's wrong?
+      options:
+        - Incorrect
+        - Unclear
+        - Missing
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What's wrong, and what would fix it?
+    validations:
+      required: true
