@@ -2,6 +2,14 @@
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
+## License
+
+This repository, including the Docusaurus site's own source code, is licensed under
+[CC BY 4.0](LICENSE). Code samples embedded in a project's doc pages (under
+`docs/<project>/`) that are drawn directly from that project's own repository keep that
+project's license, not this repository's, since they originate there. Check the linked
+project's own `LICENSE` for the specific terms.
+
 ## Installation
 
 ```bash
