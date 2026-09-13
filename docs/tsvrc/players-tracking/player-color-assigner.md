@@ -12,7 +12,8 @@ instance size](https://wiki.vrchat.com/wiki/Special:MyLanguage/Instances) (80 is
 configurable hard cap; the world author and instance creator can each still join on top
 of that, for 82 in the worst case), keyed off their numeric player ID so every client
 independently resolves the same color for the same player with no per-lookup network
-traffic.
+traffic. See [Give each player a unique color](../how-to/assigning-player-colors) for a
+task-oriented walkthrough.
 
 ## Usage
 

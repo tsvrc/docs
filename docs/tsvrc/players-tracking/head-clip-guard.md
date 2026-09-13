@@ -12,7 +12,8 @@ generated shadow is `TsHeadClipGuard`. It's a local-only, per-client behaviour (
 sync) that runs every frame in
 [`PostLateUpdate`](https://udonsharp.docs.vrchat.com/events/#udon-update-events), fired
 "near the end of the frame after IK has been calculated," so tracking and IK have
-already settled by the time it runs.
+already settled by the time it runs. See [Stop VR players clipping through
+walls](../how-to/guarding-against-head-clipping) for a task-oriented walkthrough.
 
 ## Getting an instance
 

@@ -10,7 +10,8 @@ sidebar_position: 8
 registered prefab, for on-demand, **non-networked** runtime instantiation.
 `TsConfig.FactoryEntries`/`TsBuiltinConfig.FactoryEntries` register the prefabs; builtin
 entries are resolved first so a name collision between a builtin and a project's own factory
-always suffixes the project's, never the builtin's.
+always suffixes the project's, never the builtin's. See [Spawn a local, non-networked
+object on demand](../../how-to/spawning-a-local-object) for a task-oriented walkthrough.
 
 ## Usage
 

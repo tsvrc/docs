@@ -9,7 +9,8 @@ sidebar_position: 10
 `Tsvrc.Editor.TranslationModule` turns the JSON language files registered in
 [`TsTranslationConfig`](../config/translation-config) into generated `Language`
 enum values, a `SetLanguage`/`Translate` API, and the batched text-application logic that
-actually updates `TextMeshProUGUI` targets in the scene.
+actually updates `TextMeshProUGUI` targets in the scene. See [Add another language and
+switch at runtime](../../how-to/adding-a-language) for a task-oriented walkthrough.
 
 ## Usage
 
@@ -48,6 +49,11 @@ on the next pass with no manual re-registration needed.
 - **`SetLanguage(Language lang)`** — switches the active key/value arrays and immediately
   starts a batched re-application pass over every translation target, then notifies every
   listener registered via `SubscribeLanguageChanged`.
+- **`SubscribeLanguageChanged(UdonSharpBehaviour listener, string callback)`** — registers
+  `listener` to receive `SendCustomEvent(callback)` on every future `SetLanguage` call, its
+  own small generated pub/sub separate from the base `TsvrcBehaviour`'s `TsSubscribe`/
+  `TsEmit`. Subscribing the same listener/callback pair twice is a no-op rather than a
+  duplicate delivery.
 - **`Translate(string key)`** / **`Translate(string key, string param)`** — linear-scans the
   active language's keys for an exact match, returning the untranslated key itself as a
   fallback when nothing matches (so a missing translation degrades to showing the raw key

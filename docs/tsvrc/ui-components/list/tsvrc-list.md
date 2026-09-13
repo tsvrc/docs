@@ -10,6 +10,8 @@ sidebar_position: 1
 [`ListItem`](./list-item) per visible row rather than one per data entry, so a list backed
 by thousands of rows only ever pays for however many are on screen at once. Its generated
 shadow is `TsList`. Local-only and unsynced: each client's own list state is independent.
+See [Build a paginated list UI](../../how-to/building-a-list-ui) for a task-oriented
+walkthrough.
 
 ## Setup
 

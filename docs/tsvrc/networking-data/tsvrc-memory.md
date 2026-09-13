@@ -9,7 +9,8 @@ sidebar_position: 1
 `Tsvrc.Utils.TsvrcMemory` is TsVRC's shared key-value store, reached through `_ts.Memory`.
 Its generated shadow class is `TsMemory`. It holds every key in exactly one of three
 isolated tiers, ephemeral, persistent, or synced, and the tier is a per-key decision you
-make once, before you ever write a value.
+make once, before you ever write a value. See [Persist a value across
+visits](../how-to/persisting-a-value) for a task-oriented walkthrough.
 
 ## The three tiers
 

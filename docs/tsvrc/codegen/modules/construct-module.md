@@ -10,7 +10,8 @@ sidebar_position: 7
 onboarding step. Registering a `TsvrcBehaviour` on the Configure window's **Constructs** tab
 is what this module turns into a private field and a startup `TsConstruct` call. It's the
 module directly responsible for a registered behaviour's `TsStart()` override running at
-all.
+all. See [Reach a scene object from anywhere, or guarantee it
+initializes](../../how-to/reaching-a-scene-object) for a task-oriented walkthrough.
 
 ## Usage
 

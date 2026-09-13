@@ -11,7 +11,8 @@ sidebar_position: 2
 [server time](https://udonsharp.docs.vrchat.com/vrchat-api/#methods-4) anchors and compute
 elapsed time locally, so a running timer needs no discrete network message per tick,
 beyond `Process`'s own periodic [auto-resync
-heartbeat](../core-concepts/process#the-tick-loop-and-auto-resync).
+heartbeat](../core-concepts/process#the-tick-loop-and-auto-resync). See [Run a synced
+countdown](../how-to/running-a-countdown) for a task-oriented walkthrough.
 
 ## Getting an instance
 

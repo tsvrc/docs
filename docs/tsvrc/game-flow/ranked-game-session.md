@@ -14,7 +14,9 @@ built directly on [`PlayerTracker`](../players-tracking/player-tracker),
 [`ReadyCheckProcess`](../players-tracking/ready-check-process), and
 [`TsvrcTimer`](../networking-data/tsvrc-timer), so those three pages are real prerequisites,
 not just related reading. It has no relationship to [`StateManager`](./state-manager) on the
-page before this one; its own `CurrentState` is a plain field, not a `StateManager` instance.
+page before this one; its own `CurrentState` is a plain field, not a `StateManager`
+instance. See [Run a full timed round with a lobby](../how-to/running-a-timed-round) for
+a task-oriented walkthrough.
 
 ## Getting an instance
 

@@ -10,7 +10,9 @@ TsVRC ships a small set of testing helpers your own project can use to write rea
 ClientSim-backed Play Mode tests (and plain reflection-based Edit Mode tests) against your
 own `UdonSharpBehaviour`s, without hand-rolling VRChat SDK setup and working around its Play
 Mode quirks yourself. See [Set up automated testing](../how-to/set-up-automated-testing)
-for how to add these assemblies to your project; this page covers what they give you.
+for how to add these assemblies to your project, and [Write your first automated
+test](../how-to/writing-your-first-test) for a worked example; this page covers what
+these assemblies give you.
 
 Nothing here does anything to your project just by being referenced. Every piece of
 behavior only activates when you actually use it. `PrivateFieldAccess` is a set of plain

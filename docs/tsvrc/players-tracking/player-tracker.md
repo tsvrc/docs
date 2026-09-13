@@ -10,7 +10,8 @@ sidebar_position: 2
 networked, owner-managed set of tracked players, identified by
 [`TsPlayer`](./ts-player) ID strings rather than live `VRCPlayerApi` references.
 Its generated shadow is `TsPlayerTracker`. It's the base of `AutoPlayerTracker` and
-`ReadyCheckProcess`.
+`ReadyCheckProcess`. See [Track a custom group of
+players](../how-to/tracking-a-group-of-players) for a task-oriented walkthrough.
 
 ## Getting an instance
 

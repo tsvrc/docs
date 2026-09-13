@@ -9,7 +9,8 @@ sidebar_position: 1
 `Tsvrc.StateMachine.StateManager` is a generic, local-only (unsynced) finite state machine:
 states are plain integers, each with optional enter/exit method dispatch on a chosen target
 behaviour. Its generated shadow is `TsStateManager`. It has no dependency on any other
-TsVRC module beyond `TsvrcBehaviour`.
+TsVRC module beyond `TsvrcBehaviour`. See [Give a screen or flow its own state
+machine](../how-to/adding-a-screen-state-machine) for a task-oriented walkthrough.
 
 ## Getting an instance
 

@@ -11,7 +11,9 @@ sidebar_position: 4
 scene entries resolved first so they keep an unsuffixed name on a collision with a builtin.
 Naming is the point of a Global: it accepts any scene object, not only a `TsvrcBehaviour`,
 which is what sets it apart from [Construct](./construct-module) (initialization only, no
-name at all). See that page's "Construct vs. Global" section for the full comparison.
+name at all). See that page's "Construct vs. Global" section for the full comparison, and
+[Reach a scene object from anywhere, or guarantee it
+initializes](../../how-to/reaching-a-scene-object) for a task-oriented walkthrough of both.
 
 ## Usage
 

@@ -13,19 +13,20 @@ understand what's happening underneath this API.
 
 ## Steps
 
-1. Add a `DataTransferer` to your scene and register it as a construct, same as any other
-   `TsvrcBehaviour`.
+1. Declare a `[WirePool]` field for it. `DataTransferer` ships as [one of TsVRC's own
+   default pool entries](../explanations/builtin-registrations), so there's nothing to
+   register on the Configure window first.
 2. Subscribe to completion before you ever call `TransferData`, so you don't miss a transfer
    that finishes on the same frame it starts:
 
    ```csharp
    public class ScoreSync : TsBehaviour
    {
-       [SerializeField] private DataTransferer _transferer;
+       [WirePool][SerializeField] private DataTransferer _transferer;
 
        protected override void TsStart()
        {
-           _transferer.TsSubscribe(this, TsDataTransferer.OnTransferCompletedEvent, nameof(_OnScoresReceived));
+           _transferer.TsSubscribe(this, DataTransferer.OnTransferCompletedEvent, nameof(_OnScoresReceived));
        }
 
        public void _OnScoresReceived()
@@ -68,6 +69,34 @@ public void _OnScoresReceived()
     {
         // use scores
     }
+}
+```
+
+## Showing transfer progress
+
+Subscribe to `OnTransferChunkEvent` to drive a progress bar while a large payload arrives.
+`LastChunkIndex`/`LastTotalChunks` are set before this event fires, so both are safe to
+read from inside the handler:
+
+```csharp
+public class ScoreSyncProgress : TsBehaviour
+{
+    [WirePool][SerializeField] private DataTransferer _transferer;
+    [SerializeField] private Slider _progressBar;
+
+    protected override void TsStart()
+    {
+        _transferer.TsSubscribe(this, DataTransferer.OnTransferChunkEvent, nameof(_OnChunkReceived));
+        _transferer.TsSubscribe(this, DataTransferer.OnTransferCompletedEvent, nameof(_OnTransferDone));
+    }
+
+    public void _OnChunkReceived()
+    {
+        // LastChunkIndex is 1-based (it's "how many chunks have arrived so far").
+        _progressBar.value = (float)_transferer.LastChunkIndex / _transferer.LastTotalChunks;
+    }
+
+    public void _OnTransferDone() => _progressBar.value = 1f;
 }
 ```
 

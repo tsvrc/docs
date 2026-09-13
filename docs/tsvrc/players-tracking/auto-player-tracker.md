@@ -8,7 +8,10 @@ sidebar_position: 3
 
 `Tsvrc.Tracking.AutoPlayerTracker` is a [PlayerTracker](./player-tracker) that tracks
 every player in the instance automatically: no explicit player list to manage. Its
-generated shadow is `TsAutoPlayerTracker`.
+generated shadow is `TsAutoPlayerTracker`. See [Track a custom group of
+players](../how-to/tracking-a-group-of-players) for when to reach for this over a bare
+`PlayerTracker`, or [Gate something on all players being
+ready](../how-to/wiring-a-ready-check) for a common pairing with `ReadyCheckProcess`.
 
 ## Getting an instance
 

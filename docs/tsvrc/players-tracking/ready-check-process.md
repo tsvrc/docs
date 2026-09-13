@@ -8,7 +8,9 @@ sidebar_position: 4
 
 `Tsvrc.Tracking.ReadyCheckProcess` is a [PlayerTracker](./player-tracker) that runs a ready
 check: it tracks a fixed set of players and completes automatically once every one of them
-has marked themselves ready. Its generated shadow is `TsReadyCheckProcess`.
+has marked themselves ready. Its generated shadow is `TsReadyCheckProcess`. See [Gate
+something on all players being ready](../how-to/wiring-a-ready-check) for a task-oriented
+walkthrough.
 
 ## Getting an instance
 

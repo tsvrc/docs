@@ -13,8 +13,12 @@ How to render a live minimap-style overlay of tracked players, using
 
 ## Steps
 
-1. Add a `PlayerPositionOverlay` and a raster renderer to your scene and register them as
-   constructs.
+1. Add a `PlayerPositionOverlay` to your scene and register it as a construct. It's a
+   [`PlayerTracker`](../players-tracking/player-tracker) underneath, so it needs
+   `TsConstruct` to run before anything on it works. The renderer doesn't: neither
+   `PlayerMarkerRenderer` nor `RasterPlayerMarkerRenderer` overrides `TsStart` or touches
+   `_ts`, so it's safe to just drop one into the scene and assign it, no registration
+   needed.
 2. Subclass `RasterPlayerMarkerRenderer` to decide what a marker looks like:
 
    ```csharp

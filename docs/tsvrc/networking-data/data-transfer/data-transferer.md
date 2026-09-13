@@ -10,6 +10,8 @@ sidebar_position: 6
 Its generated shadow is `TsDataTransferer`. Everything it does is inherited from
 [DataChunker](./data-chunker) through [DataSenderReceiver](./data-sender-receiver). Read
 those pages first if you haven't; this page only covers what `DataTransferer` itself adds.
+See [Send a string payload to other players](../../how-to/transferring-data-between-clients)
+for a task-oriented walkthrough.
 
 ## What it adds
 

@@ -9,7 +9,9 @@ sidebar_position: 5
 **Tsvrc > Tools > Mesh Combiner** (`MeshCombinerWindow`, backed by the pure
 `MeshCombinerTool.Combine`) merges multiple `MeshFilter` sources into a single
 multi-material mesh asset, along with their colliders. It's independent of the rest of the
-codegen system: no dependency on `TsConfig`, `TsGenerator`, or any other module.
+codegen system: no dependency on `TsConfig`, `TsGenerator`, or any other module. See
+[Combine meshes and colliders before uploading](../how-to/combining-meshes) for a
+task-oriented walkthrough.
 
 ## Usage
 
