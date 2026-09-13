@@ -10,6 +10,9 @@ This repository, including the Docusaurus site's own source code, is licensed un
 project's license, not this repository's, since they originate there. Check the linked
 project's own `LICENSE` for the specific terms.
 
+The TsVRC name and logo are governed separately, see
+[TRADEMARK.md](https://github.com/tsvrc/.github/blob/main/TRADEMARK.md).
+
 ## Installation
 
 ```bash
@@ -54,5 +57,7 @@ If you are using GitHub Pages for hosting, this command is a convenient way to b
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the writing style guide, the multi-project
 layout, and how to submit a change. Community conduct is covered by the
-[org-wide Code of Conduct](https://github.com/tsvrc/.github/blob/main/CODE_OF_CONDUCT.md).
-Found a security issue? See [SECURITY.md](SECURITY.md) rather than opening a public issue.
+[org-wide Code of Conduct](https://github.com/tsvrc/.github/blob/main/CODE_OF_CONDUCT.md),
+and [GOVERNANCE.md](https://github.com/tsvrc/.github/blob/main/GOVERNANCE.md) covers how
+decisions get made. Found a security issue? See [SECURITY.md](SECURITY.md) rather than
+opening a public issue.
