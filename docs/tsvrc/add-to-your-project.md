@@ -31,13 +31,13 @@ step, the same as adding any other [community
 repository](https://vcc.docs.vrchat.com/guides/community-repositories/)):
 
 - **With VCC installed**, click [Add TsVRC to Creator
-  Companion](vcc://vpm/addRepo?url=https%3A%2F%2Ftsvrc.github.io%2Ftsvrc-core%2Findex.json)
+  Companion](vcc://vpm/addRepo?url=https%3A%2F%2Fvpm.tsvrc.com%2Findex.json)
   to open VCC directly to the add-repository prompt.
 - **Or paste the listing URL manually**: open VCC, go to **Settings > Packages > Add
   Repository**, and paste:
 
   ```
-  https://tsvrc.github.io/tsvrc-core/index.json
+  https://vpm.tsvrc.com/index.json
   ```
 
 Once the repository's added:
