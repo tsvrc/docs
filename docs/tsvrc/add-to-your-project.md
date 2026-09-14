@@ -18,7 +18,7 @@ you to sort out yourself.
 
 - **Unity 2022.3.** TsVRC's package manifest targets this version specifically.
 - **A Unity world project with the [VRChat Worlds
-  SDK](https://creators.vrchat.com/worlds/) `3.5.x`.** VCC resolves this automatically
+  SDK](https://creators.vrchat.com/worlds/) `3.10.x`.** VCC resolves this automatically
   when you install TsVRC; importing the `.unitypackage` needs it already in your project.
 
 ## Install the package
@@ -26,13 +26,26 @@ you to sort out yourself.
 <Tabs>
 <TabItem value="vcc" label="VRChat Creator Companion (recommended)" default>
 
+If TsVRC's repository isn't in your Creator Companion yet, add it first (a one-time
+step, the same as adding any other [community
+repository](https://vcc.docs.vrchat.com/guides/community-repositories/)):
+
+- **With VCC installed**, click [Add TsVRC to Creator
+  Companion](vcc://vpm/addRepo?url=https%3A%2F%2Fvpm.tsvrc.com%2Findex.json)
+  to open VCC directly to the add-repository prompt.
+- **Or paste the listing URL manually**: open VCC, go to **Settings > Packages > Add
+  Repository**, and paste:
+
+  ```
+  https://vpm.tsvrc.com/index.json
+  ```
+
+Once the repository's added:
+
 1. Open the Creator Companion, select your project, and click **Manage Project**.
-2. Find **TsVRC** (`com.tsvrc.core`) in the package list. If it isn't there yet, add
-   TsVRC's package repository to your Creator Companion first, the same one-time step as
-   adding any other [community
-   repository](https://vcc.docs.vrchat.com/guides/community-repositories/).
-3. Press the **+** next to TsVRC to install it.
-4. Wait for Unity to finish importing and recompiling.
+2. Find **TsVRC** (`com.tsvrc.core`) in the package list and press the **+** next to it
+   to install it.
+3. Wait for Unity to finish importing and recompiling.
 
 </TabItem>
 <TabItem value="unitypackage" label=".unitypackage">
@@ -44,7 +57,7 @@ you to sort out yourself.
 3. Wait for Unity to finish importing and recompiling.
 
 Nothing here resolves the VRChat Worlds SDK version for you, so confirm it's already at
-`3.5.x` before importing. If your project also uses VCC for other packages, prefer the
+`3.10.x` before importing. If your project also uses VCC for other packages, prefer the
 VCC tab instead: mixing a hand-imported package with VCC-managed ones makes future
 updates and dependency resolution your own responsibility to track.
 
