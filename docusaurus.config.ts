@@ -86,6 +86,11 @@ const config: Config = {
           position: 'right',
         },
         {
+          to: '/support',
+          label: 'Support',
+          position: 'right',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
         },
@@ -105,6 +110,10 @@ const config: Config = {
         {
           label: 'GitHub',
           href: 'https://github.com/tsvrc',
+        },
+        {
+          label: 'Support',
+          to: '/support',
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} TsVRC. Not affiliated with or endorsed by VRChat Inc.`,

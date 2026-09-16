@@ -175,5 +175,32 @@
   },
   "framework.meta.description": {
     "message": "TsVRC Core es un framework para crear mundos de VRChat con UdonSharp: inicialización estructurada, conexión de dependencias y generación de código en el editor."
+  },
+  "support.meta.title": {
+    "message": "Apoya a TsVRC"
+  },
+  "support.meta.description": {
+    "message": "Apoya a TsVRC en Patreon o Ko-fi."
+  },
+  "support.hero.title": {
+    "message": "Apoya a TsVRC"
+  },
+  "support.hero.subtitle": {
+    "message": "Apoyar a TsVRC es completamente opcional, y se agradece de verdad si decides hacerlo."
+  },
+  "support.options.title": {
+    "message": "Formas de apoyar"
+  },
+  "support.options.patreon.description": {
+    "message": "Una membresía mensual en patreon.com/Tsvrc."
+  },
+  "support.options.patreon.cta": {
+    "message": "Apoya en Patreon"
+  },
+  "support.options.kofi.description": {
+    "message": "Propinas puntuales o una membresía mensual en ko-fi.com/tsvrc."
+  },
+  "support.options.kofi.cta": {
+    "message": "Apoya en Ko-fi"
   }
 }
