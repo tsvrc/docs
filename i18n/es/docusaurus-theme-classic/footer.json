@@ -11,6 +11,10 @@
     "message": "GitHub",
     "description": "The label of footer link with label=GitHub linking to https://github.com/tsvrc"
   },
+  "link.item.label.Support": {
+    "message": "Apoyar",
+    "description": "The label of footer link with label=Support linking to /support"
+  },
   "copyright": {
     "message": "Copyright © 2026 TsVRC. No afiliado ni respaldado por VRChat Inc.",
     "description": "The footer copyright"
