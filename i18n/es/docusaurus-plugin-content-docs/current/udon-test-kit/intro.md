@@ -22,8 +22,9 @@ Una vez escritos, los tests se vuelven a ejecutar cuando quieras, todos de una v
 rompe algo se nota enseguida, antes de subir el mundo, y puedes cambiar tu código sin miedo a
 romper algo que no estás mirando. Esto importa sobre todo en lo que es más difícil de comprobar
 jugando solo: varios jugadores, quién es dueño de qué y datos que tienen que sobrevivir cuando
-alguien vuelve a entrar. Martin Fowler explica la idea en
-[Self Testing Code](https://martinfowler.com/bliki/SelfTestingCode.html).
+alguien vuelve a entrar. Los
+[consejos de pruebas y control de calidad](https://unity.com/es/how-to/testing-and-quality-assurance-tips-unity-projects)
+de Unity lo explican con más detalle.
 
 ## Qué puedes hacer con él
 

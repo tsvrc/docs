@@ -19,8 +19,9 @@ either in the Editor (Edit Mode) or with the game running (Play Mode).
 Once written, tests run again whenever you ask, all at once. A change that breaks something shows
 up right away, before you upload the world, and you can change your code without worrying about
 breaking something you aren't looking at. That matters most for what's hardest to check by playing
-on your own: several players, who owns what, and data that has to survive a rejoin. Martin Fowler
-explains the idea in [Self Testing Code](https://martinfowler.com/bliki/SelfTestingCode.html).
+on your own: several players, who owns what, and data that has to survive a rejoin. Unity's
+[testing and quality assurance tips](https://unity.com/how-to/testing-and-quality-assurance-tips-unity-projects)
+go into more depth.
 
 ## What you can do with it
 
