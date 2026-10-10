@@ -39,7 +39,7 @@ export default function Projects() {
       </h2>
       <p className="mt-2 max-w-2xl text-fg-muted">
         <Translate id="homepage.projects.description">
-          Everything I&apos;ve built so far. Each project has its docs here and its code on GitHub.
+          Everything built so far. Each project has its docs here and its code on GitHub.
         </Translate>
       </p>
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">

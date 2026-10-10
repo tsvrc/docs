@@ -48,7 +48,7 @@
     "message": "Proyectos"
   },
   "homepage.projects.description": {
-    "message": "Todo lo que he construido hasta ahora. Cada proyecto tiene su documentación aquí y su código en GitHub."
+    "message": "Todo lo construido hasta ahora. Cada proyecto tiene su documentación aquí y su código en GitHub."
   },
   "homepage.meta.title": {
     "message": "TsVRC"
