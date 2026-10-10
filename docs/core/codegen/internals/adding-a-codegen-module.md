@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Adding a new codegen module
 
-A how-to guide for contributors extending TsVRC's own generator, not for end users
+A how-to guide for contributors extending Core's own generator, not for end users
 configuring a world. It assumes you've read [`TsModule`](./ts-module) and
 [`TsGenerator`](./ts-generator), and at least a couple of the existing modules under
 Codegen > Modules, for example [`LogModule`](../modules/log-module). The pattern below is

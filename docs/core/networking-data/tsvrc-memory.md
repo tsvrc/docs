@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # TsvrcMemory
 
-`Tsvrc.Utils.TsvrcMemory` is TsVRC's shared key-value store, reached through `_ts.Memory`.
+`Tsvrc.Utils.TsvrcMemory` is Core's shared key-value store, reached through `_ts.Memory`.
 Its generated shadow class is `TsMemory`. It holds every key in exactly one of three
 isolated tiers, ephemeral, persistent, or synced, and the tier is a per-key decision you
 make once, before you ever write a value. See [Persist a value across
@@ -72,7 +72,7 @@ them.
 ## PlayerData constraints (persistent tier)
 
 These come from VRChat's own [persistence system](https://creators.vrchat.com/worlds/udon/persistence/player-data),
-not from TsVRC:
+not from Core:
 
 - VRChat allows [100 KB of PlayerData per player per
   world](https://creators.vrchat.com/worlds/udon/persistence/#limitations). VRChat

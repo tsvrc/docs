@@ -19,7 +19,7 @@ function useFeatures(): Feature[] {
       description: translate({
         id: 'core.features.constructs.description',
         message:
-          'Register a TsvrcBehaviour once and TsVRC initializes it for you, in a fixed order, through TsStart, instead of you wiring startup by hand.',
+          'Register a TsvrcBehaviour once and Core initializes it for you, in a fixed order, through TsStart, instead of you wiring startup by hand.',
       }),
       href: '/docs/core/codegen/modules/construct-module',
     },

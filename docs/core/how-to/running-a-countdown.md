@@ -11,7 +11,7 @@ How to run a countdown every client sees identically, using
 
 ## Steps
 
-1. Declare a `[WirePool]` field. `TsvrcTimer` ships as [one of TsVRC's own default pool
+1. Declare a `[WirePool]` field. `TsvrcTimer` ships as [one of Core's own default pool
    entries](../explanations/builtin-registrations), so there's nothing to register on the
    Configure window first:
 

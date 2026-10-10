@@ -74,7 +74,7 @@ identifier.
 
 `TsBuiltinConfig` is a `ScriptableObject`, not a scene component but a package asset,
 holding the same Global/Pool/Factory entry-and-group shape as `TsConfig`, but for
-registrations TsVRC itself ships and wants present regardless of what any individual
+registrations Core itself ships and wants present regardless of what any individual
 project configures. It's merged with each project's own `TsConfig` at generate time, so a
 library-provided global or pooled prefab shows up in the generated output the same way a
 project's own entry would, without every project needing to register it by hand.

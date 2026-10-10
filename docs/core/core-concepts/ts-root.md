@@ -7,7 +7,7 @@ sidebar_position: 5
 # TsRoot
 
 `Tsvrc.Core.Generated.TsRoot` is the abstract root every `TsvrcBehaviour` reaches through
-its `_ts` field. See [How TsVRC fits together](./how-it-fits-together) for the overall
+its `_ts` field. See [How Core fits together](./how-it-fits-together) for the overall
 picture. This page is its full reference.
 
 ## Usage
@@ -42,7 +42,7 @@ it never needs to know about a generated class that hasn't been written.
 
 A generator module called `ScaffoldModule` writes that real, concrete subclass for your
 project. It's the type your `TsBehaviour`-extending scripts actually get back once
-TsVRC retypes `_ts` for them (see [How TsVRC fits
+Core retypes `_ts` for them (see [How Core fits
 together](./how-it-fits-together#why-a-generation-step-exists-at-all) for how that
 retyping works).
 

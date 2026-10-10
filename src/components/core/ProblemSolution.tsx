@@ -23,12 +23,12 @@ export default function ProblemSolution() {
               <Link
                 to="/docs/core/core-concepts/how-it-fits-together"
                 className="text-accent no-underline hover:underline">
-                <Translate id="core.why.linkText">how TsVRC fits together</Translate>
+                <Translate id="core.why.linkText">how Core fits together</Translate>
               </Link>
             ),
             code: <code>_ts</code>,
           }}>
-          {"TsVRC gives every script one shared reference, {code}, to reach anything else in your project. Setup happens in an order you control, and TsVRC works out which of your own classes to use ahead of time, in the Unity editor. See {link} for the full shape."}
+          {"Core gives every script one shared reference, {code}, to reach anything else in your project. Setup happens in an order you control, and Core works out which of your own classes to use ahead of time, in the Unity editor. See {link} for the full shape."}
         </Translate>
       </p>
     </section>

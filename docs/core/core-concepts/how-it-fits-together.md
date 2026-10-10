@@ -1,12 +1,12 @@
 ---
 id: how-it-fits-together
-title: How TsVRC fits together
+title: How Core fits together
 sidebar_position: 1
 ---
 
-# How TsVRC fits together
+# How Core fits together
 
-TsVRC splits into two halves: one lives in the Unity editor while you build, the other
+Core splits into two halves: one lives in the Unity editor while you build, the other
 runs at runtime for players. This page explains how they relate, and how the pieces from
 [the first-behaviour tutorial](../first-behaviour) fit together. Read it once: every
 module's reference page assumes you already have this picture instead of re-explaining
@@ -40,12 +40,12 @@ given type is currently registered, and giving you a typed reference to your pro
 own subclass instead of a generic base type. The usual tools for that are runtime
 reflection or a dependency injection container.
 
-TsVRC solves both while you're still in the editor instead. The codegen pass reads your
+Core solves both while you're still in the editor instead. The codegen pass reads your
 project's types and configuration once, at edit time, and writes plain code with direct
 references already baked in. Nothing gets looked up while the world is actually running.
 
 Whether UdonSharp specifically requires this approach is a separate question this page
-doesn't try to answer. What's certain: TsVRC generates every extension point instead of
+doesn't try to answer. What's certain: Core generates every extension point instead of
 resolving it at runtime. That's why your own scripts extend a generated shadow class
 (`TsBehaviour`, `TsInstance`, and so on) instead of the framework class directly: the
 shadow is what carries your project's own concrete types.

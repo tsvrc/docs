@@ -21,7 +21,7 @@ a task-oriented walkthrough.
 ## Getting an instance
 
 `RankedGameSession` itself, not just the sub-behaviours it composes, ships as one of
-[TsVRC's own default pool entries](../explanations/builtin-registrations)
+[Core's own default pool entries](../explanations/builtin-registrations)
 (`TsBuiltinConfig`).
 
 - **Default:** `[WirePool][SerializeField] private RankedGameSession _session;` just

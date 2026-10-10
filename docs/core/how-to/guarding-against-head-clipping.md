@@ -12,7 +12,7 @@ comfort setting rather than something every world forces on.
 
 ## Steps
 
-1. Spawn one with the generated factory method. `HeadClipGuard` ships as [one of TsVRC's
+1. Spawn one with the generated factory method. `HeadClipGuard` ships as [one of Core's
    own default factory entries](../explanations/builtin-registrations), so there's
    nothing to register on the Configure window first:
 

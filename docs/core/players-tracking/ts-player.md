@@ -7,7 +7,7 @@ sidebar_position: 1
 # TsPlayer
 
 `Tsvrc.Player.TsPlayer` is a static helper class for identifying and looking up players.
-It has no dependency on any other TsVRC type, despite being used throughout the
+It has no dependency on any other Core type, despite being used throughout the
 framework: by [`Process`](../core-concepts/process), the tracking chain
 ([`PlayerTracker`](./player-tracker), [`AutoPlayerTracker`](./auto-player-tracker),
 [`ReadyCheckProcess`](./ready-check-process)), the overlay UI
@@ -22,7 +22,7 @@ the current instance:
 [`GetPlayerById`](https://creators.vrchat.com/worlds/udon/players/getting-players/#getplayerbyid)
 only resolves someone who's still around, and playerId numbering isn't guaranteed to
 line up the same way for every client watching the instance. Neither is safe to store
-and compare later. TsVRC's own ID format, `displayName#playerId` (built by
+and compare later. Core's own ID format, `displayName#playerId` (built by
 `GetPlayerID`), is what gets stored and compared across clients throughout the
 framework instead.
 

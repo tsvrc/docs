@@ -6,12 +6,12 @@ sidebar_position: 1
 
 # Decision note: codegen instead of runtime reflection
 
-TsVRC resolves a project's own concrete types (which class is your `Instance` subclass,
+Core resolves a project's own concrete types (which class is your `Instance` subclass,
 which behaviours are registered as Constructs, which prefabs are pooled) once, at edit
 time, and bakes the result into generated C# with direct field references and typed
 accessors. A framework built the same way in ordinary C# would more commonly reach for
 runtime reflection or a dependency-injection container to do this lookup dynamically,
-lazily, whenever it's actually needed. TsVRC doesn't have that option, for a concrete,
+lazily, whenever it's actually needed. Core doesn't have that option, for a concrete,
 checkable reason: the runtime environment it targets doesn't support it.
 
 ## What Udon-compiled code can't do
@@ -46,10 +46,10 @@ the same limitation. That's part of why generated factory code (see
 and emits a concrete, non-generic `GetComponent<ConcreteType>()` call rather than anything
 parameterized.
 
-## What TsVRC does instead
+## What Core does instead
 
 None of that machinery exists in compiled Udon, but all of it is perfectly ordinary,
-supported C# in the Unity Editor, where TsVRC's own reflection happens. Scanning loaded
+supported C# in the Unity Editor, where Core's own reflection happens. Scanning loaded
 assemblies for an `Instance` subclass, or a class tagged
 [`[TsWorldExtensionPoint]`](../core-concepts/attributes.md), runs entirely in the editor's
 own C# runtime, at generate time, never inside a compiled UdonSharpBehaviour. The generator

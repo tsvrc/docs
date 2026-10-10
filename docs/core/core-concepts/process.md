@@ -9,7 +9,7 @@ sidebar_position: 4
 `Tsvrc.Core.Process` is the base class for networked, owner-driven processes: something
 with a start/stop/complete lifecycle that one player (the owner) drives, that survives the
 owner leaving, and that optionally ticks on an interval. Its generated shadow is
-`TsProcess`. It's the root of TsVRC's longest inheritance chain: `PlayerTracker`,
+`TsProcess`. It's the root of Core's longest inheritance chain: `PlayerTracker`,
 `AutoPlayerTracker`, `ReadyCheckProcess`, and the entire `DataTransferer` chain all build
 on top of it, so its ownership and lifecycle model is worth understanding well before
 those pages.
@@ -154,7 +154,7 @@ rate-limited to one call per second. Two things worth knowing before relying on 
 directly:
 
 - VRChat has no way to restrict who calls a `[NetworkCallable]` method: any player can
-  invoke these directly. The owner-or-object-owner guard is the only check TsVRC
+  invoke these directly. The owner-or-object-owner guard is the only check Core
   applies; any further authorization is the subclass's responsibility.
 - There's no per-run generation token. Calls beyond the rate limit are [queued, not
   dropped](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting),

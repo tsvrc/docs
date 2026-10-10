@@ -38,11 +38,11 @@ otherwise fire unattended are.
 
 A pass with `allowBootstrap: false` (every automatic trigger's default) won't create a
 project's scaffold from nothing. It waits until `HasBootstrapSignal()` finds a real reason
-this project uses TsVRC (an existing `TsConfig` in the linked scene, an existing compiled
+this project uses Core (an existing `TsConfig` in the linked scene, an existing compiled
 scaffold instance, or *any* non-abstract `Instance` subclass anywhere in the project, unless
 marked [`[TsCodegenIgnore]`](../../core-concepts/attributes.md)). Until that signal appears, the
 generator just re-arms a hierarchy-changed watch and returns. This is what makes an
-unrelated, freshly-opened project safe to have TsVRC installed in without it immediately
+unrelated, freshly-opened project safe to have Core installed in without it immediately
 scaffolding files nobody asked for. A deliberate **Force Regenerate**/**Initialize Tsvrc**
 click passes `allowBootstrap: true` and *is* the signal.
 
@@ -84,7 +84,7 @@ where every `TsvrcBehaviour`'s `_ts` reference would be `null` at runtime.
 ## Why this exists, briefly
 
 `TsGenerator` is the concrete mechanism behind the codegen-vs-runtime-reflection split
-described in [How TsVRC fits together](../../core-concepts/how-it-fits-together): every module's config is
+described in [How Core fits together](../../core-concepts/how-it-fits-together): every module's config is
 read once, at edit time, and baked into real generated C#. Nothing about this pipeline runs
 in the built world. See that page for the reasoning; this page only covers how the pipeline
 itself is sequenced and triggered.

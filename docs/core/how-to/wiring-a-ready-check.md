@@ -12,7 +12,7 @@ How to block an action until every present player has confirmed they're ready, u
 
 ## Steps
 
-1. Declare a `[WirePool]` field for each. Both ship as [TsVRC's own default pool
+1. Declare a `[WirePool]` field for each. Both ship as [Core's own default pool
    entries](../explanations/builtin-registrations), so there's nothing to register on the
    Configure window first, and codegen calls `TsConstruct` for you at wire time:
 
@@ -90,4 +90,4 @@ field of the same type.
 [its reference page](../players-tracking/ready-check-process) for the ordering guarantees
 around `SetReady` and what happens when the tracked set changes mid-check. For the "why
 generated code, why not just call these directly at compile time" background, see
-[How TsVRC fits together](../core-concepts/how-it-fits-together).
+[How Core fits together](../core-concepts/how-it-fits-together).

@@ -13,7 +13,7 @@ instead of a pile of booleans.
 ## Steps
 
 1. Spawn one for the screen or flow that needs it. `StateManager` ships as [one of
-   TsVRC's own default factory entries](../explanations/builtin-registrations), so
+   Core's own default factory entries](../explanations/builtin-registrations), so
    there's nothing to register on the Configure window first. Give each screen its own
    instance rather than sharing one across unrelated screens:
 

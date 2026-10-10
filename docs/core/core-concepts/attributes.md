@@ -6,7 +6,7 @@ sidebar_position: 6
 
 # Framework attributes
 
-Reference for the three plain marker attributes TsVRC's codegen reads by reflection at
+Reference for the three plain marker attributes Core's codegen reads by reflection at
 edit time. None of them do anything at runtime themselves. They exist so the generator
 can find and validate things without hardcoding a list of types.
 
@@ -37,7 +37,7 @@ type against its own configuration and
 validates the pairing at generation time, not compile time, so a mismatched or
 unregistered pool type surfaces as a codegen warning, not a C# compiler error. See that
 module's own reference page for exactly what gets checked. If the pooled type is a
-`TsvrcBehaviour` subclass, TsVRC calls `TsConstruct` on each pool slot at scene start;
+`TsvrcBehaviour` subclass, Core calls `TsConstruct` on each pool slot at scene start;
 for any other type, the field is just wired to a reference with no construction step.
 
 A `[WirePool]` field is read-only in the inspector: `WirePoolAttributeDrawer` disables
@@ -73,7 +73,7 @@ public class FakeInstanceForTests : Instance
 Put `[TsWorldExtensionPoint("GeneratedName")]` on a framework base class to mark it as
 one world scripts are meant to subclass directly, and to name the generated shadow class
 that [`ScaffoldModule`](../codegen/modules/scaffold-module) (the codegen module you
-already met in [How TsVRC fits together](./how-it-fits-together)) writes for it. See
+already met in [How Core fits together](./how-it-fits-together)) writes for it. See
 that page again for why the shadow class exists at all. In short, it
 retypes the inherited `_ts` reference to your project's own concrete generated root, so
 your code gets it fully typed with no cast.

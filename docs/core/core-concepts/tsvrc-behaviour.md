@@ -6,11 +6,11 @@ sidebar_position: 2
 
 # TsvrcBehaviour
 
-`Tsvrc.Core.TsvrcBehaviour` is the base class every other TsVRC runtime type extends,
+`Tsvrc.Core.TsvrcBehaviour` is the base class every other Core runtime type extends,
 directly or indirectly. It's an
 [`UdonSharpBehaviour`](https://udonsharp.docs.vrchat.com/) with structured, one-time
 initialization and a small publish/subscribe event system built in. Its generated shadow
-class is `TsBehaviour`. See [How TsVRC fits together](./how-it-fits-together) for why
+class is `TsBehaviour`. See [How Core fits together](./how-it-fits-together) for why
 your own scripts extend the shadow rather than this class directly.
 
 ## Usage
@@ -143,7 +143,7 @@ work. Two things specific to calling it from here:
   `GetUdonTypeName()`. You never pass the tag yourself.
 - `IsTsvrcInternal` (`false` by default) decides which of a message's paired toggles
   applies: the "Tsvrc Internal" one or the "Your World" one. Only override it to `true`
-  if you're writing a framework base class that should be classified as part of TsVRC
+  if you're writing a framework base class that should be classified as part of Core
   itself. Every subclass of a class that overrides it inherits that classification
   automatically. Leave it alone in ordinary world scripts.
 

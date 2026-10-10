@@ -9,7 +9,7 @@ sidebar_position: 2
 `Tsvrc.Utils.TsArray` is a static helper class for array operations that Udon can't express
 generically. UdonSharp doesn't support generic methods, so there's no single `Add<T>`.
 Instead `TsArray` overloads each operation for `string[]` and `UdonSharpBehaviour[]`, the
-two element types TsVRC itself needs this for.
+two element types Core itself needs this for.
 
 ## What it's for
 

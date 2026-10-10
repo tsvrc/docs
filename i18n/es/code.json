@@ -6,7 +6,7 @@
     "message": "TsVRC no está afiliado a VRChat Inc. ni cuenta con su respaldo."
   },
   "core.notice.body": {
-    "message": "Además, sigue siendo un trabajo en curso. Cada parte tiene sus propios tests, y los ejecutamos antes de cada versión, pero no podemos prometer haber cubierto todos los casos. Guarda una copia de seguridad de tu proyecto antes de añadir TsVRC o de actualizarlo, solo por si acaso. Si algo se rompe de tu lado, no podemos arreglarlo por ti, pero nos gustaría mucho saberlo. Abre un issue en GitHub y le echaremos un vistazo."
+    "message": "Además, sigue siendo un trabajo en curso. Cada parte tiene sus propios tests, y los ejecutamos antes de cada versión, pero no podemos prometer haber cubierto todos los casos. Guarda una copia de seguridad de tu proyecto antes de añadir Core o de actualizarlo, solo por si acaso. Si algo se rompe de tu lado, no podemos arreglarlo por ti, pero nos gustaría mucho saberlo. Abre un issue en GitHub y le echaremos un vistazo."
   },
   "homepage.hero.greeting": {
     "message": "Hola, soy {name}"
@@ -102,7 +102,7 @@
     "message": "Y eso no es todo"
   },
   "core.hero.annotation.more.description": {
-    "message": "Y hay más de donde vino eso. Mira el resto de las piezas fundamentales de TsVRC más abajo."
+    "message": "Y hay más de donde vino eso. Mira el resto de las piezas fundamentales de Core más abajo."
   },
   "core.why.title": {
     "message": "Por qué existe"
@@ -111,16 +111,16 @@
     "message": "Cada script de UdonSharp se inicia por su cuenta, sin garantía de en qué orden pasan las cosas y sin una forma fácil de llegar a otro script en tu mundo. La mayoría de los creadores lo resuelve a mano: arrastrando referencias entre objetos en el Inspector, y con la esperanza de que todo siga conectado cuando el mundo carga."
   },
   "core.why.paragraph2": {
-    "message": "TsVRC le da a cada script una única referencia compartida, {code}, para llegar a cualquier otra cosa de tu proyecto. La configuración ocurre en un orden que tú controlas, y TsVRC descubre de antemano cuál de tus propias clases usar, en el editor de Unity. Consulta {link} para ver el panorama completo."
+    "message": "Core le da a cada script una única referencia compartida, {code}, para llegar a cualquier otra cosa de tu proyecto. La configuración ocurre en un orden que tú controlas, y Core descubre de antemano cuál de tus propias clases usar, en el editor de Unity. Consulta {link} para ver el panorama completo."
   },
   "core.why.linkText": {
-    "message": "cómo encaja TsVRC"
+    "message": "cómo encaja Core"
   },
   "core.features.constructs.title": {
     "message": "Constructs"
   },
   "core.features.constructs.description": {
-    "message": "Registra un TsvrcBehaviour una vez y TsVRC lo inicializa por ti, en un orden fijo, mediante TsStart, en vez de que tengas que encargarte tú de iniciarlo a mano."
+    "message": "Registra un TsvrcBehaviour una vez y Core lo inicializa por ti, en un orden fijo, mediante TsStart, en vez de que tengas que encargarte tú de iniciarlo a mano."
   },
   "core.features.globals.title": {
     "message": "Globals"
@@ -165,7 +165,7 @@
     "message": "Empieza a construir"
   },
   "core.cta.subtitle": {
-    "message": "Agrega TsVRC mediante VCC y luego sigue la guía de introducción para tener un behaviour funcionando en Play Mode."
+    "message": "Agrega Core mediante VCC y luego sigue la guía de introducción para tener un behaviour funcionando en Play Mode."
   },
   "core.cta.button": {
     "message": "Empezar"

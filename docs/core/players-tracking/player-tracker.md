@@ -15,7 +15,7 @@ players](../how-to/tracking-a-group-of-players) for a task-oriented walkthrough.
 
 ## Getting an instance
 
-`PlayerTracker` ships as one of [TsVRC's own default pool
+`PlayerTracker` ships as one of [Core's own default pool
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in

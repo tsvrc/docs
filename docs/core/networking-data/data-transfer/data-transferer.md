@@ -28,7 +28,7 @@ already-stopped process and log a spurious warning.
 
 ## Getting an instance
 
-`DataTransferer` ships as one of [TsVRC's own default pool
+`DataTransferer` ships as one of [Core's own default pool
 entries](../../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in

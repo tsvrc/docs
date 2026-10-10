@@ -13,7 +13,7 @@ understand what's happening underneath this API.
 
 ## Steps
 
-1. Declare a `[WirePool]` field for it. `DataTransferer` ships as [one of TsVRC's own
+1. Declare a `[WirePool]` field for it. `DataTransferer` ships as [one of Core's own
    default pool entries](../explanations/builtin-registrations), so there's nothing to
    register on the Configure window first.
 2. Subscribe to completion before you ever call `TransferData`, so you don't miss a transfer

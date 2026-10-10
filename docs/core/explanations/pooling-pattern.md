@@ -27,7 +27,7 @@ handing one out via a spawn call and returning it later rather than ever instant
 destroying anything at runtime. That's the same model `PoolModule` follows for `[WirePool]`
 fields.
 
-## What this means for TsVRC's own design
+## What this means for Core's own design
 
 Because a networked, poolable object has to already exist in the scene before the world
 starts, "how many instances do we need" has to be answered before runtime, not lazily as

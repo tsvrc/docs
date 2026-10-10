@@ -35,7 +35,7 @@ here at all.
    ```
 
    This is a code change, not a Configure window edit, so it needs no Apply click at all:
-   once Unity finishes compiling, TsVRC's generator runs automatically and discovers the
+   once Unity finishes compiling, Core's generator runs automatically and discovers the
    field by reflection. `PoolModule` computes how many total slots the project needs
    across every `[WirePool]` field referencing this type, generates one serialized field
    per slot, and instantiates and wires them all under a `"Pool"` container at wire time.
@@ -70,7 +70,7 @@ never registered on the Pools tab logs a warning and leaves the field `null` for
 rather than failing generation outright. Registering the type and regenerating resolves
 it.
 
-If the field's type is one of TsVRC's own runtime types (`PlayerTracker`, `TsvrcTimer`,
+If the field's type is one of Core's own runtime types (`PlayerTracker`, `TsvrcTimer`,
 and four others), skip step 1 entirely: it's already registered for you. See [Decision
 note: builtin pool and factory entries](../explanations/builtin-registrations).
 

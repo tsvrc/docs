@@ -86,5 +86,5 @@ a remote player with the kit's `Session.SetOwner` to test the other side, as in
 
 ## Why this shape
 
-See [Testing your world](../testing/testing-your-world) for how a test builds TsVRC behaviours
-and what TsVRC's codegen does during a test run.
+See [Testing your world](../testing/testing-your-world) for how a test builds your behaviours
+and what Core's codegen does during a test run.

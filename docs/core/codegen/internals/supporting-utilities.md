@@ -7,7 +7,7 @@ sidebar_position: 4
 # Generator support utilities
 
 A handful of small internal classes back [`TsGenerator`](./ts-generator) and the codegen
-modules. None of these are things you call directly as an end user of TsVRC; they're
+modules. None of these are things you call directly as an end user of Core; they're
 documented here for anyone extending the generator itself.
 
 ## ScriptIndex

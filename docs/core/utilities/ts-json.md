@@ -8,7 +8,7 @@ sidebar_position: 3
 
 `Tsvrc.Utils.TsJson` is a static helper class for converting VRChat's `DataDictionary` and
 `DataToken` types to and from JSON, built on top of `VRCJson`. It exists to give the rest of
-TsVRC a smaller, consistent surface than calling `VRCJson`'s `Try...` methods directly
+Core a smaller, consistent surface than calling `VRCJson`'s `Try...` methods directly
 everywhere a serialization step is needed.
 
 ## Methods

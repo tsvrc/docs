@@ -16,7 +16,7 @@ countdown](../how-to/running-a-countdown) for a task-oriented walkthrough.
 
 ## Getting an instance
 
-`TsvrcTimer` ships as one of [TsVRC's own default pool
+`TsvrcTimer` ships as one of [Core's own default pool
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in

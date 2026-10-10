@@ -10,7 +10,7 @@ sidebar_position: 2
 [`LogModule`](../modules/log-module), [`MemoryModule`](../modules/memory-module),
 [`PoolModule`](../modules/pool-module), and the other six modules documented under
 Codegen > Modules all extend it. This page is for understanding how the generator pipeline
-works and, eventually, for writing a new module yourself; if you're only *using* TsVRC
+works and, eventually, for writing a new module yourself; if you're only *using* Core
 rather than extending its generator, you can skip it.
 See [Adding a codegen module](./adding-a-codegen-module) for a worked example
 of implementing one.

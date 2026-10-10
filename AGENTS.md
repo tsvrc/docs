@@ -16,5 +16,5 @@ link, which `npm start` doesn't catch.
   list, so a category's `label` comes from its wrapping `{type: 'category', ...}` node, not a
   `_category_.json`.
 - Each project's code lives in its own repo (`tsvrc-core`, `udon-test-kit`), and nothing keeps it in
-  sync with this one. When a project's public behavior changes, check its pages here, and TsVRC's
+  sync with this one. When a project's public behavior changes, check its pages here, and Core's
   testing pages too when Udon Test Kit changes.

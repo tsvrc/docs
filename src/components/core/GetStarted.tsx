@@ -22,7 +22,7 @@ export default function GetStarted() {
               It&apos;s also still a work in progress. Every part of it has its own tests,
               and we run them before every release, but we can&apos;t promise
               we&apos;ve caught every case. Keep a backup of your project before adding
-              TsVRC to it or updating it, just to be safe. If something breaks on your end, we
+              Core to it or updating it, just to be safe. If something breaks on your end, we
               can&apos;t fix it for you, but we&apos;d really like to know about it.
               Open an issue on GitHub and we&apos;ll take a look.
             </Translate>
@@ -34,7 +34,7 @@ export default function GetStarted() {
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-fg-muted">
             <Translate id="core.cta.subtitle">
-              Add TsVRC through VCC, then follow the getting-started guide to have a behaviour
+              Add Core through VCC, then follow the getting-started guide to have a behaviour
               running in play mode.
             </Translate>
           </p>

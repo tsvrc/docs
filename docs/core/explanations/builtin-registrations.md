@@ -6,7 +6,7 @@ sidebar_position: 4
 
 # Decision note: builtin pool and factory entries
 
-Eight of TsVRC's own runtime types ship pre-registered in `TsBuiltinConfig`, the
+Eight of Core's own runtime types ship pre-registered in `TsBuiltinConfig`, the
 library-wide counterpart to a project's own [`TsConfig`](../codegen/config/ts-config):
 [`DataTransferer`](../networking-data/data-transfer/data-transferer),
 [`TsvrcTimer`](../networking-data/tsvrc-timer),
@@ -18,7 +18,7 @@ library-wide counterpart to a project's own [`TsConfig`](../codegen/config/ts-co
 [`RankedGameSession`](../game-flow/ranked-game-session) as a pool entry too, not just the
 sub-behaviours it composes. A `[WirePool]` field or `_ts.CreateX()` call for any of these
 eight works the moment you write it, with nothing to add on the Configure window's Pools
-or Factories tab first. This note explains why TsVRC ships them pre-registered, and why
+or Factories tab first. This note explains why Core ships them pre-registered, and why
 each one landed on Pool or Factory specifically.
 
 ## What shipping them pre-registered actually buys
@@ -29,7 +29,7 @@ time." The observable effect of that merge is what matters here: without it, usi
 `PlayerTracker` in your own code would need the same round trip registering one of your own
 project's types does, open Configure, add it to the Pools tab, then come back to write the
 `[WirePool]` field, even though every project that uses `PlayerTracker` needs it registered
-the exact same way, with no project-specific choice to make. Merging TsVRC's own
+the exact same way, with no project-specific choice to make. Merging Core's own
 registrations in ahead of a project's own removes that step for these eight types
 specifically, without changing anything about how a project registers its *own* types.
 

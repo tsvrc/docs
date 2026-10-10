@@ -15,7 +15,7 @@ ready](../how-to/wiring-a-ready-check) for a common pairing with `ReadyCheckProc
 
 ## Getting an instance
 
-`AutoPlayerTracker` ships as one of [TsVRC's own default pool
+`AutoPlayerTracker` ships as one of [Core's own default pool
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in

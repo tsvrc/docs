@@ -7,7 +7,7 @@ sidebar_position: 3
 # TsPendingConfigEdit
 
 `Tsvrc.Editor.TsPendingConfigEdit` is the batching primitive behind every Apply/Discard
-button in TsVRC's editor UI. [`TsWindow`](./ts-window) owns one per `TsConfig` it edits
+button in Core's editor UI. [`TsWindow`](./ts-window) owns one per `TsConfig` it edits
 (plus a second one for the Settings tab's `TsvrcLogger` fields), and
 `TsBuiltinConfigInspector` owns one for whichever `TsBuiltinConfig` asset is selected. One
 instance tracks edits to exactly one target object.

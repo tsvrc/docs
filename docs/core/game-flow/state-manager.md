@@ -9,19 +9,19 @@ sidebar_position: 1
 `Tsvrc.StateMachine.StateManager` is a generic, local-only (unsynced) finite state machine:
 states are plain integers, each with optional enter/exit method dispatch on a chosen target
 behaviour. Its generated shadow is `TsStateManager`. It has no dependency on any other
-TsVRC module beyond `TsvrcBehaviour`. See [Give a screen or flow its own state
+Core module beyond `TsvrcBehaviour`. See [Give a screen or flow its own state
 machine](../how-to/adding-a-screen-state-machine) for a task-oriented walkthrough.
 
 ## Getting an instance
 
-`StateManager` ships as one of [TsVRC's own default factory
+`StateManager` ships as one of [Core's own default factory
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** `_ts.CreateStateManager(parent)` just works, nothing to register in
   Configure first.
 - **Manual:** skip the factory entirely. `AddComponent` it (or drag the shipped
   `StateManager` prefab into your scene) and start calling `RegisterState`/`SetState`
-  directly. Unlike most other TsVRC runtime types, `StateManager` never overrides
+  directly. Unlike most other Core runtime types, `StateManager` never overrides
   `TsStart` and never touches `_ts`, so it doesn't need `TsConstruct` to have run at all:
   first-class support for the fully manual path.
 

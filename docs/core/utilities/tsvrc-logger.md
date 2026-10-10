@@ -6,7 +6,7 @@ sidebar_position: 4
 
 # TsvrcLogger
 
-`Tsvrc.Utils.TsvrcLogger` is TsVRC's centralized logging sink: a `TsvrcBehaviour` you reach
+`Tsvrc.Utils.TsvrcLogger` is Core's centralized logging sink: a `TsvrcBehaviour` you reach
 through `_ts.Log`, wrapping `Debug.Log`/`LogWarning`/`LogError` with a consistent message
 format and independent on/off toggles per severity. Its generated shadow class is
 `TsLogger`. Most code never calls it directly: prefer `TsvrcBehaviour`'s own `LogInfo`,

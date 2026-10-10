@@ -11,7 +11,7 @@ written with [Udon Test Kit](/docs/udon-test-kit/intro).
 
 ## 1. Put your scripts and generated code in one assembly
 
-TsVRC's generated code declares the base types your world scripts extend (`TsBehaviour`,
+Core's generated code declares the base types your world scripts extend (`TsBehaviour`,
 `TsInstance`, and so on), and in turn references concrete types from your own scripts: a
 Construct or Factory entry generates a field typed as whatever class you registered. That's
 a two-way dependency, and Unity doesn't allow two assembly definitions to reference each
@@ -23,7 +23,7 @@ UdonSharp assemblies your scripts use.
 
 ## 2. Create your test assemblies
 
-TsVRC depends on Udon Test Kit, so the kit is already in your project. Create your test
+Core depends on Udon Test Kit, so the kit is already in your project. Create your test
 assemblies with its menu item, as described in
 [Create your test assemblies](/docs/udon-test-kit/add-to-your-project#create-your-test-assemblies).
 They already reference the kit, the VRChat SDK, ClientSim and your project's assembly from
@@ -32,8 +32,8 @@ step 1.
 ## 3. Reference Tsvrc.Runtime
 
 Add `Tsvrc.Runtime` to the references of the `EditMode` and `PlayMode` test assemblies if it isn't
-listed already, and to the `Doubles` assembly if your test doubles extend TsVRC types.
+listed already, and to the `Doubles` assembly if your test doubles extend Core types.
 
-That's all. TsVRC's codegen holds back on its own while tests run, so nothing else needs
-arming. [Testing your world](../testing/testing-your-world) covers how a test builds TsVRC
+That's all. Core's codegen holds back on its own while tests run, so nothing else needs
+arming. [Testing your world](../testing/testing-your-world) covers how a test builds your
 behaviours.

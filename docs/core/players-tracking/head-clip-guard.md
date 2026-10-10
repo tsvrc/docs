@@ -17,7 +17,7 @@ walls](../how-to/guarding-against-head-clipping) for a task-oriented walkthrough
 
 ## Getting an instance
 
-`HeadClipGuard` ships as one of [TsVRC's own default factory
+`HeadClipGuard` ships as one of [Core's own default factory
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** `_ts.CreateHeadClipGuard(parent)` just works, nothing to register in

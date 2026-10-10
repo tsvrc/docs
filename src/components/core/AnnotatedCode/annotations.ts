@@ -79,7 +79,7 @@ export function useAnnotations(): Annotation[] {
       title: translate({ id: 'core.hero.annotation.more.title', message: "That's not all" }),
       description: translate({
         id: 'core.hero.annotation.more.description',
-        message: "There's more where that came from. See the rest of TsVRC's building blocks below.",
+        message: "There's more where that came from. See the rest of Core's building blocks below.",
       }),
       href: '#building-blocks',
     },

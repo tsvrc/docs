@@ -36,7 +36,7 @@ public class GameInstance : TsInstance
   [`Networking.IsMaster`](https://udonsharp.docs.vrchat.com/vrchat-api/#networking). It's
   a real, working default today, not a stub that throws, so a project with no special
   master logic doesn't need to touch it. Treat the name and the logic behind it as a
-  placeholder, though: TsVRC's plan is real master management of its own, independent of
+  placeholder, though: Core's plan is real master management of its own, independent of
   VRChat's instance master, and this property will change to reflect that before 1.0.
   Override it now if your world needs different master logic in the meantime, but expect
   to revisit that override later. Before gating any world feature on master status at
