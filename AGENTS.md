@@ -17,4 +17,4 @@ link, which `npm start` doesn't catch.
   `_category_.json`.
 - Each project's code lives in its own repo (`tsvrc-core`, `udon-test-kit`), and nothing keeps it in
   sync with this one. When a project's public behavior changes, check its pages here, and TsVRC's
-  testing pages too when Udon Test Kit changes.
+  testing pages too when Test Kit changes.

@@ -23,9 +23,9 @@ UdonSharp assemblies your scripts use.
 
 ## 2. Create your test assemblies
 
-TsVRC's testing helpers build on Udon Test Kit. Create your test assemblies with the kit's
+TsVRC's testing helpers build on Test Kit. Create your test assemblies with the kit's
 menu item, as described in
-[Create your test assemblies](/docs/udon-test-kit/add-to-your-project#create-your-test-assemblies).
+[Create your test assemblies](/docs/test-kit/add-to-your-project#create-your-test-assemblies).
 They already reference the kit, the VRChat SDK, ClientSim and your project's assembly from
 step 1.
 
@@ -41,4 +41,4 @@ Add `Tsvrc.Runtime` to the `Doubles` assembly too, if your test doubles extend T
 
 That's all. TsVRC's codegen holds back on its own while tests run, so nothing else needs
 arming. Extend [`TsPlayModeTestBase`](../testing/testing-your-world#play-mode-tests-tsplaymodetestbase)
-to write a Play Mode test, or use Udon Test Kit's helpers directly in an Edit Mode one.
+to write a Play Mode test, or use Test Kit's helpers directly in an Edit Mode one.

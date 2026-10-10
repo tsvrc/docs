@@ -19,7 +19,7 @@ Play Mode run never reports its results, and a batch-mode run never exits.
 
 The kit adds those four types to the SDK's allowlist whenever the Editor loads it, before any test
 runs. Nothing needs turning on. The allowlist is internal to the SDK, so if a future SDK moves it,
-the kit logs a warning starting with `[UdonTestKit] UnityEventFilterAllowlist:` instead of failing.
+the kit logs a warning starting with `[TestKit] UnityEventFilterAllowlist:` instead of failing.
 
 ## Tests that fail without saying why
 

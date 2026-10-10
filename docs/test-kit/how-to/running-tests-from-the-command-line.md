@@ -15,7 +15,7 @@ into any Unity project to use it there, whether or not that project has the kit.
 
 1. Get the script: `Scripts~/Invoke-UnityTests.ps1` in the
    [kit's repository](https://github.com/tsvrc/udon-test-kit). If you installed the kit through the
-   Creator Companion, it's also in `Packages/com.tsvrc.udon-test-kit/Scripts~`. A `.unitypackage`
+   Creator Companion, it's also in `Packages/com.tsvrc.test-kit/Scripts~`. A `.unitypackage`
    can't carry it.
 2. Copy it into your project, such as its root folder. It finds the project by looking up from its
    own folder.

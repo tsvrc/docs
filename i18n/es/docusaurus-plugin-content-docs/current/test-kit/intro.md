@@ -1,12 +1,12 @@
 ---
 id: intro
-title: Udon Test Kit
+title: Test Kit
 sidebar_position: 1
 ---
 
-# Udon Test Kit
+# Test Kit
 
-Udon Test Kit te permite escribir tests automatizados para un mundo de VRChat con Unity Test
+Test Kit te permite escribir tests automatizados para un mundo de VRChat con Unity Test
 Framework. Los tests de modo Play ejecutan tus behaviours de UdonSharp en una sesión real de
 ClientSim, con jugadores reales.
 
@@ -43,7 +43,7 @@ proyecto de Unity, con o sin el kit.
 
 ## Empieza aquí
 
-1. [Añade Udon Test Kit a tu proyecto](./add-to-your-project)
+1. [Añade Test Kit a tu proyecto](./add-to-your-project)
 2. [Escribe tu primer test](./first-test)
 
 ## Tareas comunes

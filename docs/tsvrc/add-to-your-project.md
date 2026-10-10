@@ -19,9 +19,9 @@ Install **TsVRC** (`com.tsvrc.core`) as described in
 [Install a TsVRC package](/docs/install-a-package). Its `.unitypackage` is on
 [TsVRC's GitHub releases](https://github.com/tsvrc/tsvrc-core/releases).
 
-TsVRC depends on [Udon Test Kit](/docs/udon-test-kit/intro) (`com.tsvrc.udon-test-kit`) for its
+TsVRC depends on [Test Kit](/docs/test-kit/intro) (`com.tsvrc.test-kit`) for its
 testing helpers. The Creator Companion installs it along with TsVRC. With the `.unitypackage`,
-import [the kit's](/docs/udon-test-kit/add-to-your-project) too, unless your project already has
+import [the kit's](/docs/test-kit/add-to-your-project) too, unless your project already has
 it.
 
 You'll know it worked when Unity's menu bar gains a **Tsvrc** menu. Everything TsVRC does

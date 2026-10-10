@@ -16,15 +16,15 @@ function useProjects(): Project[] {
       repo: 'tsvrc/tsvrc-core',
     },
     {
-      name: 'Udon Test Kit',
+      name: 'Test Kit',
       status: 'available',
       description: translate({
-        id: 'homepage.projects.udonTestKit.description',
+        id: 'homepage.projects.testKit.description',
         message:
           'Automated tests for VRChat worlds: Play Mode tests run your UdonSharp behaviours in a ' +
           'real ClientSim session, with real players.',
       }),
-      docsHref: '/docs/udon-test-kit/intro',
+      docsHref: '/docs/test-kit/intro',
       repo: 'tsvrc/udon-test-kit',
     },
   ];

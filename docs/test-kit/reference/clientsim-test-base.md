@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # ClientSimTestBase
 
-`UdonTestKit.ClientSimTestBase` is an abstract base class for Play Mode test fixtures that use
+`Tsvrc.TestKit.ClientSimTestBase` is an abstract base class for Play Mode test fixtures that use
 ClientSim. It holds a [`ClientSimSession`](./clientsim-session) in its protected `Session` field
 and ends it after every test, and it can run every test in a [`TestScene`](./test-scene) of its
 own.

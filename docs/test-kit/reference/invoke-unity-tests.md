@@ -16,7 +16,7 @@ using it.
 
 The script is `Scripts~/Invoke-UnityTests.ps1` in the
 [kit's repository](https://github.com/tsvrc/udon-test-kit). A Creator Companion install also has
-it on disk, under `Packages/com.tsvrc.udon-test-kit/Scripts~`. Unity doesn't import folders ending
+it on disk, under `Packages/com.tsvrc.test-kit/Scripts~`. Unity doesn't import folders ending
 in `~`, so a `.unitypackage` of the kit can't include it.
 
 Copy it anywhere inside your project, such as its root folder. It finds the project by looking up

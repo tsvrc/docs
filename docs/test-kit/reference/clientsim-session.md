@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # ClientSimSession
 
-`UdonTestKit.ClientSimSession` starts ClientSim for a Play Mode test, gives the test real
+`Tsvrc.TestKit.ClientSimSession` starts ClientSim for a Play Mode test, gives the test real
 `VRCPlayerApi` players, and ends ClientSim so that nothing of it is left running.
 [`ClientSimTestBase`](./clientsim-test-base) holds one and ends it after every test; create one
 yourself only when your test class doesn't extend it.

@@ -48,7 +48,7 @@ How to write a real Play Mode test against your own `TsvrcBehaviour` subclass, o
 
 ## Reaching a private field or method
 
-Use Udon Test Kit's [`PrivateFieldAccess`](/docs/udon-test-kit/reference/private-field-access)
+Use Test Kit's [`PrivateFieldAccess`](/docs/test-kit/reference/private-field-access)
 instead of making something `public` just so a test can see it:
 
 ```csharp
@@ -57,8 +57,8 @@ int remaining = PrivateFieldAccess.GetField<int>(referee, "_remainingMillisecond
 
 ## Asserting an event actually fired
 
-Subscribe a spy from Udon Test Kit's
-[`CallLog`](/docs/udon-test-kit/reference/callback-spy-and-call-log) instead of writing a
+Subscribe a spy from Test Kit's
+[`CallLog`](/docs/test-kit/reference/callback-spy-and-call-log) instead of writing a
 one-off listener class for every test:
 
 ```csharp

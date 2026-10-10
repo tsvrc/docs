@@ -6,7 +6,7 @@ sidebar_position: 5
 
 # PrivateFieldAccess
 
-`UdonTestKit.PrivateFieldAccess` reads and writes fields, and calls methods, by name on any object
+`Tsvrc.TestKit.PrivateFieldAccess` reads and writes fields, and calls methods, by name on any object
 or type, whatever their access level. Use it to arrange or check state that a behaviour's public
 members don't expose, without making that state public just for a test.
 

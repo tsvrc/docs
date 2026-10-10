@@ -6,9 +6,9 @@ sidebar_position: 8
 
 # TestAssemblyCreator
 
-`UdonTestKit.TestAssemblyCreator` creates the test assemblies a world needs: an Edit Mode test
+`Tsvrc.TestKit.TestAssemblyCreator` creates the test assemblies a world needs: an Edit Mode test
 assembly, a Play Mode test assembly, and a test doubles assembly both of them reference. Run it
-from **Assets > Create > TsVRC > Udon Test Kit > Test Assemblies**, or from the Project window's
+from **Assets > Create > TsVRC > Test Kit > Test Assemblies**, or from the Project window's
 right-click **Create** menu.
 
 ## Where it creates them

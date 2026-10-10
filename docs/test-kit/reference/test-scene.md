@@ -6,7 +6,7 @@ sidebar_position: 3
 
 # TestScene
 
-`UdonTestKit.TestScene` is a scene for Play Mode tests to run in: a new empty scene, or a scene
+`Tsvrc.TestKit.TestScene` is a scene for Play Mode tests to run in: a new empty scene, or a scene
 asset such as your world's own. Loading it makes it the active scene, so ClientSim and the objects
 a test creates go into it, and unloading it destroys them.
 
@@ -74,7 +74,7 @@ End the session before unloading the scene, the same order `ClientSimTestBase` u
 
 ## TestSceneLifetime
 
-`UdonTestKit.TestSceneLifetime` tells `ClientSimTestBase` how long its scene lives:
+`Tsvrc.TestKit.TestSceneLifetime` tells `ClientSimTestBase` how long its scene lives:
 
 - `PerTest`, the default, loads a fresh copy for every test and unloads it after. Each test starts
   from the same scene, and whatever a test created is gone before the next one.

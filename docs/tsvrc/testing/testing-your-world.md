@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Testing your world
 
-TsVRC's testing helpers build on [Udon Test Kit](/docs/udon-test-kit/intro), which runs Play Mode
+TsVRC's testing helpers build on [Test Kit](/docs/test-kit/intro), which runs Play Mode
 tests in a real ClientSim session and works around the VRChat SDK problems that break them. TsVRC
 depends on the kit, so it's already in your project.
 
@@ -20,7 +20,7 @@ test](../how-to/writing-your-first-test) for a worked example.
 ## Play Mode tests: TsPlayModeTestBase {/* #play-mode-tests-tsplaymodetestbase */}
 
 `TsPlayModeTestBase` extends the kit's
-[`ClientSimTestBase`](/docs/udon-test-kit/reference/clientsim-test-base). A test gets the kit's
+[`ClientSimTestBase`](/docs/test-kit/reference/clientsim-test-base). A test gets the kit's
 `Session` for starting ClientSim and working with players, and `BuildTsRoot<TRoot>()` for
 constructing your project's generated composition root from code.
 
