@@ -9,7 +9,8 @@ sidebar_position: 9
 `Invoke-UnityTests.ps1` runs a Unity project's tests from PowerShell on Windows and prints a short
 report. It's a single, standalone file: it doesn't use the kit or anything else beyond Unity Test
 Framework, and it's meant to be copied into any Unity project that wants it, with or without the
-kit.
+kit. [Run tests from the command line](../how-to/running-tests-from-the-command-line) walks through
+using it.
 
 ## Getting it
 

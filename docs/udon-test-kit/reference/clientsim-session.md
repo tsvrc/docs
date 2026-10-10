@@ -71,6 +71,8 @@ in VRChat. Then it moves ownership to `player`. From then on, `Networking.SetOwn
 GameObject move its ownership too, including the ones the code under test makes. Calling
 `SetOwner` again reuses the component instead of adding another. On a GameObject that already has
 `VRCObjectSync` or `VRCObjectPool`, it only calls `Networking.SetOwner`.
+[Test what happens for a player who isn't the owner](../how-to/testing-a-player-who-isnt-the-owner)
+shows it in a test.
 
 ## Ending
 
@@ -93,7 +95,8 @@ ClientSim saves each player's data in your project folder, one file per player a
 
 `ClientSimSession.DeleteSavedData()` is static and deletes both kinds of file for the active scene,
 for every player. Nothing else in the kit deletes saved data: in your world's own scene, those
-files are your ClientSim data.
+files are your ClientSim data. [Check that saved data survives a rejoin](../how-to/testing-saved-data)
+uses both.
 
 Unity Test Framework gives its test scene a new name on every run, so each run leaves a few files
 in `ClientSimStorage` that no later run reads. You can delete them whenever you like.

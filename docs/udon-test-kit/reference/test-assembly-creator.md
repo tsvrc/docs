@@ -51,6 +51,7 @@ Each example compiles and passes as created.
   definition later, and add it to the test assemblies' references yourself.
 - Scripts without an assembly definition compile into `Assembly-CSharp`, which an assembly
   definition can't reference. When any script under `Assets` has none, creating the assemblies logs
-  a warning.
+  a warning. See
+  [Test scripts that have no assembly definition](../how-to/testing-scripts-without-an-assembly-definition).
 - `TestAssemblyCreator.Create(string parentFolder = "Assets")` does the same from code, and returns
   the new folder's path.

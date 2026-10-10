@@ -11,7 +11,8 @@ asset such as your world's own. Loading it makes it the active scene, so ClientS
 a test creates go into it, and unloading it destroys them.
 
 [`ClientSimTestBase`](./clientsim-test-base) loads and unloads one for you when you pass it to the
-base constructor. You can also use it on its own.
+base constructor, as in [Run tests in a scene of their own](../how-to/running-tests-in-their-own-scene).
+You can also use it on its own.
 
 ## Creating one
 

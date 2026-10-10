@@ -21,6 +21,7 @@ Assert.That(calls, Is.EqualTo(new[] { "Listener.CallbackA" }));
 ```
 
 Both work in Edit Mode and Play Mode tests.
+[Check the calls your code makes by name](../how-to/checking-calls-made-by-name) walks through it.
 
 ## CallLog
 
