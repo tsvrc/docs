@@ -84,11 +84,6 @@ const config: Config = {
       },
       items: [
         {
-          to: '/framework',
-          position: 'left',
-          label: 'Framework',
-        },
-        {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
@@ -113,10 +108,6 @@ const config: Config = {
     footer: {
       style: 'dark',
       links: [
-        {
-          label: 'Framework',
-          to: '/framework',
-        },
         {
           label: 'Docs',
           to: '/docs/tsvrc/intro',

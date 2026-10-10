@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import Link from '@docusaurus/Link';
 import { translate } from '@docusaurus/Translate';
+import { LawIcon, MarkGithubIcon, StarIcon, TagIcon, type Icon } from '@primer/octicons-react';
 
 export type Project = {
   name: string;
@@ -10,7 +12,53 @@ export type Project = {
   repo: string;
 };
 
-const badgeStyle = 'style=flat&color=58a6ff&labelColor=161b22';
+type StatKind = 'stars' | 'license' | 'release';
+type Stat = { kind: StatKind; value: string };
+
+const statPaths: Record<StatKind, string> = { stars: 'stars', license: 'license', release: 'v/release' };
+const statIcons: Record<StatKind, Icon> = { stars: StarIcon, license: LawIcon, release: TagIcon };
+
+function statLabel(kind: StatKind): string {
+  switch (kind) {
+    case 'stars':
+      return translate({ id: 'homepage.projects.stat.stars', message: 'Stars' });
+    case 'license':
+      return translate({ id: 'homepage.projects.stat.license', message: 'License' });
+    case 'release':
+      return translate({ id: 'homepage.projects.stat.release', message: 'Latest release' });
+  }
+}
+
+// Shields' JSON endpoints accept requests from any site and are cached for 30 minutes, so
+// visitors don't use up GitHub's limit of 60 anonymous API requests an hour. Shields reports a
+// private or missing repository, or one with no releases, as the value itself; those are left out.
+function useRepoStats(repo: string): Stat[] {
+  const [stats, setStats] = useState<Stat[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    const kinds = Object.keys(statPaths) as StatKind[];
+    Promise.all(
+      kinds.map((kind) =>
+        fetch(`https://img.shields.io/github/${statPaths[kind]}/${repo}.json`)
+          .then((response) => (response.ok ? response.json() : null))
+          .then((badge) =>
+            typeof badge?.value === 'string' && !/not found|no releases|invalid|inaccessible/i.test(badge.value)
+              ? { kind, value: badge.value }
+              : null,
+          )
+          .catch(() => null),
+      ),
+    ).then((results) => {
+      if (!cancelled) {
+        setStats(results.filter((stat): stat is Stat => stat !== null));
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [repo]);
+  return stats;
+}
 
 function statusLabel(status: Project['status']): string {
   return status === 'available'
@@ -18,59 +66,48 @@ function statusLabel(status: Project['status']): string {
     : translate({ id: 'homepage.projects.status.planned', message: 'Planned' });
 }
 
-function badges(repo: string) {
-  const github = `https://github.com/${repo}`;
-  return [
-    {
-      src: `https://img.shields.io/github/stars/${repo}?label=stars&${badgeStyle}`,
-      href: `${github}/stargazers`,
-      alt: translate({ id: 'homepage.projects.badge.stars', message: 'GitHub stars for {repo}' }, { repo }),
-    },
-    {
-      src: `https://img.shields.io/github/license/${repo}?${badgeStyle}`,
-      href: github,
-      alt: translate({ id: 'homepage.projects.badge.license', message: 'License of {repo}' }, { repo }),
-    },
-    {
-      src: `https://img.shields.io/github/v/release/${repo}?label=release&${badgeStyle}`,
-      href: `${github}/releases`,
-      alt: translate({ id: 'homepage.projects.badge.release', message: 'Latest release of {repo}' }, { repo }),
-    },
-    {
-      src: `https://img.shields.io/github/last-commit/${repo}?label=last%20commit&${badgeStyle}`,
-      href: `${github}/commits`,
-      alt: translate({ id: 'homepage.projects.badge.lastCommit', message: 'Last commit to {repo}' }, { repo }),
-    },
-  ];
-}
-
+// The whole card links to the project's docs: the title's link stretches over the card, and the
+// GitHub link sits above it.
 export default function ProjectCard({ project }: { project: Project }) {
+  const stats = useRepoStats(project.repo);
   return (
-    <div className="flex flex-col justify-between rounded-lg border border-border bg-canvas-subtle p-6">
-      <div>
+    <div className="relative flex flex-col rounded-lg border border-border bg-canvas-subtle p-6 transition-colors hover:border-accent focus-within:border-accent">
+      <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">
-          <h3 className="font-heading text-xl font-semibold text-fg">{project.name}</h3>
+          <h3 className="font-heading text-xl font-semibold">
+            <Link
+              to={project.docsHref}
+              className="text-fg no-underline hover:no-underline after:absolute after:inset-0 after:rounded-lg">
+              {project.name}
+            </Link>
+          </h3>
           <span className="rounded-full border border-border px-2 py-0.5 text-xs text-fg-muted">
             {statusLabel(project.status)}
           </span>
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-fg-muted">{project.description}</p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {badges(project.repo).map((badge) => (
-            <a key={badge.src} href={badge.href} className="opacity-90 hover:opacity-100">
-              <img src={badge.src} alt={badge.alt} height={20} />
-            </a>
-          ))}
-        </div>
-      </div>
-      <div className="mt-5 flex gap-5 text-sm font-medium">
-        <Link to={project.docsHref} className="text-accent no-underline hover:underline">
-          {translate({ id: 'homepage.projects.docs', message: 'Docs' })} →
-        </Link>
-        <Link href={`https://github.com/${project.repo}`} className="text-fg-muted no-underline hover:underline">
-          GitHub →
+        <Link
+          href={`https://github.com/${project.repo}`}
+          aria-label={translate(
+            { id: 'homepage.projects.github', message: '{name} on GitHub' },
+            { name: project.name },
+          )}
+          className="relative z-10 -m-1 p-1 text-fg-muted hover:text-fg">
+          <MarkGithubIcon size={24} />
         </Link>
       </div>
+      <p className="mt-3 text-sm leading-relaxed text-fg-muted">{project.description}</p>
+      <ul className="mt-auto flex min-h-5 list-none flex-wrap gap-x-4 gap-y-1 p-0 pt-2 text-xs text-fg-muted">
+        {stats.map((stat) => {
+          const StatIcon = statIcons[stat.kind];
+          return (
+            <li key={stat.kind} className="m-0 inline-flex items-center gap-1">
+              <StatIcon size={16} />
+              <span className="sr-only">{statLabel(stat.kind)}: </span>
+              {stat.value}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

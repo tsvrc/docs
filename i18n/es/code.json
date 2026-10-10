@@ -23,20 +23,17 @@
   "homepage.projects.udonTestKit.description": {
     "message": "Tests automatizados para mundos de VRChat: los tests de modo Play ejecutan una sesión real de ClientSim con jugadores reales, sin los problemas del SDK que de otro modo los rompen."
   },
-  "homepage.projects.docs": {
-    "message": "Documentación"
+  "homepage.projects.github": {
+    "message": "{name} en GitHub"
   },
-  "homepage.projects.badge.stars": {
-    "message": "Estrellas de GitHub de {repo}"
+  "homepage.projects.stat.stars": {
+    "message": "Estrellas"
   },
-  "homepage.projects.badge.license": {
-    "message": "Licencia de {repo}"
+  "homepage.projects.stat.license": {
+    "message": "Licencia"
   },
-  "homepage.projects.badge.release": {
-    "message": "Última versión de {repo}"
-  },
-  "homepage.projects.badge.lastCommit": {
-    "message": "Último commit de {repo}"
+  "homepage.projects.stat.release": {
+    "message": "Última versión"
   },
   "homepage.projects.status.available": {
     "message": "Disponible"

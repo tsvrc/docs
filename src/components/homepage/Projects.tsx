@@ -4,7 +4,7 @@ import ProjectCard, { type Project } from '@site/src/components/homepage/Project
 function useProjects(): Project[] {
   return [
     {
-      name: 'TsVRC Core',
+      name: 'Core',
       status: 'available',
       description: translate({
         id: 'homepage.projects.tsvrc.description',
@@ -33,7 +33,7 @@ function useProjects(): Project[] {
 export default function Projects() {
   const projects = useProjects();
   return (
-    <section className="mx-auto max-w-4xl px-6 py-16">
+    <section className="mx-auto max-w-4xl px-6 pt-12 pb-16">
       <h2 className="font-heading text-2xl font-semibold text-fg">
         <Translate id="homepage.projects.title">Projects</Translate>
       </h2>

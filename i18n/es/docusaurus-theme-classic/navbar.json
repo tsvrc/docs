@@ -7,10 +7,6 @@
     "message": "Logotipo de TsVRC",
     "description": "The alt text of navbar logo"
   },
-  "item.label.Framework": {
-    "message": "Framework",
-    "description": "Navbar item with label Framework"
-  },
   "item.label.Docs": {
     "message": "Documentación",
     "description": "Navbar item with label Docs"

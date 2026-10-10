@@ -3,8 +3,8 @@ import Translate, { translate } from '@docusaurus/Translate';
 
 export default function Hero() {
   return (
-    <header className="border-b border-border bg-canvas">
-      <div className="mx-auto max-w-4xl px-6 py-16 sm:py-20">
+    <header className="bg-canvas">
+      <div className="mx-auto max-w-4xl px-6 pt-16 sm:pt-20">
         <div className="flex items-center gap-5">
           <Link href="https://github.com/ToniSeas" className="shrink-0 hover:opacity-90">
             <img
