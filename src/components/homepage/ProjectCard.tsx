@@ -71,7 +71,7 @@ function statusLabel(status: Project['status']): string {
 export default function ProjectCard({ project }: { project: Project }) {
   const stats = useRepoStats(project.repo);
   return (
-    <div className="relative flex flex-col rounded-lg border border-border bg-canvas-subtle p-6 transition-colors hover:border-accent focus-within:border-accent">
+    <div className="relative flex flex-col rounded-lg border border-border bg-surface p-6 transition hover:border-accent hover:shadow-md focus-within:border-accent">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">
           <h3 className="font-heading text-xl font-semibold">
@@ -96,7 +96,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         </Link>
       </div>
       <p className="mt-3 text-sm leading-relaxed text-fg-muted">{project.description}</p>
-      <ul className="mt-auto flex min-h-5 list-none flex-wrap gap-x-4 gap-y-1 p-0 pt-2 text-xs text-fg-muted">
+      <ul className="mt-auto flex min-h-5 list-none flex-wrap gap-x-4 gap-y-1 p-0 pt-2 font-mono text-xs text-fg-muted">
         {stats.map((stat) => {
           const StatIcon = statIcons[stat.kind];
           return (

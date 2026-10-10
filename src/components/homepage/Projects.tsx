@@ -33,20 +33,22 @@ function useProjects(): Project[] {
 export default function Projects() {
   const projects = useProjects();
   return (
-    <section className="mx-auto max-w-4xl px-6 pt-12 pb-16">
-      <h2 className="font-heading text-2xl font-semibold text-fg">
-        <Translate id="homepage.projects.title">Projects</Translate>
-      </h2>
-      <p className="mt-2 max-w-2xl text-fg-muted">
-        <Translate id="homepage.projects.description">
-          Everything built so far. Each project has its docs here and its code on GitHub.
-        </Translate>
-      </p>
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard key={project.name} project={project} />
-        ))}
-      </div>
-    </section>
+    <div className="bg-section">
+      <section className="mx-auto max-w-4xl px-6 pt-10 pb-16">
+        <h2 className="font-heading text-2xl font-semibold text-fg">
+          <Translate id="homepage.projects.title">Projects</Translate>
+        </h2>
+        <p className="mt-2 max-w-2xl text-fg-muted">
+          <Translate id="homepage.projects.description">
+            Everything built so far. Each project has its docs here and its code on GitHub.
+          </Translate>
+        </p>
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {projects.map((project) => (
+            <ProjectCard key={project.name} project={project} />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
