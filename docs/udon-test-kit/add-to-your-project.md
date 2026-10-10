@@ -17,8 +17,7 @@ VRChat Worlds SDK version the kit needs.
 
 - **Unity 2022.3.**
 - **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) 3.8.2 or later**, which includes
-  UdonSharp and ClientSim. Earlier versions stop Play Mode when a scene has no scene descriptor,
-  and Unity Test Framework's test scene has none, so every Play Mode run hangs.
+  UdonSharp and ClientSim.
 - **Unity Test Framework**, which new Unity projects already include.
 
 ## Install the package
