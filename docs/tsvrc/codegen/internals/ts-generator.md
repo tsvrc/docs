@@ -23,9 +23,10 @@ Regenerate**, when a watched asset changes, or automatically after every recompi
   through `TsAssetWatcher` itself.
 - **Before a VRChat world build** (`TsBuildCompile`) — see below.
 
-Every *automatic* trigger is gated by `AutomaticTriggersSuppressed`, which is true during
-any automated test run (detected once, from the process's own `-runTests` command-line
-flag) or inside an explicit `SuppressAutomaticTriggers()` scope. This exists because an
+Every *automatic* trigger is gated by `AutomaticTriggersSuppressed`, which is true while
+Unity Test Framework runs tests, whether from the Test Runner window or a `-runTests`
+command-line run, while the Editor is entering or in Play Mode, and inside an explicit
+`SuppressAutomaticTriggers()` scope. This exists because an
 automatic pass reacting to whatever scene happens to be open, a test's own temporary scene
 in particular, could otherwise silently regenerate a real project's output down to almost
 nothing (see [`TsLinkedScene`](../config/linked-scene) for the deeper reason this is

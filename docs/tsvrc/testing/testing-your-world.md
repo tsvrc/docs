@@ -6,32 +6,23 @@ sidebar_position: 1
 
 # Testing your world
 
-TsVRC ships a small set of testing helpers your own project can use to write real,
-ClientSim-backed Play Mode tests (and plain reflection-based Edit Mode tests) against your
-own `UdonSharpBehaviour`s, without hand-rolling VRChat SDK setup and working around its Play
-Mode quirks yourself. See [Set up automated testing](../how-to/set-up-automated-testing)
-for how to add these assemblies to your project, and [Write your first automated
-test](../how-to/writing-your-first-test) for a worked example; this page covers what
-these assemblies give you.
+TsVRC's testing helpers build on [Udon Test Kit](/docs/udon-test-kit/intro), which runs Play Mode
+tests in a real ClientSim session and works around the VRChat SDK problems that break them. TsVRC
+depends on the kit, so the Creator Companion installs it along with TsVRC.
 
-Nothing here does anything to your project just by being referenced. Every piece of
-behavior only activates when you actually use it. `PrivateFieldAccess` is a set of plain
-static methods with no base class requirement; `TsPlayModeTestBase` and its ClientSim
-machinery only run for a test class that actually extends it.
-
-## Reflection helpers: PrivateFieldAccess
-
-`SetField`/`GetField`/`InvokeStatic`/`InvokeInstance` reach private fields and methods on
-any object or static type from a test, useful for asserting on internal state a
-behaviour's public surface doesn't expose. Standalone, works in either Edit Mode or Play
-Mode.
+This page covers what TsVRC adds for testing a TsVRC world: a base class that builds your
+generated root from code, helpers for list UI, and codegen that holds back while tests run. For
+everything else, such as players, ownership, saved data, spies and reaching private fields, use
+the kit directly. See [Set up automated testing](../how-to/set-up-automated-testing) to add the
+assemblies to your project, and [Write your first automated
+test](../how-to/writing-your-first-test) for a worked example.
 
 ## Play Mode tests: TsPlayModeTestBase {/* #play-mode-tests-tsplaymodetestbase */}
 
-Extend `TsPlayModeTestBase` instead of setting up ClientSim by hand. It exposes `Players`
-(a `ClientSimPlayerEnvironment`, for spawning, removing, or finding real `VRCPlayerApi`
-instances in the test), `StartClientSim(...)` to begin a session, and
-`BuildTsRoot<TRoot>()` to construct your project's generated composition root from code.
+`TsPlayModeTestBase` extends the kit's
+[`ClientSimTestBase`](/docs/udon-test-kit/reference/clientsim-test-base). A test gets the kit's
+`Session` for starting ClientSim and working with players, and `BuildTsRoot<TRoot>()` for
+constructing your project's generated composition root from code.
 
 ```csharp
 public class MyManagerTests : TsPlayModeTestBase
@@ -39,7 +30,7 @@ public class MyManagerTests : TsPlayModeTestBase
     [UnityTest]
     public IEnumerator MyManager_DoesTheThing()
     {
-        yield return StartClientSim();
+        yield return Session.Start();
 
         var builder = BuildTsRoot<TsGenerated>();
         var myManager = builder.WithNew<MyManager>("MyManager");
@@ -50,6 +41,9 @@ public class MyManagerTests : TsPlayModeTestBase
     }
 }
 ```
+
+Every test runs in an empty scene of its own, which is unloaded after the test. Every GameObject
+the test or the builder created goes with it, so the next test starts from nothing.
 
 `BuildTsRoot` composes your generated root with `AddComponent` rather than loading a saved
 scene, then drives the same `_TsLogStart`/`_TsMemoryStart`/`_TsGlobalStart`/`_TsPoolStart`/
@@ -65,57 +59,30 @@ field; `With<T>(fieldName, instance)` assigns an instance you already built your
 Any root field neither call touched is auto-filled with a bare `AddComponent` stand-in the
 moment `Build()` runs, so a generated stage that unconditionally iterates every field of its
 module (`_TsGlobalStart` calling `TsConstruct` on every registered global, for example) never
-throws a null reference on a field the test never cared about. `TsPlayModeTestBase` tracks
-and tears down every GameObject the builder created, including those auto-filled
-stand-ins, automatically.
+throws a null reference on a field the test never cared about.
 
-Two known VRChat SDK and Unity Test Framework Play Mode testing defects are patched
-automatically for any class extending `TsPlayModeTestBase`. One, a `ClientSim` player-object
-leak that piles up conflicting writers on the same file across back-to-back tests, goes
-through `FixupRegistry`, which runs every registered `IPlayModeEnvironmentFixup`'s hooks at
-the matching lifecycle point; if a future SDK version fixes it upstream, disable it with
-`FixupRegistry.Disable<TFixup>()` rather than forking the testing framework itself. The
-other, restoring Unity Test Framework's own Play Mode result reporting (which VRChat SDK's
-event-listener filter otherwise strips), isn't registered there: it patches itself in via
-its own domain-load-time static constructor the first time it detects a `TsPlayModeTestBase`
-subclass anywhere in the project, before `FixupRegistry` or any test lifecycle hook ever
-runs. `FixupRegistry.Disable<TFixup>()` has no effect on it, since it's never part of the
-registry's own list to begin with.
+## Codegen during a test run
 
-Stopping TsVRC's own reactive codegen from regenerating against a test's temporary scene
-during a test run (see [`TsGenerator`](../codegen/internals/ts-generator)'s
-`SuppressAutomaticTriggers`) requires reaching an `internal` editor API from outside the
-package, granted once, package-wide, via an `InternalsVisibleTo` attribute, rather than
-something you need to configure yourself.
+A test that creates or changes scene objects would otherwise trigger TsVRC's reactive codegen,
+which could regenerate your project's real output against the test's temporary scene.
+[`TsGenerator`](../codegen/internals/ts-generator) skips every automatic trigger while tests run,
+from the Test Runner window or the command line, so there's nothing to set up for it.
 
-That suppression itself isn't automatic per test class the way the `TsPlayModeTestBase`
-fixups are. It has to be armed once per test assembly, for the assembly's entire run, via
-`AutomaticTriggersSetUpFixtureBase`. See [Set up automated
-testing](../how-to/set-up-automated-testing) for the one-line subclass this requires.
+## List UI: Tsvrc.Testing.UI
 
-## Two companion assemblies, and why they're separate
+`Tsvrc.Testing.UI` provides `TestListItem`, a generic `ListItem` double, and
+`TsvrcListTestBuilder.Build(...)`, which wires a bare `TsvrcList`'s private fields the same way
+you'd otherwise have to by hand.
 
-`Tsvrc.Testing.Framework` is a plain, editor-only C# library: none of its own types are meant
-to be `AddComponent`'d as real Udon components. Two more pieces need to actually run as
-`UdonSharpBehaviour`s, so they live in their own sibling assemblies instead:
+## The assemblies
 
-- **`Tsvrc.Testing.Behaviours`** provides `TsCallbackRecorder`, a generic `TsSubscribe`/
-  `TsEmit` listener double that records how many times each callback fired (and, via an
-  optional shared log, cross-listener firing order).
-- **`Tsvrc.Testing.UI`** provides `TestListItem` (a generic `ListItem` double) and
-  `TsvrcListTestBuilder.Build(...)`, which wires a bare `TsvrcList`'s private fields the same
-  way you'd otherwise have to by hand.
+TsVRC ships two testing assemblies, and a test assembly references whichever it needs:
 
-The split exists because of an UdonSharp constraint: `AddComponent` only works for scripts
-in an assembly registered as a U# assembly, and once registered, UdonSharp Udon-compiles
-*every* source file in that assembly. Keeping the reflection/ClientSim helpers in a
-separate, non-U#-registered assembly is what stops them from being dragged into a
-compilation context they were never meant to run under. Some of them reach `internal`
-editor APIs that Udon's compiler simply can't resolve. Add whichever companion assembly a
-given test actually needs, alongside `Tsvrc.Testing.Framework`; none of the three depend on
-each other beyond that. All three carry a `UNITY_INCLUDE_TESTS` define constraint, so none
-of them compile at all outside a test context, regardless of platform: nothing here can ship
-in a built world by accident.
+- **`Tsvrc.Testing.Framework`** holds `TsPlayModeTestBase` and the root builder. It's Editor-only
+  plain C#, and none of its types are added to GameObjects.
+- **`Tsvrc.Testing.UI`** holds the list doubles, which tests add to GameObjects as components.
+  Unity won't add a behaviour from an Editor-only assembly to a GameObject, so this one targets
+  every platform.
 
-See [Set up automated testing](../how-to/set-up-automated-testing) for how to reference
-these assemblies from your own project.
+Both compile only when Unity Test Framework includes tests (`UNITY_INCLUDE_TESTS`), so neither
+can reach a world build.

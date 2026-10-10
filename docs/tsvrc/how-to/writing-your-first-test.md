@@ -20,7 +20,7 @@ How to write a real Play Mode test against your own `TsvrcBehaviour` subclass, o
        [UnityTest]
        public IEnumerator RoundReferee_StartsOnBegin()
        {
-           yield return StartClientSim();
+           yield return Session.Start();
    ```
 
 2. Build your project's generated root from code instead of loading a saved scene, and
@@ -48,8 +48,8 @@ How to write a real Play Mode test against your own `TsvrcBehaviour` subclass, o
 
 ## Reaching a private field or method
 
-Use [`PrivateFieldAccess`](../testing/testing-your-world) instead of making something
-`public` just so a test can see it:
+Use Udon Test Kit's [`PrivateFieldAccess`](/docs/udon-test-kit/reference/private-field-access)
+instead of making something `public` just so a test can see it:
 
 ```csharp
 int remaining = PrivateFieldAccess.GetField<int>(referee, "_remainingMilliseconds");
@@ -57,21 +57,24 @@ int remaining = PrivateFieldAccess.GetField<int>(referee, "_remainingMillisecond
 
 ## Asserting an event actually fired
 
-Wire a [`TsCallbackRecorder`](../testing/testing-your-world) as the subscriber instead of
-writing a one-off listener class for every test:
+Subscribe a spy from Udon Test Kit's
+[`CallLog`](/docs/udon-test-kit/reference/callback-spy-and-call-log) instead of writing a
+one-off listener class for every test:
 
 ```csharp
-var recorder = builder.WithNew<TsCallbackRecorder>("Recorder");
-referee.TsSubscribe(recorder, RoundReferee.OnRoundEndedEvent, nameof(TsCallbackRecorder.CallbackA));
+using var calls = new CallLog();
+CallbackSpy listener = calls.CreateSpy("Listener");
+referee.TsSubscribe(listener, RoundReferee.OnRoundEndedEvent, nameof(CallbackSpy.CallbackA));
 
 // ...drive the round to completion...
 
-Assert.AreEqual(1, recorder.CallbackACount);
+Assert.That(calls, Is.EqualTo(new[] { "Listener.CallbackA" }));
 ```
+
+The log records each call in order, so the same assertion also fails if the event fired
+twice.
 
 ## Why this shape
 
-See [`Testing your world`](../testing/testing-your-world) for the full reasoning behind
-building a root from code instead of a saved scene, the two Play Mode testing defects
-patched automatically for any `TsPlayModeTestBase` subclass, and why the three testing
-assemblies are split the way they are.
+See [Testing your world](../testing/testing-your-world) for why the root is built from code
+instead of loaded from a saved scene, and how each test gets a scene of its own.

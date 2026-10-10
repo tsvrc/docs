@@ -47,6 +47,9 @@ Once the repository's added:
    to install it.
 3. Wait for Unity to finish importing and recompiling.
 
+The Creator Companion also installs [Udon Test Kit](/docs/udon-test-kit/intro)
+(`com.tsvrc.udon-test-kit`), which TsVRC depends on for its testing helpers.
+
 </TabItem>
 <TabItem value="unitypackage" label=".unitypackage">
 
@@ -55,6 +58,10 @@ Once the repository's added:
 2. With your project open, double-click the downloaded file (or use **Assets > Import
    Package > Custom Package**) and import everything.
 3. Wait for Unity to finish importing and recompiling.
+
+A `.unitypackage` can't bring the packages TsVRC depends on, so also import
+[Udon Test Kit's](/docs/udon-test-kit/add-to-your-project) `.unitypackage`, unless your
+project already has the kit.
 
 Nothing here resolves the VRChat Worlds SDK version for you, so confirm it's already at
 `3.10.x` before importing. If your project also uses VCC for other packages, prefer the
@@ -76,10 +83,10 @@ scripts extend and call into, and one editor-only assembly (`Tsvrc.Editor`) hold
 the codegen and Configure-window tooling. See [How TsVRC fits
 together](./core-concepts/how-it-fits-together) for how those two halves relate.
 
-Three further assemblies, `Tsvrc.Testing.Framework`, `Tsvrc.Testing.Behaviours`, and
-`Tsvrc.Testing.UI`, exist purely to support testing a *consumer's* own project, kept
-separate from each other and from `Tsvrc.Runtime`/`Tsvrc.Editor` for the reasons covered
-in [Testing your world](./testing/testing-your-world).
+Two further assemblies, `Tsvrc.Testing.Framework` and `Tsvrc.Testing.UI`, exist purely to
+support testing a *consumer's* own project, on top of Udon Test Kit, kept separate from
+each other and from `Tsvrc.Runtime`/`Tsvrc.Editor` for the reasons covered in [Testing
+your world](./testing/testing-your-world).
 
 ## Next
 

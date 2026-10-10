@@ -21,30 +21,24 @@ generated-folder setting points (they don't need to be nested inside each other,
 under that one asmdef's root), referencing `Tsvrc.Runtime` plus whatever VRChat SDK/
 UdonSharp assemblies your scripts use.
 
-## 2. Add a test assembly
+## 2. Create your test assemblies
 
-Create an EditMode or PlayMode test assembly referencing your project's runtime asmdef,
-`Tsvrc.Runtime`, and `Tsvrc.Testing.Framework` for the [reflection and ClientSim
-helpers](../testing/testing-your-world). Add `Tsvrc.Testing.Behaviours` or
-`Tsvrc.Testing.UI` too if your tests need the listener or list-item doubles they provide.
+TsVRC's testing helpers build on Udon Test Kit, which the Creator Companion installs along
+with TsVRC. Create your test assemblies with the kit's menu item, as described in
+[Create your test assemblies](/docs/udon-test-kit/add-to-your-project#create-your-test-assemblies).
+They already reference the kit, the VRChat SDK, ClientSim and your project's assembly from
+step 1.
 
-## 3. Arm reactive codegen suppression for Play Mode tests
+## 3. Add TsVRC's testing assemblies
 
-A test that creates or mutates scene objects can otherwise trigger a real codegen
-regenerate pass against your project's actual `TsConfig` mid-test-run. Add a one-line
-`[SetUpFixture]` subclass to your PlayMode test assembly to hold that back for the whole
-run:
+In the `EditMode` and `PlayMode` test assemblies, add these references:
 
-```csharp
-[SetUpFixture]
-public class AutomaticTriggersSetUpFixture : AutomaticTriggersSetUpFixtureBase { }
-```
+- `Tsvrc.Runtime`, if it isn't listed already.
+- `Tsvrc.Testing.Framework`, for [`TsPlayModeTestBase`](../testing/testing-your-world).
+- `Tsvrc.Testing.UI`, if your tests need its list doubles.
 
-NUnit only discovers a `[SetUpFixture]` in the assembly it's physically compiled into, so
-this needs adding once per test assembly. The base class living in
-`Tsvrc.Testing.Framework` isn't enough by itself.
+Add `Tsvrc.Runtime` to the `Doubles` assembly too, if your test doubles extend TsVRC types.
 
-With these three pieces in place, extend
-[`TsPlayModeTestBase`](../testing/testing-your-world#play-mode-tests-tsplaymodetestbase)
-to write a Play Mode test, or call `PrivateFieldAccess`'s static methods directly for an
-Edit Mode one.
+That's all. TsVRC's codegen holds back on its own while tests run, so nothing else needs
+arming. Extend [`TsPlayModeTestBase`](../testing/testing-your-world#play-mode-tests-tsplaymodetestbase)
+to write a Play Mode test, or use Udon Test Kit's helpers directly in an Edit Mode one.
