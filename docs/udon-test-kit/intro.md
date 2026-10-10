@@ -40,8 +40,8 @@ Jump straight to what you need:
   [test a player who isn't the owner](./how-to/testing-a-player-who-isnt-the-owner),
   [check that saved data survives a rejoin](./how-to/testing-saved-data), or
   [run tests from the command line](./how-to/running-tests-from-the-command-line).
-- **Looking up a type's behavior** — start from [ClientSimSession](./reference/clientsim-session),
-  or browse Reference in the sidebar.
+- **Looking up a type's behavior** — search for its name, start from
+  [ClientSimSession](./reference/clientsim-session), or browse Reference in the sidebar.
 - **Understanding what the kit changes and why** —
   [What the kit works around](./explanations/what-the-kit-works-around) and
   [a fresh session for every test](./explanations/a-fresh-session-for-every-test).

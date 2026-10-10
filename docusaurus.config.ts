@@ -28,7 +28,21 @@ const config: Config = {
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: [
+    '@docusaurus/theme-mermaid',
+    [
+      // Builds the search index at build time, so search works on GitHub Pages with no
+      // external service.
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        language: ['en', 'es'],
+        indexBlog: false,
+        explicitSearchResultPath: true,
+        highlightSearchTermsOnTargetPage: true,
+      },
+    ],
+  ],
 
   i18n: {
     defaultLocale: 'en',

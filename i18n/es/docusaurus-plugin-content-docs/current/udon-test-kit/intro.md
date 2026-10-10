@@ -42,7 +42,7 @@ Ve directo a lo que necesitas:
   [probar a un jugador que no es el dueño](./how-to/testing-a-player-who-isnt-the-owner),
   [comprobar que los datos guardados sobreviven al volver a entrar](./how-to/testing-saved-data) o
   [ejecutar tests desde la línea de comandos](./how-to/running-tests-from-the-command-line).
-- **Buscar el comportamiento de un tipo concreto** — empieza por
+- **Buscar el comportamiento de un tipo concreto** — busca su nombre, empieza por
   [ClientSimSession](./reference/clientsim-session) o explora Reference en la barra lateral.
 - **Entender qué cambia el kit y por qué** —
   [Lo que el kit resuelve](./explanations/what-the-kit-works-around) y

@@ -32,7 +32,7 @@ Ve directo a lo que necesitas:
   [mostrar las posiciones de los jugadores](./how-to/showing-player-positions),
   [transferir datos entre clientes](./how-to/transferring-data-between-clients) o
   [conectar un ready check](./how-to/wiring-a-ready-check).
-- **Buscar el comportamiento de un tipo concreto** — empieza por
+- **Buscar el comportamiento de un tipo concreto** — busca su nombre, empieza por
   [Cómo encaja TsVRC](./core-concepts/how-it-fits-together) y sigue sus enlaces, o
   explora Reference en la barra lateral, agrupado por área: jugadores, red, UI, codegen,
   etc.

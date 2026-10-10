@@ -51,7 +51,9 @@ is a comment, not `{#id}`: `## Play Mode tests {/* #play-mode-tests */}`. Sideba
 labels live in `sidebars.ts` itself, not a translatable file, so they render in English for
 every locale regardless of translated content underneath. Don't override Docusaurus's
 theme chrome (pagination, admonition labels, sidebar buttons) in this site's own
-`code.json`; it ships its own translated defaults per locale.
+`code.json`; it ships its own translated defaults per locale. The search plugin
+(`@easyops-cn/docusaurus-search-local`) ships no Spanish, so its `theme.SearchBar.*` and
+`theme.SearchPage.*` strings are the exception and live in `code.json`.
 
 Before translating a technical term, check how the target language's own community or
 official docs (Unity's localized manual, GitHub's glossary, VRChat's community) actually

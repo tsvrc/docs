@@ -29,7 +29,7 @@ Jump straight to what you need:
   [showing player positions](./how-to/showing-player-positions),
   [transferring data between clients](./how-to/transferring-data-between-clients), or
   [wiring a ready check](./how-to/wiring-a-ready-check).
-- **Looking up a type's behavior** — start from
+- **Looking up a type's behavior** — search for its name, start from
   [How TsVRC fits together](./core-concepts/how-it-fits-together) and follow its links, or
   browse Reference in the sidebar, grouped by area: players, networking, UI, codegen, and
   so on.
