@@ -11,10 +11,15 @@ VRChat con UdonSharp: inicialización estructurada, conexión de dependencias y
 generación de código en el editor (codegen) que escribe ese código de conexión por ti,
 sobre el VRChat Worlds SDK.
 
-:::note
-Core todavía es pre-1.0. Todo lo documentado aquí, incluyendo el comportamiento de
-casos límite en las páginas de referencia, describe lo que el código hace hoy, no un
-contrato de API cerrado.
+:::warning[Experimental y pre-1.0]
+Core es un experimento, y herramientas de programación con IA generaron parte de sus funciones. No
+está hecho por completo con vibe coding, pero la IA tuvo una gran participación al escribirlo.
+Además, todavía es pre-1.0: todo lo documentado aquí, incluyendo el comportamiento de casos límite
+en las páginas de referencia, describe lo que el código hace hoy, no un contrato de API cerrado.
+
+Prueba el comportamiento del que depende tu mundo antes de publicarlo. Si buscas proyectos listos
+para usar, mira [Udon Test Kit](/docs/udon-test-kit/intro) y
+[Udon Tools Kit](https://github.com/tsvrc/udon-tools-kit).
 :::
 
 ## ¿Eres nuevo en Core?

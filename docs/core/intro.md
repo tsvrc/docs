@@ -10,9 +10,15 @@ TsVRC Core is an open-source, community-maintained framework for building VRChat
 UdonSharp: structured initialization, dependency wiring, and an editor tool that generates
 the code for both automatically (codegen), on top of the VRChat Worlds SDK.
 
-:::note
-Core is still pre-1.0. Everything documented here, including edge-case behavior on
-reference pages, describes what the code does today, not a locked API contract.
+:::warning[Experimental and pre-1.0]
+Core is an experiment, and AI coding tools generated part of its features. It isn't fully vibe
+coded, but AI had a large share in writing it. It's also still pre-1.0: everything documented
+here, including edge-case behavior on reference pages, describes what the code does today, not a
+locked API contract.
+
+Test the behavior your world relies on before you publish it. For projects that are ready to use,
+see [Udon Test Kit](/docs/udon-test-kit/intro) and
+[Udon Tools Kit](https://github.com/tsvrc/udon-tools-kit).
 :::
 
 ## New to Core?
