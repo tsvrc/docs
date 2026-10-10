@@ -6,42 +6,38 @@ sidebar_position: 1
 
 # Udon Test Kit
 
-Udon Test Kit lets you test a VRChat world with Unity Test Framework. Play Mode tests run a real
-ClientSim session with real `VRCPlayerApi` players, and the kit works around the VRChat SDK and
-ClientSim problems that otherwise break those tests.
+Udon Test Kit lets you write automated tests for a VRChat world with Unity Test Framework. Play
+Mode tests run your UdonSharp behaviours in a real ClientSim session, with real players.
 
-A test extends `ClientSimTestBase` and starts its `Session`. From there it can spawn and remove
-remote players, choose who is master, give any GameObject an owner, and check what your behaviours
-did with all of it. Each test can run in a scene of its own, including your world's own scene.
-Spies record the calls your code makes by method name, such as `SendCustomEvent`, and a menu item
-creates the test assemblies a world needs in one step.
+## What you can do with it
 
-The kit also comes with `Invoke-UnityTests.ps1`, a PowerShell script that runs a project's Edit
-Mode and Play Mode tests in one command, without clicking through the Test Runner. It prints only
-the tests that didn't pass, with their messages, and exits with an error code when any failed, so
-it can check your tests before you commit or fail a build step. The script doesn't depend on the
-kit: copy it into any Unity project. See
-[Run tests from the command line](./how-to/running-tests-from-the-command-line).
+- Spawn and remove players, and choose who is the master.
+- Give any GameObject an owner, to test what a player who doesn't own it sees.
+- Keep saved data between sessions, like a player who leaves and rejoins.
+- Record the calls your code makes by name, such as with `SendCustomEvent`.
+- Run each test in a scene of its own, empty or your world's.
+- Create the test assemblies your world needs from one menu item.
 
-The kit compiles only when Unity Test Framework includes tests, so nothing from it reaches a world
-build.
+The kit only compiles for tests, so nothing from it ends up in your world's build.
 
-## New to the kit?
+It also includes `Invoke-UnityTests.ps1`, a standalone PowerShell script that runs a project's
+tests in one command and prints only what failed. It works in any Unity project, with or without
+the kit.
 
-Start with [Add Udon Test Kit to your project](./add-to-your-project), then
-[Write your first test](./first-test): by the end you'll have a Play Mode test with two players and
-an Edit Mode test with a spy, both passing in the Test Runner.
+## Get started
 
-## Already using it?
+1. [Add Udon Test Kit to your project](./add-to-your-project)
+2. [Write your first test](./first-test)
 
-Jump straight to what you need:
+## Common tasks
 
-- **Doing a specific task** — [run tests in a scene of their own](./how-to/running-tests-in-their-own-scene),
-  [test a player who isn't the owner](./how-to/testing-a-player-who-isnt-the-owner),
-  [check that saved data survives a rejoin](./how-to/testing-saved-data), or
-  [run tests from the command line](./how-to/running-tests-from-the-command-line).
-- **Looking up a type's behavior** — search for its name, start from
-  [ClientSimSession](./reference/clientsim-session), or browse Reference in the sidebar.
-- **Understanding what the kit changes and why** —
-  [What the kit works around](./explanations/what-the-kit-works-around) and
-  [a fresh session for every test](./explanations/a-fresh-session-for-every-test).
+- [Run tests in a scene of their own](./how-to/running-tests-in-their-own-scene)
+- [Test what happens for a player who isn't the owner](./how-to/testing-a-player-who-isnt-the-owner)
+- [Check that saved data survives a rejoin](./how-to/testing-saved-data)
+- [Run tests from the command line](./how-to/running-tests-from-the-command-line)
+
+## Reference and background
+
+- [ClientSimSession](./reference/clientsim-session), where most tests start
+- [What the kit works around](./explanations/what-the-kit-works-around)
+- [Decision note: a fresh session for every test](./explanations/a-fresh-session-for-every-test)
