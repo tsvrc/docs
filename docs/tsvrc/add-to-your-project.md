@@ -36,11 +36,6 @@ scripts extend and call into, and one editor-only assembly (`Tsvrc.Editor`) hold
 the codegen and Configure-window tooling. See [How TsVRC fits
 together](./core-concepts/how-it-fits-together) for how those two halves relate.
 
-Two further assemblies, `Tsvrc.Testing.Framework` and `Tsvrc.Testing.UI`, exist purely to
-support testing a *consumer's* own project, kept separate from each other and from
-`Tsvrc.Runtime`/`Tsvrc.Editor` for the reasons covered in [Testing your
-world](./testing/testing-your-world).
-
 ## Next
 
 Continue to [Build your first behaviour](./first-behaviour) to initialize TsVRC in a

@@ -6,35 +6,39 @@ sidebar_position: 18
 
 # Write your first automated test for your own behaviour
 
-How to write a real Play Mode test against your own `TsvrcBehaviour` subclass, once
-[the testing assemblies are wired into your project](./set-up-automated-testing), using
-[`TsPlayModeTestBase`](../testing/testing-your-world#play-mode-tests-tsplaymodetestbase).
+How to write a real Play Mode test against your own `TsvrcBehaviour` subclass with
+[Udon Test Kit](/docs/udon-test-kit/intro), once [your test assemblies are set
+up](./set-up-automated-testing).
 
 ## Steps
 
-1. Extend `TsPlayModeTestBase` and start ClientSim in a `[UnityTest]`:
+1. Extend the kit's [`ClientSimTestBase`](/docs/udon-test-kit/reference/clientsim-test-base), give
+   the class a scene of its own, and start ClientSim in a `[UnityTest]`:
 
    ```csharp
-   public class RoundRefereeTests : TsPlayModeTestBase
+   public class RoundRefereeTests : ClientSimTestBase
    {
+       public RoundRefereeTests() : base(TestScene.Empty("RoundRefereeTests"))
+       {
+       }
+
        [UnityTest]
-       public IEnumerator RoundReferee_StartsOnBegin()
+       public IEnumerator BeginRound_Owner_StartsTheRound()
        {
            yield return Session.Start();
    ```
 
-2. Build your project's generated root from code instead of loading a saved scene, and
-   attach a fresh instance of the behaviour under test:
+   Every test gets a fresh empty scene, and everything it creates goes when the scene unloads.
+
+2. Add the behaviour under test to a GameObject and construct it, as your generated root does at
+   world startup:
 
    ```csharp
-           var builder = BuildTsRoot<TsGenerated>();
-           var referee = builder.WithNew<RoundReferee>("RoundReferee");
-           builder.Build();
+           var referee = new GameObject("RoundReferee").AddComponent<RoundReferee>();
+           referee.TsConstruct((TsRoot)null);
    ```
 
-   Any root field your test never touches (a Global, a Pool slot) is auto-filled with a
-   bare stand-in before `Build()` runs, so a generated stage that unconditionally
-   iterates every field of its module never throws on one your test doesn't care about.
+   Pass `null` when the behaviour doesn't reach `_ts` during the test.
 
 3. Drive the behaviour and assert on it:
 
@@ -74,7 +78,13 @@ Assert.That(calls, Is.EqualTo(new[] { "Listener.CallbackA" }));
 The log records each call in order, so the same assertion also fails if the event fired
 twice.
 
+## Testing as a player who isn't the owner
+
+A `Process` such as `RoundReferee` acts only for its owner and forwards everything else. Hand it to
+a remote player with the kit's `Session.SetOwner` to test the other side, as in
+[Test what happens for a player who isn't the owner](/docs/udon-test-kit/how-to/testing-a-player-who-isnt-the-owner).
+
 ## Why this shape
 
-See [Testing your world](../testing/testing-your-world) for why the root is built from code
-instead of loaded from a saved scene, and how each test gets a scene of its own.
+See [Testing your world](../testing/testing-your-world) for how a test builds TsVRC behaviours
+and what TsVRC's codegen does during a test run.
