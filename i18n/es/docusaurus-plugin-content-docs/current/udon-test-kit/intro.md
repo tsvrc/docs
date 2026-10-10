@@ -18,6 +18,4 @@ método, como `SendCustomEvent`, y un elemento de menú crea en un solo paso los
 que necesita un mundo.
 
 El kit solo se compila cuando Unity Test Framework incluye los tests, así que nada de él llega a la
-build de un mundo. Funciona en cualquier mundo hecho con UdonSharp, con o sin TsVRC. Las
-herramientas de testing de TsVRC se apoyan en él: si tu mundo usa el framework, consulta también
-[Probar tu mundo](/docs/tsvrc/testing/testing-your-world).
+build de un mundo.

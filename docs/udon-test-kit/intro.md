@@ -17,6 +17,4 @@ Spies record the calls your code makes by method name, such as `SendCustomEvent`
 creates the test assemblies a world needs in one step.
 
 The kit compiles only when Unity Test Framework includes tests, so nothing from it reaches a world
-build. It works in any world built with UdonSharp, with or without TsVRC. TsVRC's own testing
-helpers build on it: if your world uses the framework, see also
-[Testing your world](/docs/tsvrc/testing/testing-your-world).
+build.
