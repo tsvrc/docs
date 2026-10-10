@@ -8,7 +8,7 @@ sidebar_position: 3
 
 Run the example tests, then write a Play Mode test with two players in a real ClientSim session and
 an Edit Mode test with a spy. You need the test assemblies from
-[Add Test Kit to your project](./add-to-your-project).
+[Add Udon Test Kit to your project](./add-to-your-project).
 
 ## Run the examples
 
@@ -19,7 +19,7 @@ Unity enters Play Mode, ClientSim starts with a local player, the test spawns a 
 the test passes.
 
 If it fails before ClientSim starts, with a message naming project settings, run
-**Tools > TsVRC > Test Kit > Fix ClientSim Project Settings** once and run the test again. See
+**Tools > TsVRC > Udon Test Kit > Fix ClientSim Project Settings** once and run the test again. See
 [Fix the project settings ClientSim rejects](./how-to/fixing-clientsim-project-settings).
 
 ## Write a Play Mode test
@@ -29,7 +29,7 @@ In your `Tests/PlayMode` folder, create `PlayerListTests.cs`:
 ```csharp
 using System.Collections;
 using NUnit.Framework;
-using Tsvrc.TestKit;
+using Tsvrc.UdonTestKit;
 using UnityEngine.TestTools;
 using VRC.SDKBase;
 
@@ -62,7 +62,7 @@ those calls. In your `Tests/EditMode` folder, create `SpyTests.cs`:
 
 ```csharp
 using NUnit.Framework;
-using Tsvrc.TestKit;
+using Tsvrc.UdonTestKit;
 
 public class SpyTests
 {

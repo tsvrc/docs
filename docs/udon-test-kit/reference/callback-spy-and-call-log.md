@@ -6,8 +6,8 @@ sidebar_position: 4
 
 # CallbackSpy and CallLog
 
-`Tsvrc.TestKit.CallbackSpy` is a test spy for code that calls an UdonSharpBehaviour's methods by
-name, such as with `SendCustomEvent`. `Tsvrc.TestKit.CallLog` creates spies and records every call
+`Tsvrc.UdonTestKit.CallbackSpy` is a test spy for code that calls an UdonSharpBehaviour's methods by
+name, such as with `SendCustomEvent`. `Tsvrc.UdonTestKit.CallLog` creates spies and records every call
 they receive, in order, as `"GameObjectName.CallbackName"`.
 
 ```csharp

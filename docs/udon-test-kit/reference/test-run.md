@@ -6,7 +6,7 @@ sidebar_position: 6
 
 # TestRun
 
-`Tsvrc.TestKit.TestRun.IsActive` tells editor tooling whether a Unity Test Framework run is in
+`Tsvrc.UdonTestKit.TestRun.IsActive` tells editor tooling whether a Unity Test Framework run is in
 progress. Tooling that rewrites assets when the domain reloads, an asset is imported or a scene
 changes, such as a code generator, can check it and leave a test run alone.
 
@@ -39,6 +39,6 @@ as well, as in the example above.
 
 ## Using it
 
-`TestRun` uses Editor APIs, so call it from Editor code. It's in the kit's `Tsvrc.TestKit` assembly:
+`TestRun` uses Editor APIs, so call it from Editor code. It's in the kit's `Tsvrc.UdonTestKit` assembly:
 scripts without an assembly definition can use it directly, and code in an assembly definition
-needs a reference to `Tsvrc.TestKit`.
+needs a reference to `Tsvrc.UdonTestKit`.

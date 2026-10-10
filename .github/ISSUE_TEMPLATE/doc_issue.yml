@@ -13,7 +13,7 @@ body:
     id: project
     attributes:
       label: Project
-      description: Which project's docs this is about (e.g. tsvrc or test-kit).
+      description: Which project's docs this is about (e.g. tsvrc or udon-test-kit).
     validations:
       required: true
   - type: dropdown

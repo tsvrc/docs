@@ -1,10 +1,10 @@
 ---
 id: add-to-your-project
-title: Add Test Kit to your project
+title: Add Udon Test Kit to your project
 sidebar_position: 2
 ---
 
-# Add Test Kit to your project
+# Add Udon Test Kit to your project
 
 Install the kit in a VRChat world project, then create the test assemblies your tests go in.
 
@@ -17,14 +17,14 @@ Install the kit in a VRChat world project, then create the test assemblies your 
 
 ## Install the package
 
-Install **Test Kit** (`com.tsvrc.test-kit`) as described in
+Install **Udon Test Kit** (`com.tsvrc.udon-test-kit`) as described in
 [Install a TsVRC package](/docs/install-a-package). Its `.unitypackage` is on the kit's
 [GitHub releases](https://github.com/tsvrc/udon-test-kit/releases).
 
-You'll know it worked when Unity's menu bar has **Tools > TsVRC > Test Kit**.
+You'll know it worked when Unity's menu bar has **Tools > TsVRC > Udon Test Kit**.
 
 :::warning
-A project can hold only one copy of the kit. Two copies mean two assemblies named `Tsvrc.TestKit`,
+A project can hold only one copy of the kit. Two copies mean two assemblies named `Tsvrc.UdonTestKit`,
 which stop the whole project compiling. Don't import the `.unitypackage` into a project that
 already has the kit in `Packages`, including a copy another package installed as its dependency.
 :::
@@ -34,7 +34,7 @@ already has the kit in `Packages`, including a copy another package installed as
 Unity Test Framework finds tests in test assemblies, and the kit creates the three a world needs.
 
 1. In the Project window, select the folder your tests should live in, such as `Assets`.
-2. Choose **Assets > Create > TsVRC > Test Kit > Test Assemblies**.
+2. Choose **Assets > Create > TsVRC > Udon Test Kit > Test Assemblies**.
 
 You get a `Tests` folder with three assemblies, each with an example that works:
 

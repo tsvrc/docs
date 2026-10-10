@@ -20,7 +20,7 @@
   "homepage.projects.tsvrc.description": {
     "message": "Una forma estructurada de crear mundos de VRChat con UdonSharp: inicio consistente, dependencias ya conectadas y código generado en vez de conectarlo todo a mano."
   },
-  "homepage.projects.testKit.description": {
+  "homepage.projects.udonTestKit.description": {
     "message": "Tests automatizados para mundos de VRChat: los tests de modo Play ejecutan tus behaviours de UdonSharp en una sesión real de ClientSim, con jugadores reales."
   },
   "homepage.projects.github": {

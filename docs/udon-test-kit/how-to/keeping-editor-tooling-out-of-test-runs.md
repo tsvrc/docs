@@ -36,4 +36,4 @@ domain reloads in between, and for the whole of a batch-mode process started wit
 Play Mode run reports its start only after the domain reload into Play Mode, so tooling that runs
 on that reload also checks `EditorApplication.isPlayingOrWillChangePlaymode`.
 
-If your tooling's code is in an assembly definition, add `Tsvrc.TestKit` to its references.
+If your tooling's code is in an assembly definition, add `Tsvrc.UdonTestKit` to its references.

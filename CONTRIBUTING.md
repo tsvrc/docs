@@ -24,7 +24,7 @@ its own docs repo. Adding docs for a new project means adding a folder here and 
 matching top-level category in `sidebars.ts`, not creating a new repo. Every project shares
 one sidebar, so a category whose label another project already uses, such as "Reference",
 needs a unique `key`; without one, the Spanish build fails on a duplicate translation key.
-`docs/test-kit/` is set up this way.
+`docs/udon-test-kit/` is set up this way.
 
 A page every project shares, such as [Install a TsVRC package](docs/install-a-package.md),
 sits at the root of `docs/` instead. Each project's own install page links to it and adds only
@@ -32,7 +32,7 @@ what's specific to that project: the package name, requirements, and how to chec
 worked.
 
 A project's docs stand on their own. When one project depends on another, as TsVRC does on
-Test Kit, the dependent project's pages link to the other's where a reader needs it, and
+Udon Test Kit, the dependent project's pages link to the other's where a reader needs it, and
 the project depended on never mentions its consumers.
 
 ## Adding a translation
