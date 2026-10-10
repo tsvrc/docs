@@ -7,8 +7,9 @@ sidebar_position: 7
 # ClientSimProjectSettings
 
 `UdonTestKit.ClientSimProjectSettings` knows the project settings ClientSim checks before it
-starts, and the change that makes each one pass. Its menu item, **Tools > Udon Test Kit > Fix
-ClientSim Project Settings**, applies the change for every setting that fails.
+starts, and the change that makes each one pass. Its menu item,
+**Tools > TsVRC > Udon Test Kit > Fix ClientSim Project Settings**, applies the change for every
+setting that fails.
 
 ## The settings
 
@@ -28,8 +29,9 @@ input systems, the value ClientSim's settings window asks for.
 
 - `Fix()` is the menu item. It applies the change for each setting that fails ClientSim's check and
   logs the ones it changed, or that they were already correct. Settings that pass are left alone.
-- `FixMenuPath` is the menu item's path, `"Tools/Udon Test Kit/Fix ClientSim Project Settings"`,
-  for tooling that runs it with `EditorApplication.ExecuteMenuItem`.
+- `FixMenuPath` is the menu item's path,
+  `"Tools/TsVRC/Udon Test Kit/Fix ClientSim Project Settings"`, for tooling that runs it with
+  `EditorApplication.ExecuteMenuItem`.
 
 ## When it matters
 
@@ -37,7 +39,7 @@ input systems, the value ClientSim's settings window asks for.
 the check fails, `Start` fails the test with a message such as:
 
 ```
-ClientSim's project settings check fails on: input type, collision matrix. Fix them with Tools > Udon Test Kit > Fix ClientSim Project Settings.
+ClientSim's project settings check fails on: input type, collision matrix. Fix them with Tools > TsVRC > Udon Test Kit > Fix ClientSim Project Settings.
 ```
 
 Without that, ClientSim would open its settings window as it starts. In batch mode, that window

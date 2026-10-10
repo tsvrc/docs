@@ -18,8 +18,8 @@ an Edit Mode test with a spy. You need the test assemblies from
 Unity enters Play Mode, ClientSim starts with a local player, the test spawns a second player, and
 the test passes.
 
-If it fails before ClientSim starts, with a message naming project settings, run **Tools > Udon
-Test Kit > Fix ClientSim Project Settings** once and run the test again. See
+If it fails before ClientSim starts, with a message naming project settings, run
+**Tools > TsVRC > Udon Test Kit > Fix ClientSim Project Settings** once and run the test again. See
 [Fix the project settings ClientSim rejects](./how-to/fixing-clientsim-project-settings).
 
 ## Write a Play Mode test
