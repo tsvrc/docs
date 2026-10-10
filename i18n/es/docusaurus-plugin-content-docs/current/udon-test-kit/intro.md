@@ -10,6 +10,21 @@ Udon Test Kit te permite escribir tests automatizados para un mundo de VRChat co
 Framework. Los tests de modo Play ejecutan tus behaviours de UdonSharp en una sesión real de
 ClientSim, con jugadores reales.
 
+## Por qué probar tu mundo
+
+Un test automatizado es un pequeño fragmento de código que ejecuta una parte de tu mundo y
+comprueba el resultado, por ejemplo, que una puerta solo se abra para el jugador que es su dueño.
+Unity ejecuta estos tests con su
+[Unity Test Framework](https://docs.unity3d.com/Packages/com.unity.test-framework@1.1/manual/index.html),
+en el editor (modo Edit) o con el juego en marcha (modo Play).
+
+Una vez escritos, los tests se vuelven a ejecutar cuando quieras, todos de una vez. Un cambio que
+rompe algo se nota enseguida, antes de subir el mundo, y puedes cambiar tu código sin miedo a
+romper algo que no estás mirando. Esto importa sobre todo en lo que es más difícil de comprobar
+jugando solo: varios jugadores, quién es dueño de qué y datos que tienen que sobrevivir cuando
+alguien vuelve a entrar. Martin Fowler explica la idea en
+[Self Testing Code](https://martinfowler.com/bliki/SelfTestingCode.html).
+
 ## Qué puedes hacer con él
 
 - Crear y quitar jugadores, y elegir quién es el master.
