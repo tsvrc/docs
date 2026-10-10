@@ -28,6 +28,9 @@ linking instead of duplicating, avoiding AI-sounding prose.
   `dirName` pointed straight at a leaf folder returns an unlabeled flat list, so a
   category's `label` has to come from the wrapping `{type: 'category', ...}` node, not a
   `_category_.json`.
+- Every project shares one sidebar, so two categories with the same label (each project's
+  "Reference", for example) need a unique `key`, or the `es` build fails with "Multiple docs
+  sidebar items produce the same translation key".
 - Each project's code repo (`tsvrc-core` for `docs/tsvrc/`, `udon-test-kit` for
   `docs/udon-test-kit/`) and this repo aren't wired together, no submodule, no build-time
   fetch, and can drift. Changed public API or behavior in a project, or something under its
