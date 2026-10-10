@@ -21,8 +21,8 @@ export default function Hero() {
         </div>
         <p className="mt-6 max-w-2xl text-lg text-fg-muted">
           <Translate id="homepage.hero.intro">
-            I build tools for VRChat creators. TsVRC is the name I publish them under, and most of
-            them are open source.
+            I build tools for making VRChat worlds. TsVRC is the name I publish them under, and
+            most of them are open source.
           </Translate>
         </p>
       </div>

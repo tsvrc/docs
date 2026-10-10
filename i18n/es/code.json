@@ -15,7 +15,7 @@
     "message": "Toni en GitHub"
   },
   "homepage.hero.intro": {
-    "message": "Creo herramientas para creadores de VRChat. TsVRC es el nombre con el que las publico, y la mayoría son de código abierto."
+    "message": "Creo herramientas para crear mundos de VRChat. TsVRC es el nombre con el que las publico, y la mayoría son de código abierto."
   },
   "homepage.projects.tsvrc.description": {
     "message": "Una forma estructurada de crear mundos de VRChat con UdonSharp: inicio consistente, dependencias ya conectadas y código generado en vez de conectarlo todo a mano."
@@ -54,7 +54,7 @@
     "message": "TsVRC"
   },
   "homepage.meta.description": {
-    "message": "Herramientas de código abierto de Toni para creadores de VRChat, publicadas como TsVRC."
+    "message": "Herramientas de código abierto de Toni para crear mundos de VRChat, publicadas como TsVRC."
   },
   "framework.hero.title": {
     "message": "Un framework para mundos de VRChat construido sobre UdonSharp"

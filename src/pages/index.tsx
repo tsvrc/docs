@@ -10,7 +10,7 @@ export default function Home(): ReactNode {
       title={translate({ id: 'homepage.meta.title', message: 'TsVRC' })}
       description={translate({
         id: 'homepage.meta.description',
-        message: "Toni's open-source tools for VRChat creators, published as TsVRC.",
+        message: "Toni's open-source tools for making VRChat worlds, published as TsVRC.",
       })}>
       <Hero />
       <Projects />
