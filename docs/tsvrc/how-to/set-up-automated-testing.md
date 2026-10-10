@@ -23,8 +23,8 @@ UdonSharp assemblies your scripts use.
 
 ## 2. Create your test assemblies
 
-TsVRC's testing helpers build on Udon Test Kit, which the Creator Companion installs along
-with TsVRC. Create your test assemblies with the kit's menu item, as described in
+TsVRC's testing helpers build on Udon Test Kit. Create your test assemblies with the kit's
+menu item, as described in
 [Create your test assemblies](/docs/udon-test-kit/add-to-your-project#create-your-test-assemblies).
 They already reference the kit, the VRChat SDK, ClientSim and your project's assembly from
 step 1.

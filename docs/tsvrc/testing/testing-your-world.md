@@ -8,7 +8,7 @@ sidebar_position: 1
 
 TsVRC's testing helpers build on [Udon Test Kit](/docs/udon-test-kit/intro), which runs Play Mode
 tests in a real ClientSim session and works around the VRChat SDK problems that break them. TsVRC
-depends on the kit, so the Creator Companion installs it along with TsVRC.
+depends on the kit, so it's already in your project.
 
 This page covers what TsVRC adds for testing a TsVRC world: a base class that builds your
 generated root from code, helpers for list UI, and codegen that holds back while tests run. For

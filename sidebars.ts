@@ -152,6 +152,8 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    // Shared by every project, so it sits at the docs root rather than under one project.
+    'install-a-package',
   ],
 };
 

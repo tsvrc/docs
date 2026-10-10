@@ -26,6 +26,11 @@ one sidebar, so a category whose label another project already uses, such as "Re
 needs a unique `key`; without one, the Spanish build fails on a duplicate translation key.
 `docs/udon-test-kit/` is set up this way.
 
+A page every project shares, such as [Install a TsVRC package](docs/install-a-package.md),
+sits at the root of `docs/` instead. Each project's own install page links to it and adds only
+what's specific to that project: the package name, requirements, and how to check that it
+worked.
+
 A project's docs stand on their own. When one project depends on another, as TsVRC does on
 Udon Test Kit, the dependent project's pages link to the other's where a reader needs it, and
 the project depended on never mentions its consumers.

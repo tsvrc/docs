@@ -4,72 +4,25 @@ title: Add TsVRC to your project
 sidebar_position: 1
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Add TsVRC to your project
 
-Get TsVRC into a Unity project either through the VRChat Creator Companion (VCC) or by
-importing a `.unitypackage` by hand. VCC is strongly recommended: it resolves the VRChat
-Worlds SDK version TsVRC depends on for you, something a `.unitypackage` import leaves
-you to sort out yourself.
+Install TsVRC in a VRChat world project.
 
 ## Requirements
 
 - **Unity 2022.3.** TsVRC's package manifest targets this version specifically.
-- **A Unity world project with the [VRChat Worlds
-  SDK](https://creators.vrchat.com/worlds/) `3.10.x`.** VCC resolves this automatically
-  when you install TsVRC; importing the `.unitypackage` needs it already in your project.
+- **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) `3.10.x`.**
 
 ## Install the package
 
-<Tabs>
-<TabItem value="vcc" label="VRChat Creator Companion (recommended)" default>
+Install **TsVRC** (`com.tsvrc.core`) as described in
+[Install a TsVRC package](/docs/install-a-package). Its `.unitypackage` is on
+[TsVRC's GitHub releases](https://github.com/tsvrc/tsvrc-core/releases).
 
-If TsVRC's repository isn't in your Creator Companion yet, add it first (a one-time
-step, the same as adding any other [community
-repository](https://vcc.docs.vrchat.com/guides/community-repositories/)):
-
-- **With VCC installed**, click [Add TsVRC to Creator
-  Companion](vcc://vpm/addRepo?url=https%3A%2F%2Fvpm.tsvrc.com%2Findex.json)
-  to open VCC directly to the add-repository prompt.
-- **Or paste the listing URL manually**: open VCC, go to **Settings > Packages > Add
-  Repository**, and paste:
-
-  ```
-  https://vpm.tsvrc.com/index.json
-  ```
-
-Once the repository's added:
-
-1. Open the Creator Companion, select your project, and click **Manage Project**.
-2. Find **TsVRC** (`com.tsvrc.core`) in the package list and press the **+** next to it
-   to install it.
-3. Wait for Unity to finish importing and recompiling.
-
-The Creator Companion also installs [Udon Test Kit](/docs/udon-test-kit/intro)
-(`com.tsvrc.udon-test-kit`), which TsVRC depends on for its testing helpers.
-
-</TabItem>
-<TabItem value="unitypackage" label=".unitypackage">
-
-1. Download the latest `.unitypackage` from [TsVRC's GitHub
-   Releases](https://github.com/tsvrc/tsvrc-core/releases).
-2. With your project open, double-click the downloaded file (or use **Assets > Import
-   Package > Custom Package**) and import everything.
-3. Wait for Unity to finish importing and recompiling.
-
-A `.unitypackage` can't bring the packages TsVRC depends on, so also import
-[Udon Test Kit's](/docs/udon-test-kit/add-to-your-project) `.unitypackage`, unless your
-project already has the kit.
-
-Nothing here resolves the VRChat Worlds SDK version for you, so confirm it's already at
-`3.10.x` before importing. If your project also uses VCC for other packages, prefer the
-VCC tab instead: mixing a hand-imported package with VCC-managed ones makes future
-updates and dependency resolution your own responsibility to track.
-
-</TabItem>
-</Tabs>
+TsVRC depends on [Udon Test Kit](/docs/udon-test-kit/intro) (`com.tsvrc.udon-test-kit`) for its
+testing helpers. The Creator Companion installs it along with TsVRC. With the `.unitypackage`,
+import [the kit's](/docs/udon-test-kit/add-to-your-project) too, unless your project already has
+it.
 
 You'll know it worked when Unity's menu bar gains a **Tsvrc** menu. Everything TsVRC does
 from here runs from there.
@@ -84,9 +37,9 @@ the codegen and Configure-window tooling. See [How TsVRC fits
 together](./core-concepts/how-it-fits-together) for how those two halves relate.
 
 Two further assemblies, `Tsvrc.Testing.Framework` and `Tsvrc.Testing.UI`, exist purely to
-support testing a *consumer's* own project, on top of Udon Test Kit, kept separate from
-each other and from `Tsvrc.Runtime`/`Tsvrc.Editor` for the reasons covered in [Testing
-your world](./testing/testing-your-world).
+support testing a *consumer's* own project, kept separate from each other and from
+`Tsvrc.Runtime`/`Tsvrc.Editor` for the reasons covered in [Testing your
+world](./testing/testing-your-world).
 
 ## Next
 
