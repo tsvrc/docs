@@ -15,6 +15,18 @@ function useProjects(): Project[] {
       href: '/framework',
       cta: translate({ id: 'homepage.projects.learnMore', message: 'Learn more' }),
     },
+    {
+      name: 'Udon Test Kit',
+      status: 'available',
+      description: translate({
+        id: 'homepage.projects.udonTestKit.description',
+        message:
+          'Automated tests for VRChat worlds: Play Mode tests run a real ClientSim session with ' +
+          'real players, without the SDK problems that otherwise break them.',
+      }),
+      href: '/docs/udon-test-kit/intro',
+      cta: translate({ id: 'homepage.projects.readTheDocs', message: 'Read the docs' }),
+    },
   ];
 }
 
@@ -27,8 +39,7 @@ export default function Projects() {
       </h2>
       <p className="mt-2 max-w-2xl text-fg-muted">
         <Translate id="homepage.projects.description">
-          Every TsVRC project lives on this one site. Just one so far; more will land here as
-          they ship.
+          Every TsVRC project lives on this one site, and new ones will land here as they ship.
         </Translate>
       </p>
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">

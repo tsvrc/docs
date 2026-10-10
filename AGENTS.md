@@ -28,9 +28,11 @@ linking instead of duplicating, avoiding AI-sounding prose.
   `dirName` pointed straight at a leaf folder returns an unlabeled flat list, so a
   category's `label` has to come from the wrapping `{type: 'category', ...}` node, not a
   `_category_.json`.
-- `tsvrc-core` (code) and this repo (docs) aren't wired together, no submodule, no
-  build-time fetch, and can drift. Changed public API or behavior in `tsvrc-core`, or
-  something under `docs/tsvrc/`? Check the other side still matches.
+- Each project's code repo (`tsvrc-core` for `docs/tsvrc/`, `udon-test-kit` for
+  `docs/udon-test-kit/`) and this repo aren't wired together, no submodule, no build-time
+  fetch, and can drift. Changed public API or behavior in a project, or something under its
+  `docs/<project>/`? Check the other side still matches. TsVRC's testing pages describe
+  helpers built on Udon Test Kit, so a kit change can affect `docs/tsvrc/` too.
 
 ## Commit / PR rules
 

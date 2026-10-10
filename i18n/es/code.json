@@ -35,6 +35,12 @@
   "homepage.projects.learnMore": {
     "message": "Más información"
   },
+  "homepage.projects.udonTestKit.description": {
+    "message": "Tests automatizados para mundos de VRChat: los tests de modo Play ejecutan una sesión real de ClientSim con jugadores reales, sin los problemas del SDK que de otro modo los rompen."
+  },
+  "homepage.projects.readTheDocs": {
+    "message": "Leer la documentación"
+  },
   "homepage.projects.status.available": {
     "message": "Disponible"
   },
@@ -45,7 +51,7 @@
     "message": "Proyectos"
   },
   "homepage.projects.description": {
-    "message": "Cada proyecto de TsVRC vive en este mismo sitio. Por ahora solo hay uno; más llegarán aquí a medida que se publiquen."
+    "message": "Cada proyecto de TsVRC vive en este mismo sitio, y los nuevos llegarán aquí a medida que se publiquen."
   },
   "homepage.meta.title": {
     "message": "TsVRC"
