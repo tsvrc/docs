@@ -17,6 +17,13 @@ escena de tu propio mundo. Los spies registran las llamadas que tu código hace 
 método, como `SendCustomEvent`, y un elemento de menú crea en un solo paso los assemblies de test
 que necesita un mundo.
 
+El kit también incluye `Invoke-UnityTests.ps1`, un script de PowerShell que ejecuta los tests de
+modo Edit y de modo Play de un proyecto con un solo comando, sin pasar por el Test Runner. Muestra
+solo los tests que no pasaron, con sus mensajes, y termina con un código de error cuando alguno
+falló, así que sirve para comprobar tus tests antes de hacer commit o para hacer fallar un paso de
+build. El script no depende del kit: cópialo a cualquier proyecto de Unity. Consulta
+[Ejecutar tests desde la línea de comandos](./how-to/running-tests-from-the-command-line).
+
 El kit solo se compila cuando Unity Test Framework incluye los tests, así que nada de él llega a la
 build de un mundo.
 

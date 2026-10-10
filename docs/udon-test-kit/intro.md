@@ -16,6 +16,13 @@ did with all of it. Each test can run in a scene of its own, including your worl
 Spies record the calls your code makes by method name, such as `SendCustomEvent`, and a menu item
 creates the test assemblies a world needs in one step.
 
+The kit also comes with `Invoke-UnityTests.ps1`, a PowerShell script that runs a project's Edit
+Mode and Play Mode tests in one command, without clicking through the Test Runner. It prints only
+the tests that didn't pass, with their messages, and exits with an error code when any failed, so
+it can check your tests before you commit or fail a build step. The script doesn't depend on the
+kit: copy it into any Unity project. See
+[Run tests from the command line](./how-to/running-tests-from-the-command-line).
+
 The kit compiles only when Unity Test Framework includes tests, so nothing from it reaches a world
 build.
 
