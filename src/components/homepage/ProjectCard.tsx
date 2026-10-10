@@ -5,14 +5,43 @@ export type Project = {
   name: string;
   status: 'available' | 'planned';
   description: string;
-  href: string;
-  cta: string;
+  docsHref: string;
+  // The GitHub repository, as "owner/name".
+  repo: string;
 };
+
+const badgeStyle = 'style=flat&color=58a6ff&labelColor=161b22';
 
 function statusLabel(status: Project['status']): string {
   return status === 'available'
     ? translate({ id: 'homepage.projects.status.available', message: 'Available' })
     : translate({ id: 'homepage.projects.status.planned', message: 'Planned' });
+}
+
+function badges(repo: string) {
+  const github = `https://github.com/${repo}`;
+  return [
+    {
+      src: `https://img.shields.io/github/stars/${repo}?label=stars&${badgeStyle}`,
+      href: `${github}/stargazers`,
+      alt: translate({ id: 'homepage.projects.badge.stars', message: 'GitHub stars for {repo}' }, { repo }),
+    },
+    {
+      src: `https://img.shields.io/github/license/${repo}?${badgeStyle}`,
+      href: github,
+      alt: translate({ id: 'homepage.projects.badge.license', message: 'License of {repo}' }, { repo }),
+    },
+    {
+      src: `https://img.shields.io/github/v/release/${repo}?label=release&${badgeStyle}`,
+      href: `${github}/releases`,
+      alt: translate({ id: 'homepage.projects.badge.release', message: 'Latest release of {repo}' }, { repo }),
+    },
+    {
+      src: `https://img.shields.io/github/last-commit/${repo}?label=last%20commit&${badgeStyle}`,
+      href: `${github}/commits`,
+      alt: translate({ id: 'homepage.projects.badge.lastCommit', message: 'Last commit to {repo}' }, { repo }),
+    },
+  ];
 }
 
 export default function ProjectCard({ project }: { project: Project }) {
@@ -26,12 +55,22 @@ export default function ProjectCard({ project }: { project: Project }) {
           </span>
         </div>
         <p className="mt-3 text-sm leading-relaxed text-fg-muted">{project.description}</p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {badges(project.repo).map((badge) => (
+            <a key={badge.src} href={badge.href} className="opacity-90 hover:opacity-100">
+              <img src={badge.src} alt={badge.alt} height={20} />
+            </a>
+          ))}
+        </div>
       </div>
-      <Link
-        to={project.href}
-        className="mt-5 inline-block text-sm font-medium text-accent no-underline hover:underline">
-        {project.cta} →
-      </Link>
+      <div className="mt-5 flex gap-5 text-sm font-medium">
+        <Link to={project.docsHref} className="text-accent no-underline hover:underline">
+          {translate({ id: 'homepage.projects.docs', message: 'Docs' })} →
+        </Link>
+        <Link href={`https://github.com/${project.repo}`} className="text-fg-muted no-underline hover:underline">
+          GitHub →
+        </Link>
+      </div>
     </div>
   );
 }

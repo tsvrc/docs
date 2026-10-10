@@ -4,7 +4,7 @@ import ProjectCard, { type Project } from '@site/src/components/homepage/Project
 function useProjects(): Project[] {
   return [
     {
-      name: 'TsVRC',
+      name: 'TsVRC Core',
       status: 'available',
       description: translate({
         id: 'homepage.projects.tsvrc.description',
@@ -12,8 +12,8 @@ function useProjects(): Project[] {
           'A structured way to build VRChat worlds with UdonSharp: consistent startup, ' +
           'wired-up dependencies, and generated code instead of hand-wiring everything yourself.',
       }),
-      href: '/framework',
-      cta: translate({ id: 'homepage.projects.learnMore', message: 'Learn more' }),
+      docsHref: '/docs/tsvrc/intro',
+      repo: 'tsvrc/tsvrc-core',
     },
     {
       name: 'Udon Test Kit',
@@ -24,8 +24,8 @@ function useProjects(): Project[] {
           'Automated tests for VRChat worlds: Play Mode tests run a real ClientSim session with ' +
           'real players, without the SDK problems that otherwise break them.',
       }),
-      href: '/docs/udon-test-kit/intro',
-      cta: translate({ id: 'homepage.projects.readTheDocs', message: 'Read the docs' }),
+      docsHref: '/docs/udon-test-kit/intro',
+      repo: 'tsvrc/udon-test-kit',
     },
   ];
 }
@@ -39,7 +39,7 @@ export default function Projects() {
       </h2>
       <p className="mt-2 max-w-2xl text-fg-muted">
         <Translate id="homepage.projects.description">
-          Every TsVRC project lives on this one site, and new ones will land here as they ship.
+          Everything I&apos;ve built so far. Each project has its docs here and its code on GitHub.
         </Translate>
       </p>
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">

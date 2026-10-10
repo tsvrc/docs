@@ -8,38 +8,32 @@
   "framework.notice.body": {
     "message": "Además, sigue siendo un trabajo en curso. Cada parte tiene sus propios tests, y los ejecutamos antes de cada versión, pero no podemos prometer haber cubierto todos los casos. Guarda una copia de seguridad de tu proyecto antes de añadir TsVRC o de actualizarlo, solo por si acaso. Si algo se rompe de tu lado, no podemos arreglarlo por ti, pero nos gustaría mucho saberlo. Abre un issue en GitHub y le echaremos un vistazo."
   },
-  "homepage.hero.title": {
-    "message": "Herramientas para crear mundos y avatares de VRChat"
+  "homepage.hero.greeting": {
+    "message": "Hola, soy Toni"
   },
-  "homepage.hero.subtitle": {
-    "message": "TsVRC crea herramientas de código abierto para creadores de VRChat, empezando con un framework para estructurar código de mundos en UdonSharp."
-  },
-  "homepage.hero.cta.explore": {
-    "message": "Explorar TsVRC"
-  },
-  "homepage.hero.cta.github": {
-    "message": "Ver en GitHub"
-  },
-  "homepage.trust.starsAlt": {
-    "message": "Estrellas de GitHub de tsvrc/tsvrc-core"
-  },
-  "homepage.trust.lastCommitAlt": {
-    "message": "Último commit de tsvrc/tsvrc-core"
-  },
-  "homepage.trust.licenseAlt": {
-    "message": "Licencia de tsvrc/tsvrc-core"
+  "homepage.hero.intro": {
+    "message": "Creo herramientas para creadores de VRChat. TsVRC es el nombre con el que las publico, y la mayoría son de código abierto."
   },
   "homepage.projects.tsvrc.description": {
     "message": "Una forma estructurada de crear mundos de VRChat con UdonSharp: inicio consistente, dependencias ya conectadas y código generado en vez de conectarlo todo a mano."
   },
-  "homepage.projects.learnMore": {
-    "message": "Más información"
-  },
   "homepage.projects.udonTestKit.description": {
     "message": "Tests automatizados para mundos de VRChat: los tests de modo Play ejecutan una sesión real de ClientSim con jugadores reales, sin los problemas del SDK que de otro modo los rompen."
   },
-  "homepage.projects.readTheDocs": {
-    "message": "Leer la documentación"
+  "homepage.projects.docs": {
+    "message": "Documentación"
+  },
+  "homepage.projects.badge.stars": {
+    "message": "Estrellas de GitHub de {repo}"
+  },
+  "homepage.projects.badge.license": {
+    "message": "Licencia de {repo}"
+  },
+  "homepage.projects.badge.release": {
+    "message": "Última versión de {repo}"
+  },
+  "homepage.projects.badge.lastCommit": {
+    "message": "Último commit de {repo}"
   },
   "homepage.projects.status.available": {
     "message": "Disponible"
@@ -51,13 +45,13 @@
     "message": "Proyectos"
   },
   "homepage.projects.description": {
-    "message": "Cada proyecto de TsVRC vive en este mismo sitio, y los nuevos llegarán aquí a medida que se publiquen."
+    "message": "Todo lo que he construido hasta ahora. Cada proyecto tiene su documentación aquí y su código en GitHub."
   },
   "homepage.meta.title": {
     "message": "TsVRC"
   },
   "homepage.meta.description": {
-    "message": "TsVRC crea herramientas de código abierto para creadores de mundos y avatares de VRChat."
+    "message": "Herramientas de código abierto de Toni para creadores de VRChat, publicadas como TsVRC."
   },
   "framework.hero.title": {
     "message": "Un framework para mundos de VRChat construido sobre UdonSharp"
