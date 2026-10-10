@@ -68,9 +68,14 @@ change, so code that takes ownership can't be tested against ClientSim as it is.
 `SetOwner` gives such a GameObject an owner of its own. It adds a hidden component that ClientSim
 reads and writes ownership through, starting from the GameObject's current owner, the master, as
 in VRChat. Then it moves ownership to `player`. From then on, `Networking.SetOwner` calls on that
-GameObject move its ownership too, including the ones the code under test makes. Calling
-`SetOwner` again reuses the component instead of adding another. On a GameObject that already has
-`VRCObjectSync` or `VRCObjectPool`, it only calls `Networking.SetOwner`.
+GameObject move its ownership too, including the ones the code under test makes. When the owner
+leaves, through `RemovePlayer`, the master becomes the owner, as ClientSim does for `VRCObjectSync`.
+Calling `SetOwner` again reuses the component instead of adding another. On a GameObject that
+already has `VRCObjectSync` or `VRCObjectPool`, it only calls `Networking.SetOwner`.
+
+To test code that moves ownership itself while the local player still owns the GameObject, give
+it its starting owner first with `SetOwner(Networking.LocalPlayer, obj)`. Without it, ClientSim
+ignores the code's own `Networking.SetOwner` calls.
 [Test what happens for a player who isn't the owner](../how-to/testing-a-player-who-isnt-the-owner)
 shows it in a test.
 

@@ -52,7 +52,11 @@ In VRChat, every networked GameObject has an owner that can change. ClientSim tr
 for GameObjects with `VRCObjectSync` or `VRCObjectPool`. The master owns every other one, and
 `Networking.SetOwner` can't change that, so code that behaves differently for a player who isn't
 the owner can't be tested. `ClientSimSession.SetOwner` gives any GameObject an owner of its own.
-See [ClientSimSession](../reference/clientsim-session#ownership).
+
+ClientSim also hands a leaving player's GameObjects to the master only when it tracks their owner,
+so an owner added without telling ClientSim would stay with a player who has left. The kit
+registers the owner it adds the same way ClientSim registers `VRCObjectSync`'s, so the master takes
+over, as in VRChat. See [ClientSimSession](../reference/clientsim-session#ownership).
 
 ## A test scene with no scene descriptor
 
