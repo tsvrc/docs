@@ -7,12 +7,12 @@ function useProjects(): Project[] {
       name: 'Core',
       status: 'available',
       description: translate({
-        id: 'homepage.projects.tsvrc.description',
+        id: 'homepage.projects.core.description',
         message:
           'A structured way to build VRChat worlds with UdonSharp: consistent startup, ' +
           'wired-up dependencies, and generated code instead of hand-wiring everything yourself.',
       }),
-      docsHref: '/docs/tsvrc/intro',
+      docsHref: '/docs/core/intro',
       repo: 'tsvrc/tsvrc-core',
     },
     {

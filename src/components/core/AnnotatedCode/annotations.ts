@@ -42,9 +42,9 @@ export function useAnnotations(): Annotation[] {
       line: 2,
       match: 'TsBehaviour',
       color: 'accent',
-      title: translate({ id: 'framework.hero.annotation.behaviour.title', message: 'TsBehaviour' }),
+      title: translate({ id: 'core.hero.annotation.behaviour.title', message: 'TsBehaviour' }),
       description: translate({
-        id: 'framework.hero.annotation.behaviour.description',
+        id: 'core.hero.annotation.behaviour.description',
         message: "The generated shadow class every script extends. It's what gives this behaviour its _ts reference.",
       }),
       href: '#building-blocks',
@@ -54,9 +54,9 @@ export function useAnnotations(): Annotation[] {
       line: 7,
       match: '_ts.Scoreboard',
       color: 'attention',
-      title: translate({ id: 'framework.hero.annotation.globals.title', message: 'Globals' }),
+      title: translate({ id: 'core.hero.annotation.globals.title', message: 'Globals' }),
       description: translate({
-        id: 'framework.hero.annotation.globals.description',
+        id: 'core.hero.annotation.globals.description',
         message: 'Any named scene object, reachable as _ts.Name from every behaviour, no dragging references by hand.',
       }),
       href: '#building-blocks',
@@ -66,9 +66,9 @@ export function useAnnotations(): Annotation[] {
       line: 8,
       match: '_ts.Memory',
       color: 'purple',
-      title: translate({ id: 'framework.hero.annotation.memory.title', message: 'Memory' }),
+      title: translate({ id: 'core.hero.annotation.memory.title', message: 'Memory' }),
       description: translate({
-        id: 'framework.hero.annotation.memory.description',
+        id: 'core.hero.annotation.memory.description',
         message: 'The shared key-value store, reachable as _ts.Memory from anywhere.',
       }),
       href: '#building-blocks',
@@ -76,9 +76,9 @@ export function useAnnotations(): Annotation[] {
     {
       mark: 4,
       color: 'success',
-      title: translate({ id: 'framework.hero.annotation.more.title', message: "That's not all" }),
+      title: translate({ id: 'core.hero.annotation.more.title', message: "That's not all" }),
       description: translate({
-        id: 'framework.hero.annotation.more.description',
+        id: 'core.hero.annotation.more.description',
         message: "There's more where that came from. See the rest of TsVRC's building blocks below.",
       }),
       href: '#building-blocks',

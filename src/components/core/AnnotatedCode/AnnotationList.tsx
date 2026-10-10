@@ -1,6 +1,6 @@
 import { usePrismTheme } from '@docusaurus/theme-common';
 import useIsBrowser from '@docusaurus/useIsBrowser';
-import { colorClasses, type Annotation } from '@site/src/components/framework/AnnotatedCode/annotations';
+import { colorClasses, type Annotation } from '@site/src/components/core/AnnotatedCode/annotations';
 
 export default function AnnotationList({ annotations }: { annotations: Annotation[] }) {
   const prismTheme = usePrismTheme();

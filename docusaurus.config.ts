@@ -110,7 +110,7 @@ const config: Config = {
       links: [
         {
           label: 'Docs',
-          to: '/docs/tsvrc/intro',
+          to: '/docs/core/intro',
         },
         {
           label: 'GitHub',

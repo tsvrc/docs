@@ -41,7 +41,7 @@ Docs content stays English-only and unversioned under `docs/<project>/`. A trans
 lives in a parallel tree at
 `i18n/<locale>/docusaurus-plugin-content-docs/current/<project>/`, mirroring the same
 relative paths and filenames; adding a language never touches the English files. See
-`docs/tsvrc/intro.md` and its Spanish counterpart for a worked example to copy.
+`docs/core/intro.md` and its Spanish counterpart for a worked example to copy.
 `src/pages/` translates differently: via `@docusaurus/Translate` in the component source,
 with strings in `i18n/<locale>/code.json`.
 

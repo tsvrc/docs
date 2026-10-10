@@ -1,4 +1,4 @@
-import { colorClasses, type AnnotationColor } from '@site/src/components/framework/AnnotatedCode/annotations';
+import { colorClasses, type AnnotationColor } from '@site/src/components/core/AnnotatedCode/annotations';
 
 export default function Badge({ mark, color }: { mark: number; color: AnnotationColor }) {
   return (

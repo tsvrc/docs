@@ -2,13 +2,13 @@ import { Fragment } from 'react';
 import { Highlight } from 'prism-react-renderer';
 import { usePrismTheme } from '@docusaurus/theme-common';
 import useIsBrowser from '@docusaurus/useIsBrowser';
-import Badge from '@site/src/components/framework/AnnotatedCode/Badge';
+import Badge from '@site/src/components/core/AnnotatedCode/Badge';
 import {
   colorClasses,
   exampleCode,
   findTokenRun,
   type Annotation,
-} from '@site/src/components/framework/AnnotatedCode/annotations';
+} from '@site/src/components/core/AnnotatedCode/annotations';
 
 export default function CodePanel({ annotations }: { annotations: Annotation[] }) {
   const prismTheme = usePrismTheme();

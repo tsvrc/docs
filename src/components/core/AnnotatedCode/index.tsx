@@ -1,6 +1,6 @@
-import CodePanel from '@site/src/components/framework/AnnotatedCode/CodePanel';
-import AnnotationList from '@site/src/components/framework/AnnotatedCode/AnnotationList';
-import { useAnnotations } from '@site/src/components/framework/AnnotatedCode/annotations';
+import CodePanel from '@site/src/components/core/AnnotatedCode/CodePanel';
+import AnnotationList from '@site/src/components/core/AnnotatedCode/AnnotationList';
+import { useAnnotations } from '@site/src/components/core/AnnotatedCode/annotations';
 
 export default function AnnotatedCode() {
   const annotations = useAnnotations();

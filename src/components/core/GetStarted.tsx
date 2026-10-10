@@ -9,16 +9,16 @@ export default function GetStarted() {
         <Admonition
           type="warning"
           title={translate({
-            id: 'framework.notice.title',
+            id: 'core.notice.title',
             message: 'Before you build on this',
           })}>
           <p>
-            <Translate id="framework.notice.vrchat">
+            <Translate id="core.notice.vrchat">
               TsVRC is not affiliated with or endorsed by VRChat Inc.
             </Translate>
           </p>
           <p>
-            <Translate id="framework.notice.body">
+            <Translate id="core.notice.body">
               It&apos;s also still a work in progress. Every part of it has its own tests,
               and we run them before every release, but we can&apos;t promise
               we&apos;ve caught every case. Keep a backup of your project before adding
@@ -30,19 +30,19 @@ export default function GetStarted() {
         </Admonition>
         <div className="mt-10 text-center">
           <h2 className="font-heading text-2xl font-semibold text-fg">
-            <Translate id="framework.cta.title">Start building</Translate>
+            <Translate id="core.cta.title">Start building</Translate>
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-fg-muted">
-            <Translate id="framework.cta.subtitle">
+            <Translate id="core.cta.subtitle">
               Add TsVRC through VCC, then follow the getting-started guide to have a behaviour
               running in play mode.
             </Translate>
           </p>
           <div className="mt-6">
             <Link
-              to="/docs/tsvrc/intro"
+              to="/docs/core/intro"
               className="rounded-md bg-accent-emphasis px-5 py-2.5 font-medium text-white no-underline hover:no-underline hover:opacity-90">
-              <Translate id="framework.cta.button">Get started</Translate>
+              <Translate id="core.cta.button">Get started</Translate>
             </Link>
           </div>
         </div>
