@@ -54,4 +54,4 @@ Each example compiles and passes as created.
   a warning. See
   [Test scripts that have no assembly definition](../how-to/testing-scripts-without-an-assembly-definition).
 - `TestAssemblyCreator.Create(string parentFolder = "Assets")` does the same from code, and returns
-  the new folder's path.
+  the new folder's path. `TestAssemblyCreator.MenuPath` is the menu item's path.

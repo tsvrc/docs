@@ -21,7 +21,14 @@ duplicating, words/phrases to avoid, sentence shape, formatting rules.
 
 Each project under the `tsvrc` org gets its own `docs/<project>/` folder here rather than
 its own docs repo. Adding docs for a new project means adding a folder here and a
-matching top-level category in `sidebars.ts`, not creating a new repo.
+matching top-level category in `sidebars.ts`, not creating a new repo. Every project shares
+one sidebar, so a category whose label another project already uses, such as "Reference",
+needs a unique `key`; without one, the Spanish build fails on a duplicate translation key.
+`docs/udon-test-kit/` is set up this way.
+
+A project's docs stand on their own. When one project depends on another, as TsVRC does on
+Udon Test Kit, the dependent project's pages link to the other's where a reader needs it, and
+the project depended on never mentions its consumers.
 
 ## Adding a translation
 
