@@ -11,6 +11,9 @@
   "homepage.hero.greeting": {
     "message": "Hola, soy Toni"
   },
+  "homepage.hero.avatarAlt": {
+    "message": "Toni en GitHub"
+  },
   "homepage.hero.intro": {
     "message": "Creo herramientas para creadores de VRChat. TsVRC es el nombre con el que las publico, y la mayoría son de código abierto."
   },
