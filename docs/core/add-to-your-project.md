@@ -10,7 +10,7 @@ Install TsVRC Core in a VRChat world project.
 
 ## Requirements
 
-- **Unity 2022.3.** The Core package manifest targets this version specifically.
+- **Unity 2022.3.** The Core package manifest targets this version.
 - **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) `3.10.x`.**
 
 ## Install the package
@@ -19,10 +19,11 @@ Install **TsVRC Core** (`com.tsvrc.core`) as described in
 [Install a TsVRC package](/docs/install-a-package). Its `.unitypackage` is on
 [the Core GitHub releases](https://github.com/tsvrc/tsvrc-core/releases).
 
-Core depends on [Udon Test Kit](/docs/udon-test-kit/intro) (`com.tsvrc.udon-test-kit`) for its
-testing helpers. The Creator Companion installs it along with Core. With the `.unitypackage`,
-import the [Udon Test Kit](/docs/udon-test-kit/add-to-your-project) one too, unless your project
-already has the kit.
+Core depends on [Udon Test Kit](/docs/udon-test-kit/intro) (`com.tsvrc.udon-test-kit`): its
+codegen uses the kit to [hold back while tests run](./testing/testing-your-world#codegen-during-a-test-run).
+The Creator Companion installs it along with Core. With the `.unitypackage`, import the
+[Udon Test Kit](/docs/udon-test-kit/add-to-your-project) one too, unless your project already has
+the kit.
 
 You'll know it worked when the Unity menu bar gains a **Tsvrc** menu. Everything Core does
 from here runs from there.
@@ -30,8 +31,8 @@ from here runs from there.
 ## What you just added
 
 The Core manifest description sums it up: structured initialization, dependency wiring,
-and editor codegen tooling for building VRChat worlds with UdonSharp. Concretely, the
-package compiles as one runtime assembly (`Tsvrc.Runtime`), the base classes your world
+and editor codegen tooling for building VRChat worlds with UdonSharp. The package compiles as
+one runtime assembly (`Tsvrc.Runtime`), the base classes your world
 scripts extend and call into, and one editor-only assembly (`Tsvrc.Editor`) holding all
 the codegen and Configure-window tooling. See [How Core fits
 together](./core-concepts/how-it-fits-together) for how those two halves relate.

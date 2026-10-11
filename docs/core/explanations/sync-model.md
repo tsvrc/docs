@@ -6,70 +6,57 @@ sidebar_position: 3
 
 # Decision note: the shared-memory and sync model
 
-Every networked Core type that needs to replicate state, from
-[`TsvrcMemory`](../networking-data/tsvrc-memory) to [`Process`](../core-concepts/process)
-and everything built on it, to [`TsvrcTimer`](../networking-data/tsvrc-timer), uses the
-same two ingredients: the VRChat manual sync mode (`BehaviourSyncMode.Manual`) plus an
-explicit `RequestSerialization()` call whenever something changes, rather than the VRChat
-automatic continuous sync. This note ties together why that combination is the framework's
-consistent default, synthesizing what each individual type's own reference page already
-establishes rather than introducing new claims.
+Every Core type that replicates state, from [`TsvrcMemory`](../networking-data/tsvrc-memory) to
+[`Process`](../core-concepts/process) and the types built on it such as
+[`TsvrcTimer`](../networking-data/tsvrc-timer), uses the same two pieces: the VRChat manual sync mode
+(`BehaviourSyncMode.Manual`) and an explicit `RequestSerialization()` call after each change. This
+note explains why.
 
 ## Manual sync, sent on demand
 
-[The VRChat documentation of the two sync
-modes](https://creators.vrchat.com/worlds/udon/networking/variables/#2-manual-sync) states
-that manual sync "requires calling `RequestSerialization()` to send data updates" and is
-"best for crucial values that do not change often," while continuous sync "does not require
-calling `RequestSerialization()`" and instead "updates automatically" on the VRChat
-schedule, better suited to "frequently updated values." Every Core type built on `Process`
-picks manual sync deliberately: state changes in these types are discrete events (a process
-starts, a timer pauses, a player gets added to a tracked set), not continuously-varying
-values like a transform position, so there's a well-defined moment to trigger a sync rather
-than a reason to pay for automatic periodic replication.
+[VRChat describes the two sync
+modes](https://creators.vrchat.com/worlds/udon/networking/variables/#2-manual-sync) this way: manual
+sync "requires calling `RequestSerialization()` to send data updates" and suits values that don't
+change often, while continuous sync "updates automatically" and suits "frequently updated values."
+State in the Core types changes in discrete steps, such as a process starting, a timer pausing or a
+player joining a tracked set, not continuously like a transform position. Each change has a clear
+moment to send it, so there's no reason to pay for automatic periodic replication.
 
-## The self-healing resync heartbeat
+## The resync heartbeat
 
-`Process` layers a second mechanism on top of that: while a process is running, its owner
-re-broadcasts its full synced state on a slower, independent cadence (every 5 seconds),
-regardless of whether anything actually changed since the last discrete send. The `Process`
-source states the reason directly: the discrete, event-driven `[NetworkCallable]`
-broadcasts the Core process types use for lifecycle notifications aren't
-delivery-confirmed, so a client that missed one has no other way to catch up. The VRChat
-networking docs don't promise every network event arrives; the one case they document
-explicitly is a client whose own rate limit is exceeded by a sender running a different,
-incompatible world version, where [the server "may silently drop events and not deliver
+`Process` adds a second mechanism: while a process runs, its owner sends its full synced state
+again every 5 seconds, whether or not anything changed. The lifecycle broadcasts of the Core process
+types are discrete `[NetworkCallable]` events with no delivery confirmation, and a client that misses
+one has no other way to catch up. The VRChat docs document one case where events are lost: when
+players in one instance run different world versions, [the server "may silently drop events and not
+deliver
 them"](https://creators.vrchat.com/worlds/udon/networking/events/#mismatched-world-versions-in-the-same-instance).
-The Core heartbeat isn't scoped only to that one documented case: it treats every discrete
-broadcast as unconfirmed and resyncs regardless, which self-heals a missed broadcast within
-a few seconds without any acknowledgement or retry logic needed anywhere in the framework.
-See [`Process`](../core-concepts/process) for the full mechanics, including how ownership
-recovery interacts with this heartbeat when the previous owner leaves mid-run.
+The heartbeat doesn't depend on knowing which case happened: a client that missed a broadcast gets
+the current synced state within a few seconds, with no acknowledgement or retry logic. See
+[`Process`](../core-concepts/process#the-tick-loop) for the loop that sends it.
 
 ## Working around what can't be synced directly
 
-The synced tier of `TsvrcMemory` exists specifically because `DataDictionary`, the natural
-representation for an arbitrary key-value store, isn't itself a syncable type. [The VRChat
-list of types synced variables
-support](https://udonsharp.docs.vrchat.com/vrchat-api/#synced-variables) covers primitives,
-the small Unity value types (`Vector2`/`3`/`4`, `Quaternion`, `Color`), strings, and `VRCUrl`;
-`DataDictionary` isn't among them. Serializing it to a plain string via
-[`TsJson`](../utilities/ts-json) before every
-synced write, and parsing it back on `OnDeserialization`, is the accommodation: everything
-about the manual-sync-plus-`RequestSerialization` pattern above still applies to that string
-field itself, exactly as it would to any other synced value. See
-[`TsvrcMemory`](../networking-data/tsvrc-memory) for what is and isn't guaranteed about ordering and
-delivery for the synced tier specifically; this note doesn't repeat those specifics, only
-the shared pattern behind them.
+The synced tier of `TsvrcMemory` exists because `DataDictionary`, the natural shape for a key-value
+store, isn't a syncable type. [The types synced variables
+support](https://udonsharp.docs.vrchat.com/vrchat-api/#synced-variables) are primitives, the small
+Unity value types (`Vector2`, `Vector3`, `Vector4`, `Quaternion`, `Color`), strings and `VRCUrl`.
+`TsvrcMemory` serializes the dictionary to a string with [`TsJson`](../utilities/ts-json) before
+each synced write and parses it back in `OnDeserialization`, and that string field follows the same
+manual sync pattern as any other synced value. See [`TsvrcMemory`](../networking-data/tsvrc-memory)
+for what the synced tier guarantees about ordering and delivery.
 
-## Ownership follows the same convention throughout
+## Ownership
 
-Every one of these types transfers object ownership to the local player before writing a
-value it wants that write to propagate (`TsvrcMemory.Set` on a synced key,
-`Process.SetProcessOwner`, and so on). [The VRChat ownership
-documentation](https://creators.vrchat.com/worlds/udon/networking/ownership/#how-ownership-works)
-states plainly that "the owner of a networked object can modify its synchronized Udon
-variables," so only the current owner's `RequestSerialization` calls actually produce an
-outbound sync for anyone else. This is the same underlying VRChat ownership model in every
-case; Core doesn't introduce a second ownership concept of its own, it just applies
-the existing VRChat one consistently everywhere state needs to move between clients.
+Core uses the [VRChat ownership
+model](https://creators.vrchat.com/worlds/udon/networking/ownership/#how-ownership-works) as it is:
+only "the owner of a networked object can modify its synchronized Udon variables," so only the
+owner sends state to other players. There's no second ownership concept on top of it.
+
+The types differ in how a write from another player reaches the owner:
+
+- `TsvrcMemory` takes ownership for the local player before it writes a synced key.
+- `Process` never takes ownership by itself. A lifecycle call from another player is sent to the
+  owner over the network, and the owner applies it.
+- Subclasses that should run on the player who starts them, such as `TsvrcTimer` and
+  `PlayerTracker`, take ownership with `SetProcessOwner` before starting.

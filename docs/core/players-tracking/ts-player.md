@@ -7,12 +7,11 @@ sidebar_position: 1
 # TsPlayer
 
 `Tsvrc.Player.TsPlayer` is a static helper class for identifying and looking up players.
-It has no dependency on any other Core type, despite being used throughout the
-framework: by [`Process`](../core-concepts/process), the tracking chain
+It depends on no other Core type. The tracking chain uses it
 ([`PlayerTracker`](./player-tracker), [`AutoPlayerTracker`](./auto-player-tracker),
-[`ReadyCheckProcess`](./ready-check-process)), the overlay UI
-([`PlayerPositionOverlay`](../ui-components/overlay/player-position-overlay),
-[`PlayerMarkerRenderer`](../ui-components/overlay/player-marker-renderer)), and
+[`ReadyCheckProcess`](./ready-check-process) and the data transfer built on them), as do the
+overlay UI ([`PlayerPositionOverlay`](../ui-components/overlay/player-position-overlay),
+[`PlayerMarkerRenderer`](../ui-components/overlay/player-marker-renderer)) and
 [`PlayerColorAssigner`](./player-color-assigner).
 
 ## Why a custom player ID exists
@@ -46,32 +45,25 @@ if (winner != null)
 
 - **`GetPlayerID(VRCPlayerApi)`** — builds the `displayName#playerId` string for a player.
 - **`GetNumericPlayerId(string)`** — extracts the numeric ID from a `GetPlayerID` string, by
-  scanning backward from the end for digits until a `#` or a non-digit. It's a manual
-  parse rather than `int.Parse`, matching the framework's own preference for avoiding
-  standard-library calls that aren't guaranteed to be supported in the more limited Udon
-  runtime. A malformed string (no `#` at all, a `#` with nothing after it, or a
-  non-digit character right after the last `#`) returns `0` rather than throwing. A
-  display name that itself contains `#` characters is handled correctly: parsing works
-  backward from the end, so it always finds the *last* `#`, which is the one
-  `GetPlayerID` actually appended.
+  scanning backward from the end for digits until a `#` or a non-digit. It parses by hand
+  instead of calling `int.Parse`, since Core avoids standard-library calls that the Udon
+  runtime isn't guaranteed to support. A malformed string (no `#` at all, a `#` with nothing
+  after it, or a non-digit character right after the last `#`) returns `0` instead of
+  throwing. A display name that contains `#` works too: parsing from the end finds the last
+  `#`, which is the one `GetPlayerID` appended.
 - **`FindPlayerByID(string)`** — finds the live `VRCPlayerApi` matching a `GetPlayerID`
   string among players currently in the instance, or `null` if none match (for example, the
   player already left).
 - **`GetAllPlayers()`** / **`GetAllPlayerIDs()`** — the current player list, as
   `VRCPlayerApi[]` or as ID strings.
 - **`ToPlayerIDs(VRCPlayerApi[])`** / **`ToPlayerApis(string[])`** — convert between the two
-  representations. `ToPlayerApis` fetches the player list once and reuses it for every
-  lookup, rather than calling `GetAllPlayers()` per ID, and its result array is trimmed to
-  only the IDs that actually resolved to a live player: an ID for someone who's left the
-  instance is silently dropped, not represented as a null entry.
+  representations. `ToPlayerApis` fetches the player list once for all lookups instead of
+  calling `GetAllPlayers()` per ID, and its result holds only the IDs that resolved to a live
+  player: an ID for someone who left the instance is dropped, not returned as a `null` entry.
 - **`ToArray(string)`** — wraps a single player ID in a one-element array, for APIs that
   expect an array.
 
-## Edge cases worth knowing
+## Edge cases
 
-`GetNumericPlayerId("First#0")` returns `0`, the same value used to signal "no valid
-numeric ID found." [`Process.IsProcessOwner()`](../core-concepts/process#ownership-and-authority)
-accounts for this ambiguity explicitly by also checking that the ID isn't `0` before
-treating it as a real match, since VRChat player IDs start at `1`; code that calls
-`GetNumericPlayerId` directly should apply the same caution rather than treating `0` as
-an ordinary valid ID.
+`GetNumericPlayerId("First#0")` returns `0`, the same value it returns for a string with no numeric
+ID, so a caller can't tell the two apart from the result alone.
