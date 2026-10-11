@@ -19,7 +19,15 @@ export default function Hero() {
           <h1 className="font-heading text-4xl sm:text-5xl font-semibold tracking-tight text-brand-fg">
             <Translate
               id="homepage.hero.greeting"
-              values={{ name: <span className="text-brand-accent">Toni</span> }}>
+              values={{
+                name: (
+                  <Link
+                    href="https://github.com/ToniSeas"
+                    className="text-brand-accent hover:text-brand-accent hover:opacity-90">
+                    Toni
+                  </Link>
+                ),
+              }}>
               {"Hi, I'm {name}"}
             </Translate>
           </h1>

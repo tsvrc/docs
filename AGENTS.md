@@ -13,8 +13,8 @@ link, which `npm start` doesn't catch.
 ## Gotchas
 
 - `sidebars.ts` is written by hand. A `dirName` pointed at a leaf folder returns an unlabeled flat
-  list, so a category's `label` comes from its wrapping `{type: 'category', ...}` node, not a
+  list, so the `label` of a category comes from its wrapping `{type: 'category', ...}` node, not a
   `_category_.json`.
-- Each project's code lives in its own repo (`tsvrc-core`, `udon-test-kit`), and nothing keeps it in
-  sync with this one. When a project's public behavior changes, check its pages here, and the Core
-  testing pages too when Udon Test Kit changes.
+- The code of each project lives in its own repo (`tsvrc-core`, `udon-test-kit`), and nothing
+  keeps it in sync with this one. When the public behavior of a project changes, check its pages
+  here, and the Core testing pages too when Udon Test Kit changes.
