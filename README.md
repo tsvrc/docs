@@ -22,6 +22,6 @@ made.
 
 ## License
 
-CC BY 4.0, see [LICENSE](LICENSE). A code sample taken from a project repository keeps the license
-of that project. The TsVRC name and logo are governed separately, see
-[TRADEMARK.md](https://github.com/tsvrc/.github/blob/main/TRADEMARK.md).
+Copyright 2026 Antony Seas, licensed under CC BY 4.0, see [LICENSE](LICENSE). A code sample taken
+from a project repository keeps the license of that project. The TsVRC name and logo are governed
+separately, see [TRADEMARK.md](https://github.com/tsvrc/.github/blob/main/TRADEMARK.md).

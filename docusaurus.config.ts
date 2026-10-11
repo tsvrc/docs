@@ -121,7 +121,7 @@ const config: Config = {
           to: '/support',
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} TsVRC. Not affiliated with or endorsed by VRChat Inc.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Antony Seas. Not affiliated with or endorsed by VRChat Inc.`,
     },
     prism: {
       theme: prismThemes.github,
