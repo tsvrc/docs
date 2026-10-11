@@ -38,4 +38,30 @@ paquetes, úsalo también para este: las actualizaciones y dependencias de un pa
 mano quedan a tu cargo.
 
 </TabItem>
+<TabItem value="git" label="Git (para cambiar el código)">
+
+Usa esta opción solo para cambiar el código del propio paquete, por ejemplo para corregir un error
+o para contribuir. Para usar el paquete tal como es, instálalo con el Creator Companion.
+
+1. Quita el paquete de tu proyecto si ya está instalado. Un proyecto solo puede tener una copia.
+2. Pon el repositorio de GitHub del paquete en la carpeta `Assets` de tu proyecto, en la carpeta
+   que indica su `CONTRIBUTING.md`, como `Assets/Tsvrc` para Core. Si tu proyecto es un
+   repositorio de Git, añade el paquete como submódulo, para que tu proyecto registre qué commit
+   del paquete usa:
+
+   ```powershell
+   git submodule add <repository-url> Assets/<folder>
+   git submodule update --init --recursive
+   ```
+
+   Si no, clónalo:
+
+   ```powershell
+   git clone --recurse-submodules <repository-url> Assets/<folder>
+   ```
+
+Para enviar tus cambios, primero haz un fork del repositorio y usa la URL de tu fork. El
+`CONTRIBUTING.md` del repositorio explica cómo ejecutar sus pruebas y abrir un pull request.
+
+</TabItem>
 </Tabs>
