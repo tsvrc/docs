@@ -59,6 +59,22 @@ reader hits in production with nowhere to look it up.
   considered) and link to it from everywhere it's relevant. Don't re-litigate it inline on
   every page that touches it.
 
+### Document each component on its own page
+
+A page about a component states facts about that component. Name another component only when the
+reader can't use this one without it. A link breaks the build when its target goes away, but a
+sentence describing another component stays on the page, wrong, after that component changes.
+
+- Name what a component builds on, such as its base class or a type it calls, where the reader
+  needs it, and link to the section that documents it instead of restating it.
+- Don't list the subclasses or users of a component, and don't use them as examples ("as `X`
+  does"). Overview pages and the sidebar show what's built on what.
+- Don't describe the private members of another class. If a page needs a fact about another
+  component, add it to the page of that component and link to it.
+- Exceptions: a type in the public API of the component (a parameter, a return value, a field it
+  exposes or composes), an overview or decision page whose subject is how components relate, and a
+  how-to naming the components its task uses.
+
 ## Writing style: sound human, say only what's needed
 
 Docs written by an LLM have a recognizable smell, and readers trust content less once they
