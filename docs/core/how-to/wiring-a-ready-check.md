@@ -51,30 +51,33 @@ How to block an action until every present player has confirmed they're ready, u
    ```
 
 3. Wherever your own UI lets a player mark themselves ready, call
-   `_readyCheck.SetReady()` (or `SetReady(false)` to un-ready). Only the calling player's
-   own status can be changed this way; see the reference page for why.
+   `_readyCheck.SetReady()` (or `SetReady(false)` to take it back). It only changes the status of
+   the calling player, see [the reference
+   page](../players-tracking/ready-check-process#ownership-and-changes-to-the-ready-set) for why.
 
 ## Handling the roster changing mid-check
 
-If a player can join or leave while the check is already running, restart it with the
-current roster rather than trying to patch the running one: `ReadyCheckProcess` doesn't
-support adding players to a check already in progress.
+A player who leaves or is suspended is [removed from the check
+automatically](../players-tracking/player-tracker#automatic-removal). To include a player who
+joins while the check runs, add them to it. They start out not ready:
 
 ```csharp
 public void _OnRosterChanged()
 {
     if (_readyCheck.IsProcessRunning())
     {
-        _readyCheck.StopReadyCheck();
+        _readyCheck.AddTrackedPlayers(_roster.LastAddedPlayerIds);
+        return;
     }
 
     _readyCheck.StartReadyCheck(_roster.LastPlayerIds);
 }
 ```
 
-For a fixed, known set of players instead of "everyone currently in the instance," start
-`PlayerTracker`/`ReadyCheckProcess` directly with that explicit ID list and skip
-`AutoPlayerTracker` entirely.
+Restarting the check with the current roster also works, but clears every ready mark.
+
+For a fixed, known set of players instead of everyone in the instance, start the ready check with
+that ID list and skip `AutoPlayerTracker`.
 
 Declare each `[WirePool]` field exactly once in the whole project if you want one shared
 roster and ready check. [Pool slot counts are computed per
@@ -86,8 +89,7 @@ field of the same type.
 
 ## Why this shape
 
-`ReadyCheckProcess` only tracks readiness for players it's already tracking. See
-[its reference page](../players-tracking/ready-check-process) for the ordering guarantees
-around `SetReady` and what happens when the tracked set changes mid-check. For the "why
+See the [`ReadyCheckProcess` reference page](../players-tracking/ready-check-process) for the
+ordering of `SetReady` and what happens when the tracked set changes during a check. For the "why
 generated code, why not just call these directly at compile time" background, see
 [How Core fits together](../core-concepts/how-it-fits-together).

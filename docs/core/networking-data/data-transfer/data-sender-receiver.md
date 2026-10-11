@@ -6,47 +6,43 @@ sidebar_position: 5
 
 # DataSenderReceiver
 
-`Tsvrc.DataTransfer.DataSenderReceiver` sits on top of
-[DataChunkReceiver](./data-chunk-receiver) and is purely an ergonomics layer: it turns the
-receiver's raw hooks (`OnTransferStarted`, `OnChunksAssembled`, `OnChunkStored`, ...) into a
-clean, receiver-focused public API: `LastData`, `LastChunkIndex`, `LastTotalChunks`, and
-four events (`OnDataReceptionStartedEvent`, `...StoppedEvent`, `...CompletedEvent`,
-`OnDataChunkReceivedEvent`) with matching `protected virtual` hooks a subclass overrides
-without ever touching the raw chunk arrays underneath. `OnDataReceptionStartedEvent` and
-`...StoppedEvent` don't update any `Last*` property; `LastChunkIndex`/`LastTotalChunks` are
-set before `OnDataChunkReceivedEvent` fires, and `LastData` is set before
-`OnDataReceptionCompletedEvent` fires, so both are always safe to read from inside their
-matching subscriber.
+`Tsvrc.DataTransfer.DataSenderReceiver` builds on [DataChunkReceiver](./data-chunk-receiver) and
+only changes how reception is exposed. It turns the raw hooks of the receiver (`OnTransferStarted`,
+`OnChunksAssembled`, `OnChunkStored` and others) into `LastData`, `LastChunkIndex`,
+`LastTotalChunks` and four events, `OnDataReceptionStartedEvent`, `...StoppedEvent`,
+`...CompletedEvent` and `OnDataChunkReceivedEvent`, each with a matching `protected virtual` hook. A
+subclass overrides those hooks without touching the chunk arrays. It's one layer of [the data
+transfer chain](../data-transfer-overview), which names the type to use.
 
-## The same deferred-emission pattern, one layer up
+The started and stopped events don't update a `Last*` property. `LastChunkIndex` and
+`LastTotalChunks` are set before `OnDataChunkReceivedEvent` fires, and `LastData` before
+`OnDataReceptionCompletedEvent`, so a subscriber can read them inside its handler.
 
-Just as `DataSender` defers its stop/complete broadcasts by a frame, `DataSenderReceiver`
-defers its own `OnDataReceptionStopped`/`Completed` emission the same way and for the same
-reason: at the point these fire, `ExecuteStop`/`ExecuteComplete` is still on the call stack,
-so a subscriber that reacts by immediately starting a new transfer would corrupt the new
-transfer's state if the emission happened synchronously. The assembled data itself is
-staged in a private field (`_pendingCompletionData`) rather than written straight to
-`LastData`, specifically so a new transfer starting inside that one-frame gap, which resets
-receiver state, can't clobber it before the deferred emit reads it. `LastData` is only ever
-assigned atomically with the deferred completion event actually firing.
+## Deferred stop and complete events
 
-Both pending flags (`_pendingCompletion`, `_pendingStop`) are cleared by
-`ResetReceiverState`, which runs when a new transfer starts. That's what suppresses a stale
-emission for a transfer that's already been superseded: the deferred call still fires, finds
-its flag already cleared, and returns without emitting anything.
+`DataSenderReceiver` emits `OnDataReceptionStopped` and `Completed` one frame late, [like the
+transfer events of DataSender](./data-sender#deferred-stop-and-complete-events) and for the same
+reason: they fire inside the stop or complete call, before [the cleanup of the
+process](../../core-concepts/process#lifecycle), and a new transfer started from the event right
+away would lose its state to that cleanup.
 
-## What this layer adds vs. what it doesn't
+The assembled data waits in the private `_pendingCompletionData` field instead of going straight to
+`LastData`. A new transfer that starts within that frame resets the receiver state, and this keeps
+it from clearing the data before the deferred event reads it. `LastData` is set in the same step
+that fires the completion event.
 
-There's no new validation here; every correctness guarantee (sender verification, duplicate
-suppression, chunk-count bounds) lives one layer down in `DataChunkReceiver` and isn't
-repeated here.
+`ResetReceiverState`, which runs when a new transfer starts, clears both pending flags
+(`_pendingCompletion` and `_pendingStop`). A deferred call for an older transfer still fires, finds
+its flag cleared, and emits nothing.
+
+## Validation
+
+This layer adds no checks. Sender verification, duplicate suppression and the chunk-count bounds
+are [done by DataChunkReceiver](./data-chunk-receiver#validation-layer-by-layer).
 
 ## Usage
 
-Most consumers use [`DataTransferer`](./data-transferer) directly and never touch this layer.
-Subclass `DataSenderReceiver` itself only if you want the sender/receiver plumbing without
-the transfer-specific event names of `DataTransferer`. Override `OnDataReceptionCompleted` and
-read `LastData`:
+To build your own type on this layer, override `OnDataReceptionCompleted` and read `LastData`:
 
 ```csharp
 protected override void OnDataReceptionCompleted()

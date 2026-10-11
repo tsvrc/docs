@@ -6,9 +6,8 @@ sidebar_position: 3
 
 # Decision note: the shared-memory and sync model
 
-Every Core type that replicates state, from [`TsvrcMemory`](../networking-data/tsvrc-memory) to
-[`Process`](../core-concepts/process) and the types built on it such as
-[`TsvrcTimer`](../networking-data/tsvrc-timer), uses the same two pieces: the VRChat manual sync mode
+Every Core type that replicates state, such as [`TsvrcMemory`](../networking-data/tsvrc-memory)
+and [`Process`](../core-concepts/process), uses the same two pieces: the VRChat manual sync mode
 (`BehaviourSyncMode.Manual`) and an explicit `RequestSerialization()` call after each change. This
 note explains why.
 
@@ -57,6 +56,5 @@ The types differ in how a write from another player reaches the owner:
 
 - `TsvrcMemory` takes ownership for the local player before it writes a synced key.
 - `Process` never takes ownership by itself. A lifecycle call from another player is sent to the
-  owner over the network, and the owner applies it.
-- Subclasses that should run on the player who starts them, such as `TsvrcTimer` and
-  `PlayerTracker`, take ownership with `SetProcessOwner` before starting.
+  owner over the network, and the owner applies it. A subclass that should run on the player who
+  starts it [takes ownership first](../core-concepts/process#lifecycle).

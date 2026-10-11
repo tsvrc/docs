@@ -9,9 +9,9 @@ sidebar_position: 2
 `Tsvrc.DataTransfer.ChunkedTransferSession` sends a message split by [DataChunker](./data-chunker)
 one chunk at a time: each chunk runs its own [ready
 check](../../players-tracking/ready-check-process), in which every target player acknowledges it,
-before the next chunk starts. It has no networking of its own, which `DataSender` adds on top. This
-layer only owns the chunk sequence. You never call it directly. See
-[DataTransferer](./data-transferer) for the type you use.
+before the next chunk starts. It only owns the chunk sequence and sends nothing over the network
+itself. It's one layer of [the data transfer chain](../data-transfer-overview), which names the type
+to use.
 
 ## The sequence
 
@@ -26,11 +26,10 @@ to broadcast the transitions:
 - `OnDataChunkSendRequested(dataChunk, chunkIndex, totalChunks, playerIds)`: fires for every chunk,
   and is where a subclass sends it over the network.
 
-If every tracked player leaves or is suspended during a ready check, the check can't complete:
-[`ReadyCheckProcess`](../../players-tracking/ready-check-process) doesn't treat an empty tracked
-list as everyone being ready. `ChunkedTransferSession` overrides `OnProcessUpdate` to find a running
-process with no tracked players and calls `CancelDataTransfer()`, so the transfer doesn't wait
-forever.
+If every tracked player leaves or is suspended during a ready check, [the check can't
+complete](../../players-tracking/ready-check-process#edge-cases). `ChunkedTransferSession`
+overrides `OnProcessUpdate` to find a running process with no tracked players and calls
+`CancelDataTransfer()`, so the transfer doesn't wait forever.
 
 ## Between chunks
 

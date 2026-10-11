@@ -7,12 +7,7 @@ sidebar_position: 1
 # TsPlayer
 
 `Tsvrc.Player.TsPlayer` is a static helper class for identifying and looking up players.
-It depends on no other Core type. The tracking chain uses it
-([`PlayerTracker`](./player-tracker), [`AutoPlayerTracker`](./auto-player-tracker),
-[`ReadyCheckProcess`](./ready-check-process) and the data transfer built on them), as do the
-overlay UI ([`PlayerPositionOverlay`](../ui-components/overlay/player-position-overlay),
-[`PlayerMarkerRenderer`](../ui-components/overlay/player-marker-renderer)) and
-[`PlayerColorAssigner`](./player-color-assigner).
+It depends on no other Core type.
 
 ## Why a custom player ID exists
 

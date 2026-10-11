@@ -93,6 +93,9 @@ that player as the caller and fail the check above.
 
 ## Edge cases
 
+- A check with no tracked players never completes on its own: completion needs at least one
+  tracked player, and every one of them ready. That holds for a check started with an empty list
+  and for one whose tracked players all left. Stop it with `StopReadyCheck()`.
 - A ready mark from a player who isn't tracked is rejected with a warning. `CheckAllPlayersReady`
   only looks at tracked players, so that mark could never affect completion.
 - `OnTrackingPlayersRemoved` can remove up to 79 players at once when a new owner takes over, one

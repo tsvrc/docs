@@ -9,14 +9,11 @@ sidebar_position: 2
 `Tsvrc.Session.RankedGameSession` composes the rest of the tracking and timing stack into a
 full round-based game session: a lobby, a synchronized ready-check-gated start, an active
 game phase with completion tracking, and a configurable end condition. Its generated shadow
-is `TsRankedGameSession`. It's one of the most dependent runtime types in the package: it's
-built directly on [`PlayerTracker`](../players-tracking/player-tracker),
-[`ReadyCheckProcess`](../players-tracking/ready-check-process), and
-[`TsvrcTimer`](../networking-data/tsvrc-timer), so those three pages are real prerequisites,
-not just related reading. It has no relationship to [`StateManager`](./state-manager) on the
-page before this one; its own `CurrentState` is a plain field, not a `StateManager`
-instance. See [Run a full timed round with a lobby](../how-to/running-a-timed-round) for
-a task-oriented walkthrough.
+is `TsRankedGameSession`. It's built from [`PlayerTracker`](../players-tracking/player-tracker),
+[`ReadyCheckProcess`](../players-tracking/ready-check-process) and
+[`TsvrcTimer`](../networking-data/tsvrc-timer) instances, listed under [What it's built
+from](#what-its-built-from). See [Run a full timed round with a lobby](../how-to/running-a-timed-round)
+for a task-oriented walkthrough.
 
 ## Getting an instance
 
@@ -91,17 +88,15 @@ logs an error and does nothing if a session is already running (`CurrentState` i
 `Idle`). It takes an optional `additionalKnownPresentPlayerIds`: extra IDs unioned into that
 initial snapshot even if the synced state of `_lobbyTracker` hasn't caught up to them yet,
 since a caller's own local knowledge (say, a trigger volume's roster) can be ahead of what's
-propagated over the network. Starting with an empty roster is rejected outright with an
-error, rather than allowed to silently hang: `ReadyCheckProcess.CheckAllPlayersReady` never
-auto-completes on a zero-length tracked list, so an empty-lobby start would otherwise leave
-the session stuck in `Loading` forever with nothing able to complete it except a manual
-`StopSession`.
+propagated over the network. Starting with an empty roster logs an error and does nothing:
+[a ready check with no players never
+completes](../players-tracking/ready-check-process#edge-cases), so the session would otherwise
+stay in `Loading` until a `StopSession` call.
 
 `AddLoadingParticipant` lets a player join an *already-running* ready check that they
 weren't part of the original snapshot: useful for a game that becomes eligible to more
-players over time without waiting for the next round. It's a no-op outside `Loading` and for
-a player already tracked, matching the underlying `AddTrackedPlayers` semantics it forwards
-to.
+players over time without waiting for the next round. It does nothing outside `Loading` or
+for a player already tracked.
 
 Once `InGame`, `RemoveGamePlayer` drops a player from `_gameTracker` directly, for a player
 leaving the round early without leaving the instance (a respawn, an exit trigger); it's a
@@ -118,31 +113,24 @@ Four independent, individually toggleable natural end conditions
 (`_endOnTimerComplete`, `_endOnAllGamePlayersLeft`, `_endOnAllPlayersCompleted`,
 `_stopOnEmptyLobbyDuringLoading`) plus an explicit `StopSession()` call. Each maps to its own
 `RankedGameSessionEndReason` value, readable via `LastEndReason` once the corresponding event
-fires. `_stopOnEmptyLobbyDuringLoading` exists for the same underlying reason the empty-lobby
-start guard does: `CheckAllPlayersReady` can't complete a check with nobody left tracked, so
-losing every remaining player during `Loading` needs an explicit stop or the session hangs
-there permanently, one phase earlier than the equivalent `_endOnAllGamePlayersLeft` check.
+fires. `_stopOnEmptyLobbyDuringLoading` exists for the same reason as the empty-roster start
+guard: a ready check whose players all left never completes, so without it the session would stay
+in `Loading`. It's the `Loading` counterpart of `_endOnAllGamePlayersLeft`.
 
 **`StopSession` reaches every client during `Loading`, but not during `InGame`.** The two
 branches behave differently, and the difference matters if you're building a networked
 "force stop" button.
 
-During `Loading`, `StopSession` calls `_readyCheck.StopReadyCheck()`, an ordinary `Process`
-call: it forwards to the real owner if the caller isn't it, and the owner's stop already
-broadcasts to every instance player, the same way every other `ReadyCheckProcess`/
-`PlayerTracker` state change does. `RankedGameSession` subscribes to that broadcast
-(`OnReadyCheckStoppedEvent`), so every client's own bookkeeping updates on its own once it
-arrives, with no extra work from you.
+During `Loading`, `StopSession` calls `_readyCheck.StopReadyCheck()`. `RankedGameSession`
+subscribes to `OnReadyCheckStoppedEvent`, which fires on every client when the ready check stops,
+so every client updates its own state when that event arrives.
 
-During `InGame`, `StopSession` instead calls `_EndSession` directly: `CurrentState`,
-`LastEndReason`, and `OnSessionStoppedEvent` are all set and fired immediately and
-synchronously, on the calling client only, before `_StopSubProcesses()` even asks
-`_gameTracker`/`_completedTracker`/`_timer` to stop (and each of those calls is itself
-subject to the same owner-forwarding as any other `Process` call). Those three sub-processes
-do eventually stop and broadcast that to every client once their real owner processes it,
-but `RankedGameSession` isn't subscribed to any of *their* stop events, only to their
-players-added/players-removed/timer-completed events, so nothing re-runs its own bookkeeping
-on other clients when that stop arrives. **A client that didn't call `StopSession` itself
+During `InGame`, `StopSession` calls `_EndSession` directly instead: `CurrentState`,
+`LastEndReason` and `OnSessionStoppedEvent` are set and fired right away, on the calling client
+only, before `_StopSubProcesses()` asks `_gameTracker`, `_completedTracker` and `_timer` to stop.
+`RankedGameSession` doesn't subscribe to the stop events of those three, only to their
+players-added, players-removed and timer-completed events, so nothing updates its state on other
+clients when they stop. **A client that didn't call `StopSession` itself
 during `InGame` never sees its own `CurrentState` return to `Idle`.**
 
 `RankedGameSession` carries no authorization or broadcast policy of its own (who's allowed

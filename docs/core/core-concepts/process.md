@@ -8,8 +8,7 @@ sidebar_position: 4
 
 `Tsvrc.Core.Process` is the base class for networked work that one player runs at a time: it
 starts, runs, then stops or completes. That player is the owner, and another player takes over if
-the owner leaves or is suspended. Its generated shadow is `TsProcess`. `PlayerTracker`,
-`AutoPlayerTracker`, `ReadyCheckProcess`, `TsvrcTimer` and the `DataTransferer` chain all extend it.
+the owner leaves or is suspended. Its generated shadow is `TsProcess`.
 
 ## Usage
 
@@ -45,9 +44,9 @@ gameRound.CompleteProcess();
 `OnProcessStarted`, sends the synced state and starts the [tick loop](#the-tick-loop). On any other
 player it sends `RequestStartProcess` to the owner and changes nothing locally. It never changes who
 owns the object. A subclass that should run on the player who starts it calls `SetProcessOwner`
-first, as `TsvrcTimer.StartTimer` and `PlayerTracker.StartPlayerTracking` do. If two players start
-such a subclass at the same time, both can take ownership and start a run before either sees the
-other, and only one stays the owner, so start it from one player when that can happen.
+before `StartProcess`. If two players start such a subclass at the same time, both can take
+ownership and start a run before either sees the other, and only one stays the owner, so start it
+from one player when that can happen.
 
 `StopProcess()` ends a run early and `CompleteProcess()` ends it successfully. The owner acts on
 them directly, and any other player sends `RequestStopProcess` or `RequestCompleteProcess` to the
@@ -87,11 +86,9 @@ of its GameObject. Subclasses read and change it with three `protected` methods:
 
 A run keeps going when its owner can no longer drive it:
 
-- When the owner leaves, [VRChat picks a new
+- When the owner leaves, [VRChat assigns a new
   owner](https://creators.vrchat.com/worlds/udon/networking/ownership/#how-ownership-works). That
-  player takes over from `OnPlayerLeft` or `OnOwnershipTransferred`, whichever runs once it owns the
-  object. The two [can fire in either
-  order](https://feedback.vrchat.com/udon/p/order-of-onownershiptransferred-and-onplayerleft-when-another-player-leaves-the).
+  player takes over from `OnPlayerLeft` or `OnOwnershipTransferred`.
 - When the owner is [suspended](https://creators.vrchat.com/worlds/udon/players/#get-issuspended),
   their client stops running Udon and answering network events, so nothing would drive the run.
   Every client that sees the suspension in `OnPlayerSuspendChanged` calls `SetProcessOwner` for its
