@@ -6,52 +6,44 @@ sidebar_position: 3
 
 # DataSender
 
-`Tsvrc.DataTransfer.DataSender` puts real networking under the sequencing hooks of
-[ChunkedTransferSession](./chunked-transfer-session): it translates
-`OnChunkSequenceStarted`/`Stopped`/`Completed` into `[NetworkCallable]` broadcasts to every
-player in the instance, and exposes them as three events (`OnDataTransferStartedEvent`,
-`...StoppedEvent`, `...CompletedEvent`) plus matching `protected virtual` hooks
-(`OnTransferStarted`, `OnTransferStopped`, `OnTransferCompleted`; none of the three matching
-events update any `Last*` property, unlike the reception-side events further up the chain).
-You never call it directly. See [DataTransferer](./data-transferer) for the type a consumer
-actually uses.
+`Tsvrc.DataTransfer.DataSender` adds networking to the sequence hooks of
+[ChunkedTransferSession](./chunked-transfer-session): it turns `OnChunkSequenceStarted`, `Stopped`
+and `Completed` into `[NetworkCallable]` broadcasts to every player in the instance. It exposes them
+as three events (`OnDataTransferStartedEvent`, `...StoppedEvent` and `...CompletedEvent`) with
+matching `protected virtual` hooks (`OnTransferStarted`, `OnTransferStopped` and
+`OnTransferCompleted`). None of the three updates a `Last*` property. It's one layer of [the data
+transfer chain](../data-transfer-overview), which names the type to use.
 
-## Owner-only broadcasts, verified per call
+## Owner-only broadcasts, checked per call
 
-Each `Notify*` broadcast method checks that the caller is genuinely the object's owner
-before acting. Any player can invoke a [`[NetworkCallable]`](https://creators.vrchat.com/worlds/udon/networking/events/#legacy-events-and-security)
-method directly, so without this a malicious call could reset every client's receiver state
-(corrupting the expected-sender tracking the next layer relies on) and stall the transfer
-for everyone. The check is skipped only during the owner's own inline broadcast (tracked by
-the inherited `_isBroadcasting` flag), because `CallingPlayer` isn't reliable there.
+Each `Notify*` broadcast method checks that the caller is the owner of the object before acting.
+Any player can call a
+[`[NetworkCallable]`](https://creators.vrchat.com/worlds/udon/networking/events/#legacy-events-and-security)
+method directly, so without the check a forged call could fire the start, stop or complete events
+on every client and stall a running transfer for everyone. The owner skips the check during its own
+broadcast, tracked by the inherited `_isBroadcasting` flag, because `CallingPlayer` isn't reliable
+there.
 
-## Why the rate limit is 100/second, not the default
+## Why the rate limit is 100 per second
 
-All three broadcasts, and the chunk-delivery event defined one layer up, share a
-`maxEventsPerSecond: 100` limit, the [maximum VRChat
-allows](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting). VRChat
-only guarantees relative delivery ordering between two event types from the same sender
-when *neither* exceeds its own rate limit: at the default rate, a rapid cancel-then-restart
-could let a chunk event overtake the "transfer started" notification on a remote client,
-which would see `_transferActive` still false when that chunk arrives, silently drop it,
-and stall forever with no automatic recovery. Keeping every event in this family at the
-same, generous rate is what keeps that ordering guarantee in force.
+The three broadcasts use `maxEventsPerSecond: 100`, the [maximum VRChat
+allows](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting). VRChat keeps the
+order of events from one sender only while none of them hits its own rate limit. At the default
+rate, a quick cancel and restart could let a later event of the transfer, such as a chunk, overtake
+the start notification on another client. That client would drop the chunk and the transfer would
+stall with nothing to recover it. A subclass that adds events to the transfer needs the same limit
+to keep that order.
 
-## Deferred stop/complete emission
+## Deferred stop and complete events
 
-The broadcast handlers behind these events, `NotifyTrackedPlayersDataTransferStopped`/
-`Completed`, call the `OnTransferStopped`/`OnTransferCompleted` hooks synchronously but
-don't emit the public events yet. They set a pending flag first and schedule the actual
-emission (`_EmitDataTransferStopped`/`_EmitDataTransferCompleted`) one frame later via
-`SendCustomEventDelayedSeconds`. This matters because, on the owner, `ExecuteStop`/
-`ExecuteComplete` (from `Process`) are still on the call stack when the broadcast handler
-runs: internal cleanup hasn't run yet. If a subscriber reacted to the event synchronously
-by starting a new transfer, that new transfer's state would be corrupted by the
-still-pending cleanup of the old one. Deferring the event by a frame lets cleanup finish
-first.
+The broadcast handlers `NotifyTrackedPlayersDataTransferStopped` and `...Completed` call the
+`OnTransferStopped` and `OnTransferCompleted` hooks right away, but emit the public events one frame
+later: they set a pending flag and schedule `_EmitDataTransferStopped` or
+`_EmitDataTransferCompleted` with `SendCustomEventDelayedSeconds`. On the owner, the handler runs
+inside the stop or complete call, before [the cleanup of the process](../../core-concepts/process#lifecycle).
+A subscriber that started a new transfer from the event right away would have the new state cleared
+by that cleanup. Waiting a frame lets the cleanup finish first.
 
-The pending flags exist specifically to handle a new transfer starting inside that one-frame
-gap: `NotifyTrackedPlayersDataTransferStarted` clears both flags immediately, so if a
-subscriber restarts the transfer before the deferred call fires, the stale stop/complete
-event for the *old* transfer is suppressed rather than firing after the new one has already
-begun.
+`NotifyTrackedPlayersDataTransferStarted` clears both pending flags, so when a subscriber starts a
+new transfer within that frame, the deferred stop or complete event of the old transfer doesn't fire
+after the new one began.

@@ -10,8 +10,8 @@ sidebar_position: 4
 stored, and acknowledged. It overrides
 `OnDataChunkSendRequested` from [DataSender](./data-sender) to broadcast each chunk via its own `[NetworkCallable]` method,
 `BroadcastDataChunkReceived`, which every instance player receives and which validates the
-chunk before storing it. You never call it directly. See
-[DataTransferer](./data-transferer) for the type a consumer actually uses.
+chunk before storing it. It's one layer of [the data transfer chain](../data-transfer-overview),
+which names the type to use.
 
 ## Validation, layer by layer
 
@@ -30,8 +30,8 @@ flow, not just handling malformed input:
 - **Sender must match the expected process owner** — an internal `_expectedSenderPlayerId`,
   captured in `OnTransferStarted` from `Networking.LocalPlayer` (if the local instance is
   the process owner) or from `NetworkCalling.CallingPlayer` (if not), rejects a chunk from
-  anyone else. The owner's own broadcast bypasses this via the same inline-call flag pattern
-  used elsewhere in the chain (here, `_isSendingChunk`).
+  anyone else. The owner skips this check during its own broadcast, tracked by the
+  `_isSendingChunk` flag.
 - **`playerIds` must be non-null and include the local player** — otherwise the chunk isn't
   meant for this client and is ignored.
 - **`dataChunk` must be non-null** — `StringBuilder.Append(null)` is a silent no-op, so a
@@ -54,11 +54,11 @@ flow, not just handling malformed input:
   ownership-transfer race). Without de-duplication a repeat would re-fire `OnChunkStored`
   and send a redundant acknowledgment.
 
-## A second reason for the same rate limit
+## Why the rate limit is 100 per second
 
-[`DataSender`](./data-sender) explains why every broadcast in this family shares
-`maxEventsPerSecond: 100`: event ordering. `BroadcastDataChunkReceived` has an additional,
-independent reason of its own: VRChat [splits any event payload over 1 KB into internal 1 KB
+`BroadcastDataChunkReceived` uses `maxEventsPerSecond: 100`, the same limit as the [broadcasts it
+must stay in order with](./data-sender#why-the-rate-limit-is-100-per-second). It has a second reason
+of its own: VRChat [splits any event payload over 1 KB into internal 1 KB
 packets](https://creators.vrchat.com/worlds/udon/networking/events/#parameter-size-limits-and-event-splitting),
 and each of those counts separately against the rate limit. A 2,500-character ASCII
 chunk is already close to 2,500 bytes (roughly three internal packets); a CJK chunk near the
@@ -73,8 +73,8 @@ of about 11 KB/s, which ends up being the real limit on how fast a transfer can 
 
 A validated chunk is stored at `_receivedChunks[chunkIndex - 1]`, `OnChunkStored` fires
 (subclass hook for updating public properties), and only then does `NotifyChunkReceived()`
-run, which is just `SetReady()` under the hood, acknowledging via the same ready-check
-mechanism the rest of the chain already uses. `OnChunkStored` firing *before* the
+acknowledge the chunk by calling the inherited
+[`SetReady()`](../../players-tracking/ready-check-process#usage). `OnChunkStored` firing *before* the
 acknowledgment matters on the owner specifically: `SetReady` can synchronously cascade into
 completing the whole ready check, so emitting the chunk-received signal first guarantees a
 chunk event is never observed to arrive after the completion event it made possible.

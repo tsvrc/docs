@@ -111,5 +111,5 @@ the exact guarantees (what "completed" means when the recipient list shrank, for
 
 VRChat caps individual network event payloads well below what most real payloads need, so a
 single call has to become a sequenced chunk transfer underneath. The
-[chain overview](../networking-data/overview.md) explains why that's split across eight small
+[chain overview](../networking-data/overview.md) explains why that's split across several small
 layers instead of one large class.

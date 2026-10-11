@@ -7,11 +7,9 @@ sidebar_position: 1
 # DataChunker
 
 `Tsvrc.DataTransfer.DataChunker` is a [ReadyCheckProcess](../../players-tracking/ready-check-process)
-with no network or process state of its own: it only splits and validates string data,
-purely as instance methods other classes in the chain call. It's the first link past
-`ReadyCheckProcess` and exists to isolate the chunking math from everything that actually
-moves chunks over the network. You never call it directly. See
-[DataTransferer](./data-transferer) for the type a consumer actually uses.
+that adds no network or process state: it splits and validates string data through `protected`
+methods for subclasses, which keeps the chunking math apart from the code that sends chunks. It's
+one layer of [the data transfer chain](../data-transfer-overview), which names the type to use.
 
 ## Public surface (all `protected`, for subclasses)
 
@@ -24,14 +22,12 @@ moves chunks over the network. You never call it directly. See
   underlying math, exposed separately so a subclass can compute chunk count without
   materializing every chunk, or extract one chunk on demand.
 
-## Why CHUNK_SIZE is 2500, specifically
+## Why CHUNK_SIZE is 2500
 
-This is a real, checked constant, not a round number. VRChat caps the [total parameter size
-of a single network
+VRChat caps the [total parameter size of a single network
 event](https://creators.vrchat.com/worlds/udon/networking/events/#parameter-size-limits-and-event-splitting)
-at 16 KB (16,384 bytes), and the chunk-delivery event (`BroadcastDataChunkReceived`, defined
-further up the chain) carries four parameters: the chunk string, its index, the total count,
-and the target player ID array. The chunk string dominates that budget, encoded as UTF-8,
+at 16 KB (16,384 bytes), and the event that delivers a chunk carries four parameters: the chunk
+string, its index, the total count, and the target player ID array. The chunk string dominates that budget, encoded as UTF-8,
 which means the true worst case isn't emoji (2 UTF-16 chars but only 4 UTF-8 bytes, i.e. 2
 bytes/char) but CJK text in the U+0800-U+FFFF range, which costs 3 bytes per character. The
 player ID array adds its own cost: IDs are `displayName#playerId` strings, and a busy
