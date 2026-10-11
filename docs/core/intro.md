@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # TsVRC Core
 
-TsVRC Core is an open-source, community-maintained framework for building VRChat worlds with
+TsVRC Core is an open-source framework for building VRChat worlds with
 UdonSharp: structured initialization, dependency wiring, and an editor tool that generates
 the code for both automatically (codegen), on top of the VRChat Worlds SDK.
 

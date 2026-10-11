@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'TsVRC',
-  tagline: 'A community-maintained framework for building VRChat worlds',
+  tagline: 'Open-source tools for building VRChat worlds',
   favicon: 'img/tsvrc-logo.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
