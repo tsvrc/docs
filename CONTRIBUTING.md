@@ -1,78 +1,76 @@
 # Contributing to TsVRC docs
 
+Fixes, new pages and translations are welcome. Before you add a page or change how the site is
+organized, open an issue to agree on it. Questions go in
+[GitHub Discussions](https://github.com/orgs/tsvrc/discussions).
+
 ## Setup
 
-- **Node 20+** (see `engines` in `package.json`).
-- `npm install`, then `npm start` for a hot-reloading dev server at
-  `http://localhost:3000`. Config changes (`docusaurus.config.ts`) need a server restart,
-  content changes don't.
-- `npm run build` before calling any doc change done. `onBrokenLinks: 'throw'` means a
-  broken link fails the build, so this catches mistakes `npm start` won't.
+You need Node 20 or later.
 
-## Writing docs
+```bash
+npm install
+npm start
+```
 
-This site follows the [Diátaxis framework](https://diataxis.fr/) (tutorial / how-to /
-reference / explanation) and a house writing style aimed at not reading like AI-generated
-prose. Read [STYLE_GUIDE.md](STYLE_GUIDE.md) before writing or editing any page: which of
-the four categories a page belongs to, section conventions, linking instead of
-duplicating, words/phrases to avoid, sentence shape, formatting rules.
+`npm start` serves the site at `http://localhost:3000` and reloads it when content changes. Restart
+it after changing `docusaurus.config.ts`. Before you open a pull request, run `npm run build`: it
+builds both languages and fails on a broken link, which `npm start` doesn't catch. Every push to
+`main` deploys the site.
+
+## Writing a page
+
+Pages follow the [Diátaxis framework](https://diataxis.fr/) and [STYLE_GUIDE.md](STYLE_GUIDE.md).
+Read the style guide before you write or edit a page. A page about a project must match what its
+code does.
 
 ## Multi-project layout
 
-Each project under the `tsvrc` org gets its own `docs/<project>/` folder here rather than
-its own docs repo. Adding docs for a new project means adding a folder here and a
-matching top-level category in `sidebars.ts`, not creating a new repo. Every project shares
-one sidebar, so a category whose label another project already uses, such as "Reference",
-needs a unique `key`; without one, the Spanish build fails on a duplicate translation key.
-`docs/udon-test-kit/` is set up this way.
+Each TsVRC project gets its own `docs/<project>/` folder here instead of its own docs repo, plus a
+top-level category in `sidebars.ts`. Every project shares one sidebar, so a category whose label
+another project already uses, such as "Reference", needs a unique `key`. Without one, the Spanish
+build fails on a duplicate translation key. `docs/udon-test-kit/` is set up this way.
 
-A page every project shares, such as [Install a TsVRC package](docs/install-a-package.md),
-sits at the root of `docs/` instead. Each project's own install page links to it and adds only
-what's specific to that project: the package name, requirements, and how to check that it
-worked.
+A page every project shares, such as [Install a TsVRC package](docs/install-a-package.md), sits at
+the root of `docs/`. Each project install page links to it and adds only what's specific to that
+project: the package name, requirements, and how to check that it worked.
 
-A project's docs stand on their own. When one project depends on another, as TsVRC does on
-Udon Test Kit, the dependent project's pages link to the other's where a reader needs it, and
-the project depended on never mentions its consumers.
+The docs of a project stand on their own. When one project depends on another, as Core does on Udon
+Test Kit, the dependent project links to the other where a reader needs it, and the project
+depended on never mentions its consumers.
 
 ## Adding a translation
 
-Docs content stays English-only and unversioned under `docs/<project>/`. A translation
-lives in a parallel tree at
-`i18n/<locale>/docusaurus-plugin-content-docs/current/<project>/`, mirroring the same
-relative paths and filenames; adding a language never touches the English files. See
-`docs/core/intro.md` and its Spanish counterpart for a worked example to copy.
-`src/pages/` translates differently: via `@docusaurus/Translate` in the component source,
-with strings in `i18n/<locale>/code.json`.
+English pages live in `docs/<project>/`. A translation mirrors the same paths and file names under
+`i18n/<locale>/docusaurus-plugin-content-docs/current/<project>/`, so adding a language never
+touches the English files. `docs/core/intro.md` and its Spanish counterpart are a worked example.
+Pages in `src/pages/` translate through `@docusaurus/Translate` instead, with their strings in
+`i18n/<locale>/code.json`.
 
-A heading another page links to by anchor needs a stable id that survives translation,
-since translating the heading text changes the anchor. The Docusaurus MDX v3 syntax for this
-is a comment, not `{#id}`: `## Play Mode tests {/* #play-mode-tests */}`. Sidebar category
-labels live in `sidebars.ts` itself, not a translatable file, so they render in English for
-every locale regardless of translated content underneath. Don't override the Docusaurus
-theme chrome (pagination, admonition labels, sidebar buttons) in this site's own
-`code.json`; it ships its own translated defaults per locale. The search plugin
-(`@easyops-cn/docusaurus-search-local`) ships no Spanish, so its `theme.SearchBar.*` and
-`theme.SearchPage.*` strings are the exception and live in `code.json`.
-
-Before translating a technical term, check how the target language's own community or
-official docs (the localized Unity manual, the GitHub glossary, the VRChat community) actually
-render it rather than translating literally. Some terms stay in English even in translated
-prose, others have a real idiomatic equivalent that isn't the literal word-for-word choice.
-This repo's own code identifiers (`_ts.Memory`, `TsStart`) are never translated, including
-inside prose.
+- A heading that another page links to by anchor needs an id that survives translation. In
+  Docusaurus MDX v3 that's a comment, not `{#id}`: `## Play Mode tests {/* #play-mode-tests */}`.
+- Sidebar category labels live in `sidebars.ts`, which isn't translated, so they stay English in
+  every locale.
+- Don't override the Docusaurus theme strings (pagination, admonition labels, sidebar buttons) in
+  `code.json`: the theme ships its own translations. The search plugin
+  (`@easyops-cn/docusaurus-search-local`) ships no Spanish, so its `theme.SearchBar.*` and
+  `theme.SearchPage.*` strings are the exception.
+- Before translating a technical term, check how the localized Unity manual, the GitHub glossary
+  or the VRChat community writes it. Some terms stay in English. Code identifiers such as
+  `_ts.Memory` and `TsStart` are never translated, in prose either.
 
 ## Submitting a pull request
 
-1. Sign off every commit (`git commit -s`) per the [Developer Certificate of
-   Origin](https://developercertificate.org/). This certifies you wrote the change, or
-   otherwise have the right to submit it under this project's license (CC BY 4.0 for
-   docs content, see [README.md](README.md#license) for the code/content split).
-2. If AI tooling helped write part of your change, say so in the PR description, briefly.
-   You're still fully responsible for the contribution, read, understand, and check it
-   renders correctly before submitting, the same as if you'd written it yourself.
-3. Fill in the PR template's checklist and open the PR. Community conduct is covered by
-   the [org-wide Code of Conduct](https://github.com/tsvrc/.github/blob/main/CODE_OF_CONDUCT.md).
+1. Sign off every commit (`git commit -s`) per the
+   [Developer Certificate of Origin](https://developercertificate.org/). It certifies you wrote the
+   change, or otherwise have the right to submit it under the CC BY 4.0 license, so only you can
+   add it, never a tool. A check fails the pull request if any of its commits isn't signed off.
+2. If AI tools helped, say which parts and how in the pull request description. You're the author
+   either way: read, understand and check all of it in the built site before you submit it, and be
+   ready to explain it in review. A pull request that's mostly unreviewed AI output, and would take
+   longer to review than it saves, will be closed.
+3. Open the pull request, describing what it changes and why. Community conduct is covered by the
+   [org-wide Code of Conduct](https://github.com/tsvrc/.github/blob/main/CODE_OF_CONDUCT.md).
 
 ## Reporting a security vulnerability
 

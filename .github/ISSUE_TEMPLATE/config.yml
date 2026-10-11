@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Ask a question
+    url: https://github.com/orgs/tsvrc/discussions
+    about: Questions go in Discussions, not the issue tracker.
