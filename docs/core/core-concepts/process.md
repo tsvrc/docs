@@ -86,11 +86,9 @@ of its GameObject. Subclasses read and change it with three `protected` methods:
 
 A run keeps going when its owner can no longer drive it:
 
-- When the owner leaves, [VRChat picks a new
+- When the owner leaves, [VRChat assigns a new
   owner](https://creators.vrchat.com/worlds/udon/networking/ownership/#how-ownership-works). That
-  player takes over from `OnPlayerLeft` or `OnOwnershipTransferred`, whichever runs once it owns the
-  object. The two [can fire in either
-  order](https://feedback.vrchat.com/udon/p/order-of-onownershiptransferred-and-onplayerleft-when-another-player-leaves-the).
+  player takes over from `OnPlayerLeft` or `OnOwnershipTransferred`.
 - When the owner is [suspended](https://creators.vrchat.com/worlds/udon/players/#get-issuspended),
   their client stops running Udon and answering network events, so nothing would drive the run.
   Every client that sees the suspension in `OnPlayerSuspendChanged` calls `SetProcessOwner` for its

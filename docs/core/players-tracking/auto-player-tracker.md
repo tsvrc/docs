@@ -28,7 +28,7 @@ ignores both of its parameters, since `AutoPlayerTracker` never uses the process
 
 While tracking runs, the owner adds each player who joins in `OnPlayerJoined`. A join is skipped
 when the player reference [isn't valid](https://creators.vrchat.com/worlds/udon/players/#isvalid),
-since accessing an invalid reference has been reported to crash the behaviour. Players who leave or
+which VRChat says to check before using a player. Players who leave or
 are suspended are [removed by the base class](./player-tracker#automatic-removal). Other players
 ignore `OnPlayerJoined`,
 because only the owner changes the tracked set.
