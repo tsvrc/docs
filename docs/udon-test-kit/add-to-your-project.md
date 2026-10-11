@@ -18,16 +18,10 @@ Install the kit in a VRChat world project, then create the test assemblies your 
 ## Install the package
 
 Install **Udon Test Kit** (`com.tsvrc.udon-test-kit`) as described in
-[Install a TsVRC package](/docs/install-a-package). Its `.unitypackage` is on the kit's
-[GitHub releases](https://github.com/tsvrc/udon-test-kit/releases).
+[Install a TsVRC package](/docs/install-a-package). Its `.unitypackage` is on the
+[releases page](https://github.com/tsvrc/udon-test-kit/releases).
 
 You'll know it worked when the Unity menu bar has **Tools > TsVRC > Udon Test Kit**.
-
-:::warning
-A project can hold only one copy of the kit. Two copies mean two assemblies named `Tsvrc.UdonTestKit`,
-which stop the whole project compiling. Don't import the `.unitypackage` into a project that
-already has the kit, including a copy another package installed as its dependency.
-:::
 
 ## Create your test assemblies
 
