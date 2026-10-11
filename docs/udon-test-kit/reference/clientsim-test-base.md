@@ -31,7 +31,7 @@ a test can choose `localPlayerIsMaster: false`, or do work before ClientSim exis
 
 ## Constructors
 
-- `ClientSimTestBase()` runs every test in Unity Test Framework's own test scene, which the whole
+- `ClientSimTestBase()` runs every test in the Unity Test Framework test scene, which the whole
   run shares.
 - `ClientSimTestBase(TestScene scene, TestSceneLifetime lifetime = TestSceneLifetime.PerTest)` runs
   every test in `scene`. With `PerTest`, the scene is loaded fresh for each test and unloaded after

@@ -13,7 +13,7 @@ documented here for anyone extending the generator itself.
 ## ScriptIndex
 
 Answers "does class X derive from class Y" and "does any script in the project contain this
-text" by scanning every `MonoScript`'s raw source text, rather than by reflecting over
+text" by scanning the raw source text of every `MonoScript`, rather than by reflecting over
 compiled types. This matters specifically because it has to keep working **while the
 project doesn't currently compile**. Reflection over `Assembly-CSharp` is useless exactly
 when a not-yet-generated member breaks the build, which is one of the more common moments a
@@ -26,11 +26,11 @@ passes.
 
 ## TsUsageScanner
 
-Layered on top of `ScriptIndex`'s source scan to answer tree-shaking's real question: "is
+Layered on top of the `ScriptIndex` source scan to answer tree-shaking's real question: "is
 this generated member actually used anywhere?" A Global/Log/Memory read has no attribute to
 reflect over the way `[WirePool]` does. It's just `_ts.Name`, a bare member access in
 arbitrary source text (`IsMemberReferenced`), so this has to pattern-match source rather
-than inspect live objects. A Factory's generated `CreateName(parent)` call site is matched
+than inspect live objects. The generated `CreateName(parent)` call site of a Factory is matched
 the same way, via a separate method-call pattern (`IsMethodCallReferenced`). The matching is
 deliberately conservative: a false positive (treating something as used when it isn't) only
 wastes a few bytes of generated code, but a false negative would silently drop real content,

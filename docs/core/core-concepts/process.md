@@ -9,7 +9,7 @@ sidebar_position: 4
 `Tsvrc.Core.Process` is the base class for networked, owner-driven processes: something
 with a start/stop/complete lifecycle that one player (the owner) drives, that survives the
 owner leaving, and that optionally ticks on an interval. Its generated shadow is
-`TsProcess`. It's the root of Core's longest inheritance chain: `PlayerTracker`,
+`TsProcess`. It's the root of the longest inheritance chain in Core: `PlayerTracker`,
 `AutoPlayerTracker`, `ReadyCheckProcess`, and the entire `DataTransferer` chain all build
 on top of it, so its ownership and lifecycle model is worth understanding well before
 those pages.
@@ -82,7 +82,7 @@ A process has exactly one owner at a time, tracked two ways: a display-name-base
 `IsProcessOwner()` actually does, since it avoids a string allocation.
 
 `StopProcess`/`CompleteProcess` treat two things as sufficient authority to act locally:
-being the recognized process owner, or simply holding VRChat's own [object
+being the recognized process owner, or simply holding VRChat [object
 ownership](https://creators.vrchat.com/worlds/udon/networking/ownership/) of the
 GameObject (`Networking.IsOwner`, layered on top of Unity by the VRChat SDK, not a
 Unity feature itself). That second check exists for a specific timing window: right

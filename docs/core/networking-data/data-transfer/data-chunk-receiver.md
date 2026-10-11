@@ -7,8 +7,8 @@ sidebar_position: 4
 # DataChunkReceiver
 
 `Tsvrc.DataTransfer.DataChunkReceiver` is where an incoming chunk actually gets validated,
-stored, and acknowledged. It overrides [DataSender](./data-sender)'s
-`OnDataChunkSendRequested` to broadcast each chunk via its own `[NetworkCallable]` method,
+stored, and acknowledged. It overrides
+`OnDataChunkSendRequested` from [DataSender](./data-sender) to broadcast each chunk via its own `[NetworkCallable]` method,
 `BroadcastDataChunkReceived`, which every instance player receives and which validates the
 chunk before storing it. You never call it directly. See
 [DataTransferer](./data-transferer) for the type a consumer actually uses.
@@ -47,7 +47,7 @@ flow, not just handling malformed input:
 - **`totalChunks` is locked to the first chunk's value** for the rest of the transfer; a
   later chunk claiming a different total is rejected outright, since accepting it would
   silently reallocate the receive buffer and discard everything already assembled.
-- **A chunk index already filled is ignored** — VRChat's own documentation [describes its
+- **A chunk index already filled is ignored** — the VRChat documentation [describes its
   internal splitting of large events as "almost
   transparent"](https://creators.vrchat.com/worlds/udon/networking/events/#parameter-size-limits-and-event-splitting),
   which leaves room for a duplicate delivery under some conditions (network anomalies, an
@@ -62,11 +62,11 @@ independent reason of its own: VRChat [splits any event payload over 1 KB into i
 packets](https://creators.vrchat.com/worlds/udon/networking/events/#parameter-size-limits-and-event-splitting),
 and each of those counts separately against the rate limit. A 2,500-character ASCII
 chunk is already close to 2,500 bytes (roughly three internal packets); a CJK chunk near the
-worst case discussed on [`DataChunker`](./data-chunker)'s page is closer to 7,500 bytes
-(roughly eight). At the SDK's default of 5 events per second, even the ASCII case would take
+worst case discussed on the [`DataChunker`](./data-chunker) page is closer to 7,500 bytes
+(roughly eight). At the SDK default of 5 events per second, even the ASCII case would take
 over half a second to clear the rate limiter per chunk, and the CJK case over a second. A
 100/second budget clears either in well under a tenth of a second, comfortably inside
-VRChat's [global throughput cap](https://creators.vrchat.com/worlds/udon/networking/network-details/#bandwidth-limits)
+the VRChat [global throughput cap](https://creators.vrchat.com/worlds/udon/networking/network-details/#bandwidth-limits)
 of about 11 KB/s, which ends up being the real limit on how fast a transfer can go.
 
 ## Storing and acknowledging

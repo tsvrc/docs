@@ -20,7 +20,7 @@ everyone and can't be told to track less.
 
 ## Steps
 
-1. Declare a `[WirePool]` field. `PlayerTracker` ships as [one of Core's own default pool
+1. Declare a `[WirePool]` field. `PlayerTracker` ships as [one of the Core default pool
    entries](../explanations/builtin-registrations), so there's nothing to register on the
    Configure window first:
 
@@ -64,7 +64,7 @@ everyone and can't be told to track less.
 
 ## Why this shape
 
-See [`PlayerTracker`'s reference page](../players-tracking/player-tracker) for the full
+See the [`PlayerTracker` reference page](../players-tracking/player-tracker) for the full
 event table, exactly when a `Notify*` broadcast fires versus when `LastPlayerIds` itself
 updates, and the three separate paths that remove a player automatically (leaving,
 suspending, or the tracker's own owner abandoning it).

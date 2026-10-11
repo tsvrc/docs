@@ -46,17 +46,17 @@ relative paths and filenames; adding a language never touches the English files.
 with strings in `i18n/<locale>/code.json`.
 
 A heading another page links to by anchor needs a stable id that survives translation,
-since translating the heading text changes the anchor. Docusaurus's MDX v3 syntax for this
+since translating the heading text changes the anchor. The Docusaurus MDX v3 syntax for this
 is a comment, not `{#id}`: `## Play Mode tests {/* #play-mode-tests */}`. Sidebar category
 labels live in `sidebars.ts` itself, not a translatable file, so they render in English for
-every locale regardless of translated content underneath. Don't override Docusaurus's
+every locale regardless of translated content underneath. Don't override the Docusaurus
 theme chrome (pagination, admonition labels, sidebar buttons) in this site's own
 `code.json`; it ships its own translated defaults per locale. The search plugin
 (`@easyops-cn/docusaurus-search-local`) ships no Spanish, so its `theme.SearchBar.*` and
 `theme.SearchPage.*` strings are the exception and live in `code.json`.
 
 Before translating a technical term, check how the target language's own community or
-official docs (Unity's localized manual, GitHub's glossary, VRChat's community) actually
+official docs (the localized Unity manual, the GitHub glossary, the VRChat community) actually
 render it rather than translating literally. Some terms stay in English even in translated
 prose, others have a real idiomatic equivalent that isn't the literal word-for-word choice.
 This repo's own code identifiers (`_ts.Memory`, `TsStart`) are never translated, including

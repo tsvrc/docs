@@ -27,7 +27,7 @@ arrays.
   order is preserved.
 - **`Contains(array, value)`** — returns whether `value` is present in `array`, compared by
   `==` (reference equality for `UdonSharpBehaviour[]`, value equality for `string[]`). For
-  `UdonSharpBehaviour[]`, that's [Unity's own overridden equality
+  `UdonSharpBehaviour[]`, that's [the overridden Unity equality
   operator](https://docs.unity3d.com/ScriptReference/Object-operator_eq.html), so a
   destroyed-but-not-yet-garbage-collected behaviour still correctly reports as equal to
   `null`, not as a dangling non-null reference.

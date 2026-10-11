@@ -7,7 +7,7 @@ sidebar_position: 5
 # PlayerColorAssigner
 
 `Tsvrc.Player.PlayerColorAssigner` assigns every player a stable, visually distinct
-color from an 82-entry palette, one slot per player up to [VRChat's absolute maximum
+color from an 82-entry palette, one slot per player up to [the absolute maximum VRChat
 instance size](https://wiki.vrchat.com/wiki/Special:MyLanguage/Instances) (80 is the
 configurable hard cap; the world author and instance creator can each still join on top
 of that, for 82 in the worst case), keyed off their numeric player ID so every client

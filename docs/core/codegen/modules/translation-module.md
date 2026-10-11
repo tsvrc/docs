@@ -51,8 +51,8 @@ on the next pass with no manual re-registration needed.
   listener registered via `SubscribeLanguageChanged`.
 - **`SubscribeLanguageChanged(UdonSharpBehaviour listener, string callback)`** — registers
   `listener` to receive `SendCustomEvent(callback)` on every future `SetLanguage` call, its
-  own small generated pub/sub separate from the base `TsvrcBehaviour`'s `TsSubscribe`/
-  `TsEmit`. Subscribing the same listener/callback pair twice is a no-op rather than a
+  own small generated pub/sub separate from `TsSubscribe`/
+  `TsEmit` in the base `TsvrcBehaviour`. Subscribing the same listener/callback pair twice is a no-op rather than a
   duplicate delivery.
 - **`Translate(string key)`** / **`Translate(string key, string param)`** — linear-scans the
   active language's keys for an exact match, returning the untranslated key itself as a
@@ -68,5 +68,5 @@ on the next pass with no manual re-registration needed.
 `AfterFilesStable`/`OnSceneHierarchyChanged` both re-scan for matching `TextMeshProUGUI`
 targets and compare against the last known set (`SyncEffectiveKeys`). A scene edit that adds
 or renames a matching text object triggers a regenerate on its own, independent of whether
-any language file itself changed, since `Wire()`'s `_translationTargets` array needs to
+any language file itself changed, since the `_translationTargets` array in `Wire()` needs to
 include it.

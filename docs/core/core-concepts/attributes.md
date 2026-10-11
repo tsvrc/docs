@@ -6,7 +6,7 @@ sidebar_position: 6
 
 # Framework attributes
 
-Reference for the three plain marker attributes Core's codegen reads by reflection at
+Reference for the three plain marker attributes the Core codegen reads by reflection at
 edit time. None of them do anything at runtime themselves. They exist so the generator
 can find and validate things without hardcoding a list of types.
 
@@ -123,7 +123,7 @@ Tagging it would just generate an unused shadow class.
 
 The internal class name and its generated shadow name deliberately differ in most
 cases: `TsvrcBehaviour` keeps its distinguishing `Tsvrc` prefix internally because a bare
-`Behaviour` would collide with Unity's own
+`Behaviour` would collide with
 [`UnityEngine.Behaviour`](https://docs.unity3d.com/ScriptReference/Behaviour.html),
 while the shadow gets the clean name (`TsBehaviour`) that your own code actually
 extends.

@@ -31,7 +31,7 @@ An entry's generated member name is its explicit `Name` if set, otherwise derive
 literal type name `"GameObject"` would be useless and collide across every ungrouped plain
 GameObject entry), an `Animator` reference is named `{GameObjectName}Animator`, and anything
 else uses its component type name directly. A group with `IncludeInName` set prefixes the
-final name with its (and its opted-in ancestors') own name, exactly as described on
+final name with its (and its opted-in ancestors) own name, exactly as described on
 [`TsConfig`](../config/ts-config).
 
 ## Generated shape
@@ -56,7 +56,7 @@ what a real Global entry usually is.
 `ExcludeFieldNames` drops any Global entry whose name lost a cross-module collision, most
 commonly two Global entries independently deriving the same name (two plain GameObjects
 both named "Manager", say), or a Global entry that happens to auto-derive a reserved name
-like `Instance` (see [`InstanceModule`](./instance-module)'s reserved-name precedence). It
+like `Instance` (see the reserved-name precedence in [`InstanceModule`](./instance-module)). It
 logs a warning naming the fix: give one of the conflicting entries a distinct explicit
 `Name`. A Construct entry never causes this, since a construct's field is always private and
 never claims a name at all.

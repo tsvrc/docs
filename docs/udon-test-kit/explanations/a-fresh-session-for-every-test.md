@@ -15,7 +15,7 @@ unless a test asks.
 
 A test that starts from a fresh session can't depend on what an earlier test did, so each test
 passes or fails on its own, in any order. NUnit doesn't promise an order between tests, so a test
-that only passes after another one fails at random. In xUnit Test Patterns' terms, this is a
+that only passes after another one fails at random. In xUnit Test Patterns terms, this is a
 fresh fixture.
 
 Ending a session completely also lets one test use more than one session. A test can end a session
@@ -33,7 +33,7 @@ for a test that needs none.
 
 - **One session for a whole test class** — faster, since ClientSim starts once, but every test
   then shares whatever the earlier ones changed: players, owners, saved data and every object in
-  the scene. That's xUnit Test Patterns' shared fixture, and its known cost is tests that depend on
+  the scene. That's xUnit Test Patterns shared fixture, and its known cost is tests that depend on
   each other. It stays possible for tests that only read, by starting the session in a
   `[UnitySetUp]` when it isn't running yet and ending it in `[OneTimeTearDown]`.
 - **Deleting saved data after every test** — every test would start clean, but tests run in the
@@ -42,6 +42,6 @@ for a test that needs none.
 
 ## Scenes follow the same rule
 
-Every test in a Play Mode run shares Unity Test Framework's test scene by default. A
+Every test in a Play Mode run shares the Unity Test Framework test scene by default. A
 [`TestScene`](../reference/test-scene) with the default `PerTest` lifetime gives each test a fresh
 copy of its own scene, and `PerFixture` is the shared option, for tests that don't change it.

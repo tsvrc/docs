@@ -42,8 +42,8 @@ project. Register it as both if you need both: a Global entry that happens to be
    }
    ```
 
-Any scene object works as a Global, not just a `TsvrcBehaviour`, since a Global's whole
-point is naming, not initialization. A plain `GameObject` or an arbitrary `Component`
+Any scene object works as a Global, not just a `TsvrcBehaviour`, since the whole point
+of a Global is naming, not initialization. A plain `GameObject` or an arbitrary `Component`
 reference is exposed the same way, just never constructed.
 
 ## Steps: registering a Construct
@@ -73,7 +73,7 @@ arbitrary `GameObject` reference doesn't qualify.
 
 ## Why this shape
 
-See [`GlobalModule`](../codegen/modules/global-module) and
-[`ConstructModule`](../codegen/modules/construct-module)'s reference pages for how each
+See the [`GlobalModule`](../codegen/modules/global-module) and
+[`ConstructModule`](../codegen/modules/construct-module) reference pages for how each
 derives a default name, what happens on a name collision, and how tree-shaking can
 exclude an unused Global if your project has `TreeShakeUnused` turned on.

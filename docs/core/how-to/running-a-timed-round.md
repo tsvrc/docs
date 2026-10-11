@@ -13,7 +13,7 @@ ready check, and timer yourself.
 
 ## Steps
 
-1. Declare a `[WirePool]` field. `RankedGameSession` ships as [one of Core's own default
+1. Declare a `[WirePool]` field. `RankedGameSession` ships as [one of the Core default
    pool entries](../explanations/builtin-registrations), so there's nothing to register on
    the Configure window first:
 
@@ -102,7 +102,7 @@ public bool IsPlayerStillPlaying(string playerId) =>
 
 ## Why this shape
 
-See [`RankedGameSession`'s reference page](../game-flow/ranked-game-session) for the full
+See the [`RankedGameSession` reference page](../game-flow/ranked-game-session) for the full
 state machine, the nine lifecycle events, and a real asymmetry worth knowing before you
 build a networked "force stop" button: `StopSession` reaches every client automatically
 during the lobby's ready check, but not once a round is already in progress.

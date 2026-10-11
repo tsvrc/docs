@@ -51,7 +51,7 @@ public class HelloWorld : TsBehaviour
 ```
 
 `TsStart` is the framework's initialization hook, called once per instance. `LogInfo`
-routes through Core's own logger instead of `Debug.Log`, so the message respects whatever
+routes through the Core logger instead of `Debug.Log`, so the message respects whatever
 log levels you've configured in **Tsvrc > Configure > Logging**.
 
 Attach `HelloWorld` to a GameObject in your scene.
@@ -60,7 +60,7 @@ Attach `HelloWorld` to a GameObject in your scene.
 
 Adding the component to the scene isn't enough by itself: Core only calls `TsStart` on
 behaviours it's been told about. Back in **Tsvrc > Configure**, open the **Constructs**
-tab and click **+ Add**. With `HelloWorld`'s GameObject selected, drag its `HelloWorld`
+tab and click **+ Add**. With the `HelloWorld` GameObject selected, drag its `HelloWorld`
 component (from the Inspector, not the GameObject from the Hierarchy) into the new slot.
 Core needs the actual component reference here and silently rejects anything else, a
 GameObject included, with a console warning, so dropping the GameObject by mistake looks

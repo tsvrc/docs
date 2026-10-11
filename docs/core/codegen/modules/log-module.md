@@ -27,8 +27,8 @@ LogWarning("Slot already occupied, skipping");
 
 - **Extra usage detection.** A script rarely writes `_ts.Log` directly: it calls
   `TsvrcBehaviour.LogInfo`/`LogWarning`/`LogError`, which reach the logger indirectly. Those
-  wrapper calls never textually mention `_ts.Log`, so `TsSingleComponentModule`'s base
-  member-access check alone would miss the single most common way logging actually gets
+  wrapper calls never textually mention `_ts.Log`, so the base member-access check in
+  `TsSingleComponentModule` alone would miss the single most common way logging actually gets
   used. `LogModule` reports those three method names as additional usage signatures so
   tree-shaking doesn't wrongly conclude an actively-used logger is dead.
 - **No standalone Configure tab.** Logging settings are rendered as a section inside the

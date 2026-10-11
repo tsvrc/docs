@@ -17,7 +17,7 @@ action needed.
 
 `DetectInstanceType` reflects across every loaded assembly, filters out anything marked
 [`[TsCodegenIgnore]`](../../core-concepts/attributes.md) (test doubles, most commonly), and
-deduplicates by full type name. Unity's `AppDomain` can carry stale duplicate copies of the
+deduplicates by full type name. The Unity `AppDomain` can carry stale duplicate copies of the
 same assembly across successive recompiles, which would otherwise make one real subclass
 look ambiguous just because it was seen twice. Zero candidates or exactly one are both
 unambiguous outcomes; more than one logs an error and makes `Wire()` leave whatever's
@@ -27,11 +27,11 @@ possibly-transient subclass momentarily appeared would be worse than doing nothi
 ## Surviving a broken compile
 
 The generated field and property (`_instance` / `public override Instance Instance =>
-_instance;`) are always declared as the plain `Instance` base type. `GenerateCode()`'s output
+_instance;`) are always declared as the plain `Instance` base type. The output of `GenerateCode()`
 never depends on which concrete subclass was detected, so a broken compile can't corrupt the
-generated *code*. What a broken compile *can* corrupt is `Wire()`'s live-reflection
-detection: if the AppDomain scan finds zero candidates, but `ScriptIndex`'s independent,
-source-text-based scan confirms exactly one real `Instance` subclass genuinely exists in
+generated *code*. What a broken compile *can* corrupt is the live-reflection
+detection in `Wire()`: if the AppDomain scan finds zero candidates, but the independent,
+source-text-based `ScriptIndex` scan confirms exactly one real `Instance` subclass genuinely exists in
 project source, that almost always means the subclass itself just failed to compile along
 with everything else. In that case (`_knownViaScriptIndexOnly`), `Wire()` deliberately does
 nothing rather than destroying the real, working `"Instance"` child object and nulling the

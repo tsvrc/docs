@@ -6,11 +6,11 @@ sidebar_position: 4
 
 # TsvrcLogger
 
-`Tsvrc.Utils.TsvrcLogger` is Core's centralized logging sink: a `TsvrcBehaviour` you reach
+`Tsvrc.Utils.TsvrcLogger` is the centralized logging sink in Core: a `TsvrcBehaviour` you reach
 through `_ts.Log`, wrapping `Debug.Log`/`LogWarning`/`LogError` with a consistent message
 format and independent on/off toggles per severity. Its generated shadow class is
-`TsLogger`. Most code never calls it directly: prefer `TsvrcBehaviour`'s own `LogInfo`,
-`LogWarning`, and `LogError` methods, which supply the tag and context automatically.
+`TsLogger`. Most code never calls it directly: prefer the `TsvrcBehaviour` methods `LogInfo`,
+`LogWarning`, and `LogError`, which supply the tag and context automatically.
 
 ## Message format
 
@@ -86,6 +86,6 @@ actually prints.
 
 ## Edge case worth knowing
 
-Calling `Info`/`Warning`/`Error` on the logger directly, rather than through a
-`TsvrcBehaviour`'s wrappers, means you supply your own `tag` string and `isInternal` value
+Calling `Info`/`Warning`/`Error` on the logger directly, rather than through the
+wrappers on a `TsvrcBehaviour`, means you supply your own `tag` string and `isInternal` value
 by hand: there's no automatic class-name tag or `IsTsvrcInternal` lookup at that layer.

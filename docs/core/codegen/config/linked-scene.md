@@ -12,7 +12,7 @@ scaffold root. It exists to close a real correctness gap. Without it, every code
 searched "whatever scene happens to be loaded," which meant switching to look at an
 unrelated scene, or a play-mode test's own temporary scene, could silently regenerate a
 project's real generated output with an almost-empty result. A scene with no `TsConfig`
-compiles clean, and per `TsModule`'s own snapshot-fallback logic, a clean compile with fewer
+compiles clean, and per the snapshot-fallback logic in `TsModule`, a clean compile with fewer
 entries than before is treated as a deliberate deletion, not an error.
 
 ## How it's set
@@ -36,7 +36,7 @@ Once a scene is linked, every scene-scoped lookup (`Find<T>`, `FindType`, `FindA
 `FindAllType`) is scoped strictly to that scene's root objects, rather than searching
 whatever's currently loaded. `Find<T>`/`FindType` additionally refuse to guess: if more than
 one match exists within the linked scene, they return `null` rather than picking whichever
-one Unity's iteration order happens to return first, the same "don't guess" stance
+one the Unity iteration order happens to return first, the same "don't guess" stance
 `InstanceModule` takes for resolving a project's single scaffold instance.
 
 `IsConfiguredButNotLoaded` is true whenever a scene has been linked but isn't currently

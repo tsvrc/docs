@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Adding a new codegen module
 
-A how-to guide for contributors extending Core's own generator, not for end users
+A how-to guide for contributors extending the Core generator, not for end users
 configuring a world. It assumes you've read [`TsModule`](./ts-module) and
 [`TsGenerator`](./ts-generator), and at least a couple of the existing modules under
 Codegen > Modules, for example [`LogModule`](../modules/log-module). The pattern below is
@@ -75,8 +75,8 @@ If your module generates a member accessible via `_ts.Name`, report it through
 member compile errors, and implement `ExcludeFieldNames(names)` to drop the losing side of a
 collision cleanly (with a warning explaining the fix, not just silently disappearing). Only
 reach for `ReservedFieldNamePrecedence` if your module declares a name unconditionally,
-regardless of any user config (`InstanceModule`'s `Instance`, `TsSingleComponentModule`'s
-`Log`/`Memory`). An ordinary config-driven module should use the default precedence (`0`)
+regardless of any user config (`Instance` from `InstanceModule`, `Log`/`Memory` from
+`TsSingleComponentModule`). An ordinary config-driven module should use the default precedence (`0`)
 and let a real naming conflict resolve the normal way.
 
 ## Watch the right things

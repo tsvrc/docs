@@ -13,7 +13,7 @@ entry, using [`TsvrcList`](../ui-components/list/tsvrc-list) and
 
 ## Steps
 
-1. In the scene, add a `TsvrcList` next to a `ScrollRect`. Assign the `ScrollRect`'s
+1. In the scene, add a `TsvrcList` next to a `ScrollRect`. Assign the `ScrollRect`
    `Content` transform as its item container, a prefab carrying your `ListItem`
    subclass as its item prefab, and a page size (or `-1` to show every row without
    pagination) in the Inspector.
@@ -66,7 +66,7 @@ if one's assigned in the Inspector.
 
 ## Why this shape
 
-See [`TsvrcList`](../ui-components/list/tsvrc-list) and
-[`ListItem`](../ui-components/list/list-item)'s reference pages for exactly how row
+See the [`TsvrcList`](../ui-components/list/tsvrc-list) and
+[`ListItem`](../ui-components/list/list-item) reference pages for exactly how row
 instances get reused across pages instead of destroyed and recreated, and what
-`Bind`/`Unbind` guarantee about `_itemData`'s lifetime inside `_OnUnbind`.
+`Bind`/`Unbind` guarantee about the lifetime of `_itemData` inside `_OnUnbind`.

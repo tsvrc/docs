@@ -6,8 +6,8 @@ sidebar_position: 3
 
 # DataSender
 
-`Tsvrc.DataTransfer.DataSender` puts real networking under
-[ChunkedTransferSession](./chunked-transfer-session)'s sequencing hooks: it translates
+`Tsvrc.DataTransfer.DataSender` puts real networking under the sequencing hooks of
+[ChunkedTransferSession](./chunked-transfer-session): it translates
 `OnChunkSequenceStarted`/`Stopped`/`Completed` into `[NetworkCallable]` broadcasts to every
 player in the instance, and exposes them as three events (`OnDataTransferStartedEvent`,
 `...StoppedEvent`, `...CompletedEvent`) plus matching `protected virtual` hooks

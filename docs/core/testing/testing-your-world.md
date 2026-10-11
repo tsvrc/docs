@@ -12,7 +12,7 @@ depends on the kit, so it's already in your project, and Core has no testing hel
 players, ownership, saved data, spies and reaching private fields all come from the kit.
 
 This page covers what's particular to a world built on Core: how a test builds your behaviours,
-and what Core's codegen does while tests run. See [Set up automated
+and what the Core codegen does while tests run. See [Set up automated
 testing](../how-to/set-up-automated-testing) to add the assemblies to your project, and [Write your
 first automated test](../how-to/writing-your-first-test) for a worked example.
 
@@ -36,7 +36,7 @@ and everything a test created is destroyed when it ends.
 
 ## Codegen during a test run
 
-A test that creates or changes scene objects would otherwise trigger Core's reactive codegen,
+A test that creates or changes scene objects would otherwise trigger the reactive Core codegen,
 which could regenerate your project's real output against the test's temporary scene.
 [`TsGenerator`](../codegen/internals/ts-generator) skips every automatic trigger while tests run,
 from the Test Runner window or the command line, and while the Editor enters Play Mode, so there's

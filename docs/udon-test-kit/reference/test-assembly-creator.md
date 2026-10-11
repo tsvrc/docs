@@ -48,7 +48,7 @@ Each example compiles and passes as created.
 ## Edge cases
 
 - The list of your assemblies is read once, when you create the test assemblies. Add an assembly
-  definition later, and add it to the test assemblies' references yourself.
+  definition later, and add it to the test assemblies references yourself.
 - Scripts without an assembly definition compile into `Assembly-CSharp`, which an assembly
   definition can't reference. When any script under `Assets` has none, creating the assemblies logs
   a warning. See

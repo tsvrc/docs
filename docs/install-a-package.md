@@ -16,7 +16,7 @@ what it needs, and how to check that it worked.
 
 1. Add the TsVRC repository to the Creator Companion, once per computer: click
    [Add to VCC](vcc://vpm/addRepo?url=https%3A%2F%2Fvpm.tsvrc.com%2Findex.json), or add
-   `https://vpm.tsvrc.com/index.json` as described in VRChat's
+   `https://vpm.tsvrc.com/index.json` as described in the VRChat
    [Community Repositories](https://vcc.docs.vrchat.com/guides/community-repositories/) guide.
 2. Click **Manage Project** next to your project, then **+** next to the package.
 

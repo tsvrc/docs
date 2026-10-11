@@ -74,7 +74,7 @@ string or an exception).
 
 ## Why this shape
 
-See [`TranslationModule`'s reference page](../codegen/modules/translation-module) for
+See the [`TranslationModule` reference page](../codegen/modules/translation-module) for
 exactly how a text object is discovered as a translation target, why the batch
 application spreads across multiple frames instead of updating everything at once, and
 the required `"key"`/`"label"`/`"entries"` shape a language file must have.

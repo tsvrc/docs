@@ -7,7 +7,7 @@ sidebar_position: 3
 # TsPendingConfigEdit
 
 `Tsvrc.Editor.TsPendingConfigEdit` is the batching primitive behind every Apply/Discard
-button in Core's editor UI. [`TsWindow`](./ts-window) owns one per `TsConfig` it edits
+button in the Core editor UI. [`TsWindow`](./ts-window) owns one per `TsConfig` it edits
 (plus a second one for the Settings tab's `TsvrcLogger` fields), and
 `TsBuiltinConfigInspector` owns one for whichever `TsBuiltinConfig` asset is selected. One
 instance tracks edits to exactly one target object.
@@ -16,9 +16,9 @@ instance tracks edits to exactly one target object.
 
 Without this, every `SerializedObject.ApplyModifiedProperties()` call, meaning every single
 field edit including one keystroke into a name field, would immediately trigger a real
-regenerate pass through `TsGenerator`'s own `Undo.postprocessModifications` watch. Typing a
+regenerate pass through the `Undo.postprocessModifications` watch in `TsGenerator`. Typing a
 ten-character name would fire ten regenerate passes. `TsPendingConfigEdit` suppresses
-`TsGenerator`'s automatic triggers for the duration of an in-progress edit and only lets the
+the `TsGenerator` automatic triggers for the duration of an in-progress edit and only lets the
 accumulated changes trigger one real regenerate when you explicitly click Apply.
 
 ## The baseline
@@ -39,7 +39,7 @@ GameObject to live on at all) or as a bare `ScriptableObject` instance otherwise
 Three calls, in order, once per `OnGUI` pass:
 
 1. **`BeginFrame()`** — arms suppression proactively, before any edit could happen this
-   frame. This matters because some UI code (`TsGroupTreeGUI`'s drag-and-drop reparenting)
+   frame. This matters because some UI code (the drag-and-drop reparenting in `TsGroupTreeGUI`)
    calls `ApplyModifiedProperties()` itself, mid-draw, ahead of the caller's own outer call,
    so suppression has to already be active by then.
 2. *(the tab draws its fields, and the caller calls `SerializedObject.ApplyModifiedProperties()`
@@ -67,5 +67,5 @@ state immediately. A discarded edit never reaches `ScheduleRerun()`.
 baseline clone and any held suppression scope. It never has data to lose by the time it
 runs, since `OnDisable` also fires around an ordinary domain reload, where cleaning up a
 pending edit would be wrong because the user hasn't decided anything yet, while `OnDestroy`
-only fires once the window or inspector is actually closing for good, by which point Unity's
-own save-changes dialog has already forced a real Apply or Discard decision.
+only fires once the window or inspector is actually closing for good, by which point the Unity
+save-changes dialog has already forced a real Apply or Discard decision.

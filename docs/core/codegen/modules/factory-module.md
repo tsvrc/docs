@@ -37,7 +37,7 @@ namespace.
 
 The same prefab registered under two differently-named groups (for example, both an
 "Enemies" group and a "Traps" group spawning the same projectile prefab) is a legitimate,
-common case, not a mistake. Unlike Pool's duplicate-reference detection, `FactoryModule`
+common case, not a mistake. Unlike the Pool duplicate-reference detection, `FactoryModule`
 deliberately does *not* flag a prefab appearing more than once across different
 registrations.
 

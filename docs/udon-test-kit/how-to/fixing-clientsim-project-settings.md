@@ -10,7 +10,7 @@ ClientSim checks a few project settings before it starts. When a Play Mode test 
 ClientSim starts, with a message such as this one, your project fails that check:
 
 ```
-ClientSim's project settings check fails on: input type, collision matrix. Fix them with Tools > TsVRC > Udon Test Kit > Fix ClientSim Project Settings.
+The ClientSim project settings check fails on: input type, collision matrix. Fix them with Tools > TsVRC > Udon Test Kit > Fix ClientSim Project Settings.
 ```
 
 ## Steps

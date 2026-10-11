@@ -21,7 +21,7 @@ a task-oriented walkthrough.
 ## Getting an instance
 
 `RankedGameSession` itself, not just the sub-behaviours it composes, ships as one of
-[Core's own default pool entries](../explanations/builtin-registrations)
+[the Core default pool entries](../explanations/builtin-registrations)
 (`TsBuiltinConfig`).
 
 - **Default:** `[WirePool][SerializeField] private RankedGameSession _session;` just
@@ -49,10 +49,10 @@ decide what "completed" or "should end" actually means for your game.
 ## The state machine
 
 `CurrentState` is one of `RankedGameSessionState.Idle`, `Loading`, or `InGame`. It's a plain
-local field, not re-derived from the sub-trackers' own synced state on every read: `TsStart`
+local field, not re-derived from the sub-trackers own synced state on every read: `TsStart`
 seeds it once from that live state (safe only there, since a late-joining client's
 sub-trackers are already fully synced by the time its own scripts start running), and from
-then on `RankedGameSession`'s own code sets it directly at each transition, whether that
+then on the `RankedGameSession` code sets it directly at each transition, whether that
 code is running in response to a subscribed sub-behaviour event or, for `StopSession`
 specifically, directly inside the call itself. Re-deriving it live on every read instead
 would go stale on any client that doesn't own that particular sub-process.
@@ -81,15 +81,15 @@ session.SetReady();
 session.AddCompletedPlayer(somePlayerId);
 ```
 
-`StartLobbyTracking`/`StopLobbyTracking` are thin forwards to `_lobbyTracker`'s own
-tracking. `AddLobbyPlayer`/`RemoveLobbyPlayer` add or remove one player from the lobby, and
+`StartLobbyTracking`/`StopLobbyTracking` are thin forwards that start and stop tracking
+on `_lobbyTracker`. `AddLobbyPlayer`/`RemoveLobbyPlayer` add or remove one player from the lobby, and
 both require `StartLobbyTracking` to have run first: calling either before that logs an
 error and does nothing, rather than silently queuing the player for later.
 
 `StartSession` snapshots the current lobby roster and starts the ready check over it; it
 logs an error and does nothing if a session is already running (`CurrentState` isn't
 `Idle`). It takes an optional `additionalKnownPresentPlayerIds`: extra IDs unioned into that
-initial snapshot even if `_lobbyTracker`'s own synced state hasn't caught up to them yet,
+initial snapshot even if the synced state of `_lobbyTracker` hasn't caught up to them yet,
 since a caller's own local knowledge (say, a trigger volume's roster) can be ahead of what's
 propagated over the network. Starting with an empty roster is rejected outright with an
 error, rather than allowed to silently hang: `ReadyCheckProcess.CheckAllPlayersReady` never
@@ -155,7 +155,7 @@ through the ready check's own networking.
 
 `GamePlayerIds`/`CompletedPlayerIds` read live off the sub-trackers, which are already being
 torn down by the time `OnSessionEndedEvent`/`OnSessionStoppedEvent` actually fire: reading
-them from inside those events' handlers sees either an already-emptied result (on whichever
+them from inside those events handlers sees either an already-emptied result (on whichever
 client owns the sub-tracker being stopped) or a stale one that hasn't caught up yet (on
 every other client), never reliably the picture at the moment the round actually ended. Use
 `LastEndedGamePlayerIds`/`LastEndedCompletedPlayerIds` instead: both are snapshotted

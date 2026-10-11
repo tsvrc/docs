@@ -23,10 +23,10 @@ being generated at all. Usage (tracked via the shared `ApplyTreeShaking` mechani
 this single subsystem as a one-element list) gates exactly two things: whether
 `GenerateCode()` emits the real field/property/start-method or a stub, and whether the
 backing scene child object exists at all. A caller reading `_ts.Log` or `_ts.Memory` while
-genuinely unused simply gets `TsRoot`'s own `null` default. There's no special-casing needed
+genuinely unused simply gets the `null` default from `TsRoot`. There's no special-casing needed
 elsewhere in the framework for "this subsystem happens to be turned off."
 
-`IsUsed` is exposed as a `protected` property specifically so `LogModule`'s own Settings-tab
+`IsUsed` is exposed as a `protected` property specifically so the `LogModule` Settings-tab
 integration can tell "never generated yet, click Force Regenerate" apart from "deliberately
 tree-shaken away, won't reappear until referenced or force-included." Without it, the tab's
 guidance would be actively misleading once tree-shaking legitimately turns this subsystem
@@ -35,7 +35,7 @@ off.
 ## Self-healing, but never destructive to the shared package asset
 
 `AfterFilesStable()` always calls `ScaffoldModule.EnsureUdonSharpProgramAsset` for
-`ComponentType`'s own script/asset pair, regardless of current usage. Those are permanent
+the script/asset pair of `ComponentType`, regardless of current usage. Those are permanent
 package resources (`TsvrcLogger.cs`/`.asset`, `TsvrcMemory.cs`/`.asset`), never created or
 deleted by this module, only healed if something about their linkage drifted. What usage
 *does* control is the scene-local child object: when unused, an existing child under the

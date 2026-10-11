@@ -10,13 +10,13 @@ sidebar_position: 2
 [Process](../core-concepts/process). Its generated shadow is `TsTimer`. All clients share
 [server time](https://udonsharp.docs.vrchat.com/vrchat-api/#methods-4) anchors and compute
 elapsed time locally, so a running timer needs no discrete network message per tick,
-beyond `Process`'s own periodic [auto-resync
+beyond the periodic `Process` [auto-resync
 heartbeat](../core-concepts/process#the-tick-loop-and-auto-resync). See [Run a synced
 countdown](../how-to/running-a-countdown) for a task-oriented walkthrough.
 
 ## Getting an instance
 
-`TsvrcTimer` ships as one of [Core's own default pool
+`TsvrcTimer` ships as one of [the Core default pool
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
@@ -37,7 +37,7 @@ entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
   ```
 - **Manual:** skip pooling entirely. Drag the shipped `TsTimer` prefab into your scene and
   reference it directly, but then call `TsConstruct` on it yourself before calling
-  anything else on it. Skipping that leaves [`Process`'s cached local-player
+  anything else on it. Skipping that leaves the [cached `Process` local-player
   ID](../core-concepts/process) at its default, which makes `IsProcessOwner()` report
   `false` even for the actual owner, so `StartTimer`/`StopTimer`/`PauseTimer` all behave
   as if called by a non-owner.
@@ -57,7 +57,7 @@ changes, not for driving a per-frame UI redraw.
   to the owner over the network if called by a non-owner, [same as
   `Process`](../core-concepts/process#lifecycle).
 - **`PauseTimer()`** / **`ResumeTimer()`** — freeze and unfreeze elapsed time. Pausing
-  extends the effective run time: `OnProcessUpdate`'s auto-complete check uses
+  extends the effective run time: the auto-complete check in `OnProcessUpdate` uses
   `GetElapsedMilliseconds()`, which returns the frozen offset while paused, so a duration is
   always fully observed regardless of how long a pause lasts. Both forward to the owner when
   called by a non-owner, through their own [`[NetworkCallable]`](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting)
@@ -95,8 +95,8 @@ else. Both fire on every client, hook before event, for the matching transition:
 
 ## How non-owner clients detect transitions
 
-The owner gets its lifecycle hooks called directly from `Process`'s own
-`OnProcessStarted`/`Stopped`/`Completed`. A non-owner has no such direct call: it derives
+The owner gets its lifecycle hooks called directly from
+`OnProcessStarted`/`Stopped`/`Completed` in `Process`. A non-owner has no such direct call: it derives
 the same events by diffing synced state inside `OnDeserialization`, comparing the newly
 received running/paused flags against what it last observed. This diffing approach has two
 sharp edges worth knowing if you're relying on exact event sequencing:
@@ -105,7 +105,7 @@ sharp edges worth knowing if you're relying on exact event sequencing:
   packet. That's treated the same as a fresh start: `OnTimerStarted` fires, and if the timer
   happens to already be paused, `OnTimerPaused` fires right after it in the same
   deserialization call. The joiner doesn't need to separately poll `_isPaused`.
-- **A stop-then-restart lands in one packet.** VRChat's manual sync doesn't send
+- **A stop-then-restart lands in one packet.** VRChat manual sync doesn't send
   immediately on `RequestSerialization`; it [waits until its own rate limit allows,
   then sends whatever the synced fields currently
   hold](https://creators.vrchat.com/worlds/udon/networking/network-details/#manual-synchronization).

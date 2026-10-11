@@ -6,9 +6,9 @@ sidebar_position: 3
 
 # TsJson
 
-`Tsvrc.Utils.TsJson` is a static helper class for converting VRChat's `DataDictionary` and
+`Tsvrc.Utils.TsJson` is a static helper class for converting the VRChat `DataDictionary` and
 `DataToken` types to and from JSON, built on top of `VRCJson`. It exists to give the rest of
-Core a smaller, consistent surface than calling `VRCJson`'s `Try...` methods directly
+Core a smaller, consistent surface than calling the `VRCJson` `Try...` methods directly
 everywhere a serialization step is needed.
 
 ## Methods
@@ -36,7 +36,7 @@ if (restored != null)
 }
 ```
 
-Always check `Deserialize`'s result for `null` before reading from it: see the failure
+Always check the result of `Deserialize` for `null` before reading from it: see the failure
 table below for why a bad string never throws instead.
 
 ## Failure handling

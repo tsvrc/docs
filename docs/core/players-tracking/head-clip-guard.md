@@ -17,7 +17,7 @@ walls](../how-to/guarding-against-head-clipping) for a task-oriented walkthrough
 
 ## Getting an instance
 
-`HeadClipGuard` ships as one of [Core's own default factory
+`HeadClipGuard` ships as one of [the Core default factory
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** `_ts.CreateHeadClipGuard(parent)` just works, nothing to register in
@@ -36,7 +36,7 @@ guard.Begin(solidColliders, count);
 guard.End();
 ```
 
-`Begin` bakes each `BoxCollider`'s world-space center, rotation, and half-extents once
+`Begin` bakes the world-space center, rotation, and half-extents of each `BoxCollider` once
 (a one-time cost, not repeated per frame) and starts the guard. Null entries in the
 array are skipped rather than rejected. `End` fully resets all runtime state and is safe to
 call before a later `Begin` on the same instance, so one `HeadClipGuard` can be reused

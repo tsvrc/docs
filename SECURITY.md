@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Don't open a public issue. Use [GitHub's private vulnerability
+Don't open a public issue. Use [GitHub private vulnerability
 reporting](https://github.com/tsvrc/docs/security/advisories/new) for this repository
 instead, so the report isn't visible before a fix is available.
 

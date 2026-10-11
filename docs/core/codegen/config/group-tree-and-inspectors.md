@@ -20,15 +20,15 @@ group's direct entries on the right (row rendering delegated to
 with different parameters. `memberPrefix`/`memberSuffix` control whether a live member-name
 preview is shown at all (`"_ts."` for Globals, `"Create"`/`"(parent)"` for Factories,
 neither for Pool or Constructs, since neither generates a name at all). `prefixRespectsToggle`
-mirrors [`BuildGroupPrefix`](../internals/ts-module)'s own `respectToggle`
-parameter: Factory always prefixes regardless of a group's `IncludeInName`, Global respects
+mirrors the `respectToggle` parameter of
+[`BuildGroupPrefix`](../internals/ts-module): Factory always prefixes regardless of a group's `IncludeInName`, Global respects
 it per-group.
 
 Its `State` class holds purely UI-local state (tree expansion, selection, search text,
 pagination), never written back to any config asset, persisted across a domain reload via
 `SessionState`. It's keyed by a combination of the target object's type name and the
-property name being drawn, specifically so `TsWindow`'s `TsConfig`-backed trees and
-`TsBuiltinConfigInspector`'s `TsBuiltinConfig`-backed trees (which share property names like
+property name being drawn, specifically so the `TsConfig`-backed trees in `TsWindow` and the
+`TsBuiltinConfig`-backed trees in `TsBuiltinConfigInspector` (which share property names like
 `"GlobalGroups"`) never collide on the same session key.
 
 `Draw` returns whether a drag-and-drop reparent action already flushed its own nested
@@ -44,8 +44,8 @@ into: a delete button, and per-row hint text covering three cases a bare `Proper
 can't communicate on its own. An empty slot means something used to be assigned here and
 was probably deleted; a scene-instance reference where only a persisted prefab asset is
 valid (the Pool and Factory tabs, both drawn with `assetsOnly: true`) gets its own hint too;
-and a type resolved only via `TsModule.TryResolveObjectType`'s compile-broken fallback is
-shown with a note that the compile is currently broken, since Unity's own `PropertyField`
+and a type resolved only via the compile-broken fallback in `TsModule.TryResolveObjectType` is
+shown with a note that the compile is currently broken, since the Unity `PropertyField`
 can't display a component's real type while nothing compiles.
 
 ## The three "managed by Configure" inspectors

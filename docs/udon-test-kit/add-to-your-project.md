@@ -21,7 +21,7 @@ Install **Udon Test Kit** (`com.tsvrc.udon-test-kit`) as described in
 [Install a TsVRC package](/docs/install-a-package). Its `.unitypackage` is on the kit's
 [GitHub releases](https://github.com/tsvrc/udon-test-kit/releases).
 
-You'll know it worked when Unity's menu bar has **Tools > TsVRC > Udon Test Kit**.
+You'll know it worked when the Unity menu bar has **Tools > TsVRC > Udon Test Kit**.
 
 :::warning
 A project can hold only one copy of the kit. Two copies mean two assemblies named `Tsvrc.UdonTestKit`,

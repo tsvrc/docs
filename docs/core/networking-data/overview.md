@@ -11,14 +11,14 @@ inheritance chain built on [Process](../core-concepts/process):
 `Process → PlayerTracker → ReadyCheckProcess → DataChunker → ChunkedTransferSession →
 DataSender → DataChunkReceiver → DataSenderReceiver → DataTransferer`. Each layer adds one
 concern on top of the one below it, so this section documents them bottom-up in that same
-order. Reading `DataTransferer`'s page without the ones before it skips the reasoning
+order. Reading the `DataTransferer` page without the ones before it skips the reasoning
 behind most of what it does.
 
 ## The problem being solved
 
 VRChat caps the [total parameter size of a single network
 event](https://creators.vrchat.com/worlds/udon/networking/events/#parameter-size-limits-and-event-splitting)
-at 16 KB and [Udon's overall outgoing
+at 16 KB and [the overall outgoing Udon
 bandwidth](https://creators.vrchat.com/worlds/udon/networking/network-details/#bandwidth-limits)
 to about 11 KB/s, so sending an arbitrary string to a set of players means splitting it
 into chunks, sending them one at a time, and confirming each one actually arrived before

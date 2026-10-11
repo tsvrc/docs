@@ -42,7 +42,7 @@ pooled-but-currently-unbound instance.
 
 ## Wiring selection
 
-Wire `_OnItemPressed` to a `Button`'s `onClick`. It's a no-op if the item isn't currently
+Wire `_OnItemPressed` to the `onClick` of a `Button`. It's a no-op if the item isn't currently
 bound (guards against a stray press on a pooled item mid-transition). Otherwise it calls
 back into the owning list's `OnItemSelected(dataIndex)`, which is what actually records the
 selection and emits `TsvrcList.OnItemSelectedEvent`. `ListItem` itself never emits that event

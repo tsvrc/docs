@@ -17,7 +17,7 @@ a minimap marker) is simpler than setting up a render pipeline for it.
 Every drawing operation comes in two forms, and neither one reaches the GPU by itself:
 
 - **Texture methods** (`DrawLine`, `DrawCircle`, `FillTexture`, ...) write straight into the
-  `Texture2D` you pass in, but only into its CPU-side pixel data. [Unity's own `SetPixel`
+  `Texture2D` you pass in, but only into its CPU-side pixel data. [The Unity `SetPixel`
   docs say so
   directly](https://docs.unity3d.com/ScriptReference/Texture2D.SetPixel.html): "you must
   call `Apply` after `SetPixel`" for a change to actually reach the GPU. None of these
@@ -36,7 +36,7 @@ Use the buffer form whenever you're drawing more than one or two shapes before t
 needs to be visible: skipping repeated `SetPixel` calls in favor of plain array writes, and
 paying for [the genuinely expensive
 `Apply()`](https://docs.unity3d.com/ScriptReference/Texture2D.Apply.html) exactly once no
-matter how many shapes you drew, is the entire reason the buffer family exists. Unity's own
+matter how many shapes you drew, is the entire reason the buffer family exists. The Unity
 docs for `Apply` say why: it "copies all the pixels in the texture even if you've only
 changed some of the pixels," so the fewer times you call it, the better.
 
@@ -44,7 +44,7 @@ changed some of the pixels," so the fewer times you call it, the better.
 
 Every method that takes explicit coordinates uses pixel coordinates with `(0, 0)` at the
 [bottom-left corner](https://docs.unity3d.com/ScriptReference/Texture2D.GetPixel.html)
-("the lower left corner is (0, 0)," in Unity's own words), and clips silently at the
+("the lower left corner is (0, 0)," as the Unity docs put it), and clips silently at the
 texture's or buffer's edges: a shape drawn partially or entirely out of bounds never throws,
 it just doesn't draw the out-of-bounds part. `FillTexture` and `ClearTexture` take no
 coordinates at all; they always cover the whole texture.
@@ -80,7 +80,7 @@ it would with a real buffer in that situation.
   the four diagonal pixels are at distance `√2` from the center, which fails the `≤ 1` test.
   A negative radius draws nothing (the iteration range is empty rather than throwing).
 - **`DrawTriangleToBuffer`** draws a filled, direction-aware triangle inscribed in a
-  `(2×halfWidth) × (2×halfHeight)` box. `headingDegrees` follows Unity's Y-axis rotation
+  `(2×halfWidth) × (2×halfHeight)` box. `headingDegrees` follows the Unity Y-axis rotation
   convention: `0°` points the tip toward `+Y` (up), and increasing degrees rotate the tip
   clockwise (`90°` toward `+X`). Headings outside `[0, 360)`, including negative values, are
   accepted directly: trigonometric functions handle the wraparound, so `-90°` points the

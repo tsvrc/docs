@@ -26,7 +26,7 @@ if (TestRun.IsActive || EditorApplication.isPlayingOrWillChangePlaymode)
 - for the whole life of a batch-mode Unity process started with `-runTests`, from before the first
   test is found.
 
-The start and end come from Unity Test Framework's public callbacks, which the kit registers again
+The start and end come from the public Unity Test Framework callbacks, which the kit registers again
 on every domain load, since registered callbacks don't survive a reload. The flag between them
 lives in `SessionState`, so it survives the domain reloads a run causes but not an Editor restart.
 A run that crashes without reporting its end can't leave it set for good.

@@ -52,8 +52,8 @@ up](./set-up-automated-testing).
 
 ## Reaching a private field or method
 
-Use Udon Test Kit's [`PrivateFieldAccess`](/docs/udon-test-kit/reference/private-field-access)
-instead of making something `public` just so a test can see it:
+Use [`PrivateFieldAccess`](/docs/udon-test-kit/reference/private-field-access) from
+Udon Test Kit instead of making something `public` just so a test can see it:
 
 ```csharp
 int remaining = PrivateFieldAccess.GetField<int>(referee, "_remainingMilliseconds");
@@ -61,7 +61,7 @@ int remaining = PrivateFieldAccess.GetField<int>(referee, "_remainingMillisecond
 
 ## Asserting an event actually fired
 
-Subscribe a spy from Udon Test Kit's
+Subscribe a spy from the Udon Test Kit
 [`CallLog`](/docs/udon-test-kit/reference/callback-spy-and-call-log) instead of writing a
 one-off listener class for every test:
 
@@ -87,4 +87,4 @@ a remote player with the kit's `Session.SetOwner` to test the other side, as in
 ## Why this shape
 
 See [Testing your world](../testing/testing-your-world) for how a test builds your behaviours
-and what Core's codegen does during a test run.
+and what the Core codegen does during a test run.

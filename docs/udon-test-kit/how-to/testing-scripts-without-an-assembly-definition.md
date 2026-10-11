@@ -15,7 +15,7 @@ when your project has such scripts.
 
 Put the tests in any folder named `Editor` that has no assembly definition. Unity compiles them
 into `Assembly-CSharp-Editor`, which can use your scripts, NUnit and the kit without any
-references set up. Unity's Test Runner finds them there, and so does
+references set up. The Unity Test Runner finds them there, and so does
 [`Invoke-UnityTests.ps1`](../reference/invoke-unity-tests).
 
 ## Play Mode tests

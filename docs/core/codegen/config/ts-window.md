@@ -35,16 +35,16 @@ survives a domain reload via a `[SerializeField]` field: `EditorWindow` instance
 re-deserialized across a reload, but only serialized fields keep their value across it.
 
 The Settings tab isn't a real module: it's a pseudo-module (`SettingsTabModule`) appended
-last, because its content spans two different data sources (`LogModule`'s logging fields,
-which live on the scene's `TsvrcLogger`, and `TsConfig`'s tree-shaking fields) that don't
+last, because its content spans two different data sources (the `LogModule` logging fields,
+which live on the scene's `TsvrcLogger`, and the `TsConfig` tree-shaking fields) that don't
 belong to any single registered module.
 
 ## Apply / Discard
 
 Every tab's edits are batched behind an explicit Apply/Discard step rather than triggering a
 real regenerate on every single property change. That batching is the entire reason
-[`TsPendingConfigEdit`](./ts-pending-config-edit) exists. `TsWindow` participates in Unity's
-own "unsaved changes" contract (`hasUnsavedChanges`, `SaveChanges`, `DiscardChanges`): it
+[`TsPendingConfigEdit`](./ts-pending-config-edit) exists. `TsWindow` participates in the Unity
+"unsaved changes" contract (`hasUnsavedChanges`, `SaveChanges`, `DiscardChanges`): it
 decorates the window's title/tab and blocks it from closing, including on an editor quit,
 until you explicitly apply or discard. `TsWindow` tracks two independent pending-edit sets
 at once, the active tab's `TsConfig` edits and the Settings tab's separate `TsvrcLogger`
@@ -54,7 +54,7 @@ edits, both folded into one shared "you have unapplied changes" footer and one s
 Beyond the window-close path, switching the linked scene (or picking a different scene to
 link) also risks discarding an in-progress edit silently. `ResolvePendingChangesBeforeSwitch`
 guards that specific action with its own Apply/Cancel/Discard dialog, since
-`hasUnsavedChanges`'s built-in protection only covers the window actually closing.
+the built-in protection of `hasUnsavedChanges` only covers the window actually closing.
 
 ## Status reporting
 

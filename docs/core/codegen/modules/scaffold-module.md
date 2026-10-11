@@ -45,8 +45,8 @@ own.
 
 ## Deterministic program asset field order
 
-`NormalizeProgramAsset` sorts an `UdonSharpProgramAsset`'s internal field-definition
-dictionary into a stable order after every pass. Unity/UdonSharp's own serialization of that
+`NormalizeProgramAsset` sorts the internal field-definition dictionary of an
+`UdonSharpProgramAsset` into a stable order after every pass. The Unity/UdonSharp serialization of that
 dictionary isn't guaranteed to stay in the same order across compilations, which without
 this normalization would produce a spurious file diff on every single domain reload even
 when nothing about the actual fields changed. That's noisy for version control and confusing

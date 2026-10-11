@@ -29,7 +29,7 @@ function statLabel(kind: StatKind): string {
   }
 }
 
-// Shields' JSON endpoints accept requests from any site and are cached for 30 minutes, so
+// Shields JSON endpoints accept requests from any site and are cached for 30 minutes, so
 // visitors don't use up GitHub's limit of 60 anonymous API requests an hour. Shields reports a
 // private or missing repository, or one with no releases, as the value itself; those are left out.
 function useRepoStats(repo: string): Stat[] {

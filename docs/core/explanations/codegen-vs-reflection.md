@@ -18,24 +18,24 @@ checkable reason: the runtime environment it targets doesn't support it.
 
 UdonSharp compiles against a fixed set of APIs the Udon VM exposes ("externs"), determined
 by walking the .NET type system at compile time, not at the compiled program's own runtime.
-[VRChat's own documentation of the Udon VM](https://creators.vrchat.com/worlds/udon/vm-and-assembly/#overview-of-the-udon-vm)
+[The VRChat documentation of the Udon VM](https://creators.vrchat.com/worlds/udon/vm-and-assembly/#overview-of-the-udon-vm)
 states this directly: "reflection is not used to access functions," though the VM is
 "'styled' like it is," meaning a function call compiles down to a fixed extern name resolved
 ahead of time, not a live, `System.Reflection`-style lookup by member name at runtime. (The
-reflection calls you'll find inside UdonSharp's own tooling, for example [the Editor-side
+reflection calls you'll find inside the UdonSharp tooling, for example [the Editor-side
 "proxy" object every `UdonSharpBehaviour`
-has](https://udonsharp.docs.vrchat.com/editor-scripting/#overview), run in the Unity
-Editor's own C# context while compiling or inspecting a script; they never execute as part
+has](https://udonsharp.docs.vrchat.com/editor-scripting/#overview), run in the C# context of the
+Unity Editor while compiling or inspecting a script; they never execute as part
 of the compiled Udon bytecode itself.)
 
-Generics compound the problem: [UdonSharp's own
+Generics compound the problem: [the UdonSharp
 FAQ](https://udonsharp.docs.vrchat.com/frequently-asked-questions/#im-starting-from-scratch-and-need-to-use-c-tutorials-what-common-aspects-of-c-dont-work-in-udonsharp)
 lists generic classes and generic methods among the C# features that don't work in Udon. A
 typical reflection-or-DI-based framework leans on both together: reflect over a type, then
 resolve or construct it generically. With neither tool available in compiled Udon code,
 that whole approach is closed off, not just inconvenient.
 
-Object creation is restricted the same way: the only instantiation method [VRChat's own API
+Object creation is restricted the same way: the only instantiation method [the VRChat API
 reference](https://udonsharp.docs.vrchat.com/vrchat-api/#vrcinstantiate) lists is
 `GameObject VRCInstantiate(GameObject original)`, a single, non-generic overload. Since
 generic methods don't work in Udon at all (the same restriction cited above), there's no
@@ -49,7 +49,7 @@ parameterized.
 ## What Core does instead
 
 None of that machinery exists in compiled Udon, but all of it is perfectly ordinary,
-supported C# in the Unity Editor, where Core's own reflection happens. Scanning loaded
+supported C# in the Unity Editor, where Core does its own reflection. Scanning loaded
 assemblies for an `Instance` subclass, or a class tagged
 [`[TsWorldExtensionPoint]`](../core-concepts/attributes.md), runs entirely in the editor's
 own C# runtime, at generate time, never inside a compiled UdonSharpBehaviour. The generator

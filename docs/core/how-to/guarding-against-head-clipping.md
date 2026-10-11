@@ -12,8 +12,8 @@ comfort setting rather than something every world forces on.
 
 ## Steps
 
-1. Spawn one with the generated factory method. `HeadClipGuard` ships as [one of Core's
-   own default factory entries](../explanations/builtin-registrations), so there's
+1. Spawn one with the generated factory method. `HeadClipGuard` ships as [one of the Core
+   default factory entries](../explanations/builtin-registrations), so there's
    nothing to register on the Configure window first:
 
    ```csharp
@@ -48,7 +48,7 @@ transform once and the guard re-evaluates all of them every frame it's active.
 
 ## Why this shape
 
-See [`HeadClipGuard`'s reference page](../players-tracking/head-clip-guard) for how it
+See the [`HeadClipGuard` reference page](../players-tracking/head-clip-guard) for how it
 decides which direction to push, the three-tier movement gate/batch-scan/full-test
 pipeline that keeps per-frame cost down with many colliders, and the two tunable
 invariants (`_margin`, `_batchScanExpansion`) worth understanding before changing them.

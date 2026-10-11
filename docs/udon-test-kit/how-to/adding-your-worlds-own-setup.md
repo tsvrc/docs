@@ -40,7 +40,7 @@ public class ScoreboardTests : MyWorldTestBase
 }
 ```
 
-Use NUnit's attributes in your base class as you would in a test class. NUnit runs a base class's
+Use NUnit attributes in your base class as you would in a test class. NUnit runs a base class's
 setup before yours and its teardown after yours, so with `ClientSimTestBase` underneath:
 
 - your `[UnitySetUp]` and `[SetUp]` run with the test scene already loaded and active,

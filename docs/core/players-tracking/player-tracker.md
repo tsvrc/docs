@@ -15,14 +15,14 @@ players](../how-to/tracking-a-group-of-players) for a task-oriented walkthrough.
 
 ## Getting an instance
 
-`PlayerTracker` ships as one of [Core's own default pool
+`PlayerTracker` ships as one of [the Core default pool
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
   Configure first, and codegen calls `TsConstruct` for you at wire time.
 - **Manual:** skip pooling entirely. Drag the shipped `PlayerTracker` prefab into your
   scene and call `TsConstruct` on it yourself before calling anything else on it. Skipping
-  construction leaves [`Process`'s cached local-player ID](../core-concepts/process) at
+  construction leaves the [cached `Process` local-player ID](../core-concepts/process) at
   its default, which makes `IsProcessOwner()` report `false` even for the actual owner.
 
 ## Usage
@@ -97,7 +97,7 @@ covering a different way a tracked player can stop being reachable:
   to suspended; waking up needs no action, since the player was already removed on the way
   in.
 - **`OnOwnerAbandonedProcess`** — covers the case where the *tracker's owner itself* leaves
-  or suspends. The new owner (promoted by `Process`'s own ownership recovery) scans the
+  or suspends. The new owner (promoted by the `Process` ownership recovery) scans the
   entire tracked set against the current, non-suspended player list and removes anyone
   who's gone or suspended. This is what catches a tracked player who suspended while the
   process owner was the one who couldn't act on it (all non-owner clients skip that

@@ -48,10 +48,10 @@ two-pass grace period involved.
 
 `TsGroup` is one node in an entry group tree, flat, with a `ParentId` reference rather than
 a nested/recursive structure, so it maps directly onto a tree-view's row model and avoids
-Unity's serialization depth limit for nested types. `Id` is assigned once and never reused,
+the Unity serialization depth limit for nested types. `Id` is assigned once and never reused,
 even after deletion. Groups are purely organizational by default; setting `IncludeInName`
 turns nesting into namespacing, prefixing an opted-in group's own name (and its
-opted-in ancestors') onto the generated member name of everything inside it. `_ts.Spawner`
+opted-in ancestors) onto the generated member name of everything inside it. `_ts.Spawner`
 under a plain group stays `_ts.Spawner`, but under a group named "Enemies" with
 `IncludeInName` set it becomes `_ts.EnemiesSpawner`. Factory groups always prefix
 regardless of this toggle; Global groups respect it per-group. Construct groups have no

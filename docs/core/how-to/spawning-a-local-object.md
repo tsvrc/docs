@@ -50,7 +50,7 @@ the same prefab.
 
 ## Why this shape
 
-See [`FactoryModule`'s reference page](../codegen/modules/factory-module) for how the
+See the [`FactoryModule` reference page](../codegen/modules/factory-module) for how the
 instantiation source is a pre-instantiated, inactive template rather than the raw prefab
 asset, and why that specific detail is what makes factory-created objects fast to spawn
 repeatedly. See [Decision note: builtin pool and factory entries](../explanations/builtin-registrations)

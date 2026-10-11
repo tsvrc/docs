@@ -45,7 +45,7 @@ repeated here.
 
 Most consumers use [`DataTransferer`](./data-transferer) directly and never touch this layer.
 Subclass `DataSenderReceiver` itself only if you want the sender/receiver plumbing without
-`DataTransferer`'s transfer-specific event names. Override `OnDataReceptionCompleted` and
+the transfer-specific event names of `DataTransferer`. Override `OnDataReceptionCompleted` and
 read `LastData`:
 
 ```csharp

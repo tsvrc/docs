@@ -58,11 +58,11 @@ what makes `StartOverlay`/`StopOverlay`/`OnTrackingDeserialization` restarting t
 mid-flight safe: an old, now-superseded tick fires, sees a nonzero counter, and does
 nothing.
 
-## Buffers are pre-sized to VRChat's own cap
+## Buffers are pre-sized to the VRChat cap
 
 Every internal buffer (cached positions, headings, player IDs, live player references) is
 sized to 82, the [worst-case absolute maximum instance
-size](https://wiki.vrchat.com/wiki/Special:MyLanguage/Instances) (80 is VRChat's
+size](https://wiki.vrchat.com/wiki/Special:MyLanguage/Instances) (80 is the VRChat
 configurable hard cap; the world author and instance creator can each still join on top of
 that), allocated once, lazily, on first use, and reused every tick rather than reallocated.
 `_ResolveTrackedPlayers` is zero-allocation

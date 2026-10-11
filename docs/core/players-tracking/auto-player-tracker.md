@@ -15,14 +15,14 @@ ready](../how-to/wiring-a-ready-check) for a common pairing with `ReadyCheckProc
 
 ## Getting an instance
 
-`AutoPlayerTracker` ships as one of [Core's own default pool
+`AutoPlayerTracker` ships as one of [the Core default pool
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
   Configure first, and codegen calls `TsConstruct` for you at wire time.
 - **Manual:** skip pooling entirely. Drag the shipped `AutoPlayerTracker` prefab into your
   scene and call `TsConstruct` on it yourself before calling anything else on it. Skipping
-  construction leaves [`Process`'s cached local-player ID](../core-concepts/process) at
+  construction leaves the [cached `Process` local-player ID](../core-concepts/process) at
   its default, which makes `IsProcessOwner()` report `false` even for the actual owner.
 
 ## Usage
@@ -75,13 +75,13 @@ still `false` for all of it, and every one of those events is dropped. By the ti
 at that instant is what captures everyone who's genuinely present. A player who is
 still mid-join at that exact instant hasn't fired their own `OnPlayerJoined` yet. It
 fires afterward, once the process is live, and gets picked up normally through the
-ordinary join path. Because UdonSharp runs on Unity's single main thread, no
+ordinary join path. Because UdonSharp runs on the single Unity main thread, no
 `OnPlayerJoined` can interleave between reading that snapshot and the process actually
 going live, so there's no window where a joining player is missed by both paths.
 
 The snapshot itself excludes any player already suspended at that instant. A player
 who's suspended before tracking even starts has no suspend *transition* left to
-produce, and `PlayerTracker`'s own suspend-handling only reacts to that transition, so a
+produce, and the suspend-handling in `PlayerTracker` only reacts to that transition, so a
 pre-suspended player must never enter the tracked set in the first place.
 
 ## Events
@@ -91,4 +91,4 @@ Same six lifecycle names as `PlayerTracker`, renamed with an `Auto` prefix
 `...PlayersAdded`, `...PlayersRemoved`) and their matching `OnAutoTracking*Event`
 constants. Each is just the base `OnTracking*` hook overridden to emit the renamed
 event. The underlying data (`LastPlayerIds`, `LastAddedPlayerIds`,
-`LastRemovedPlayerIds`) is identical to `PlayerTracker`'s own.
+`LastRemovedPlayerIds`) is identical to that of `PlayerTracker`.

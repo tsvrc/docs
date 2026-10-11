@@ -123,7 +123,7 @@ Two failure modes matter here, and they're handled differently on purpose:
   still gets called normally before that throw happens.
 - A listener whose GameObject got destroyed *after* subscribing is treated differently:
   `TsEmit` just skips it, and every other listener still fires. This works because
-  Unity's [`==` operator](https://docs.unity3d.com/ScriptReference/Object-operator_eq.html)
+  the Unity [`==` operator](https://docs.unity3d.com/ScriptReference/Object-operator_eq.html)
   treats a destroyed object as equal to `null`, but `TsEmit` casts to `object` first to
   check whether the reference is genuinely null (never assigned) versus just destroyed,
   and only throws for the first case.
@@ -156,7 +156,7 @@ logging is configured elsewhere.
 
 ## Destruction
 
-`TsDestroy()` is `virtual` and defaults to calling Unity's own
+`TsDestroy()` is `virtual` and defaults to calling the Unity
 [`Destroy(gameObject)`](https://docs.unity3d.com/ScriptReference/Object.Destroy.html). In
 play mode, that defers the actual removal to the end of the current frame rather than
 happening instantly. Outside play mode, in the editor, Unity refuses to run it

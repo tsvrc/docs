@@ -13,7 +13,7 @@ instead of a pile of booleans.
 ## Steps
 
 1. Spawn one for the screen or flow that needs it. `StateManager` ships as [one of
-   Core's own default factory entries](../explanations/builtin-registrations), so
+   the Core default factory entries](../explanations/builtin-registrations), so
    there's nothing to register on the Configure window first. Give each screen its own
    instance rather than sharing one across unrelated screens:
 
@@ -70,7 +70,7 @@ non-networked spawn.
 
 ## Why this shape
 
-See [`StateManager`'s reference page](../game-flow/state-manager) for what happens if an
+See the [`StateManager` reference page](../game-flow/state-manager) for what happens if an
 enter/exit method or a subscriber throws mid-transition, how a reentrant `SetState` call
 from inside an enter/exit method is queued rather than interleaved, and why `StateManager`
 needs no `TsConstruct` at all if you want to skip the factory and use one completely

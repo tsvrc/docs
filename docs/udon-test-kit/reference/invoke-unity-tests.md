@@ -39,11 +39,11 @@ Close the Unity Editor first: batch mode can't open a project that another Edito
 | `-TestMode` | `All`, which runs `EditMode` and then `PlayMode`. Pass one of those to run one mode. |
 | `-AssemblyNames` | Your project's own assemblies, separated with `;` (see below). |
 | `-ProjectPath` | The nearest folder with a `ProjectSettings\ProjectVersion.txt`, looking up from the script's folder, then from the current folder. |
-| `-UnityPath` | The Editor version in `ProjectVersion.txt`, in Unity Hub's default install folder under `Program Files`. |
+| `-UnityPath` | The Editor version in `ProjectVersion.txt`, in the Unity Hub default install folder under `Program Files`. |
 | `-ResultsPath` | A new folder under the temp folder, named after the date and time. |
 
 Without assembly names, Unity runs every test it finds, including the tests that come with
-packages, such as the VRChat SDK's. The default list is every assembly definition under `Assets`,
+packages, such as the VRChat SDK. The default list is every assembly definition under `Assets`,
 plus the assemblies Unity compiles scripts without one into (`Assembly-CSharp`,
 `Assembly-CSharp-firstpass`, `Assembly-CSharp-Editor` and `Assembly-CSharp-Editor-firstpass`), so
 tests in `Editor` folders run too. A name with no tests in it is harmless.

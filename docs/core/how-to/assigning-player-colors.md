@@ -46,6 +46,6 @@ color belongs to which player.
 
 ## Why this shape
 
-See [`PlayerColorAssigner`'s reference page](../players-tracking/player-color-assigner)
+See the [`PlayerColorAssigner` reference page](../players-tracking/player-color-assigner)
 for why the palette is shuffled per instance instead of used in raw ID order, and why
 `GetColor` is always safe to call even before `Initialize` has run anywhere.

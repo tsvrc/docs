@@ -6,7 +6,7 @@ sidebar_position: 4
 
 # Decision note: builtin pool and factory entries
 
-Eight of Core's own runtime types ship pre-registered in `TsBuiltinConfig`, the
+Eight of the Core runtime types ship pre-registered in `TsBuiltinConfig`, the
 library-wide counterpart to a project's own [`TsConfig`](../codegen/config/ts-config):
 [`DataTransferer`](../networking-data/data-transfer/data-transferer),
 [`TsvrcTimer`](../networking-data/tsvrc-timer),
@@ -23,13 +23,13 @@ each one landed on Pool or Factory specifically.
 
 ## What shipping them pre-registered actually buys
 
-`TsBuiltinConfig`'s own doc comment describes it plainly: "library-wide Globals/Pool/Factory
+The doc comment on `TsBuiltinConfig` describes it plainly: "library-wide Globals/Pool/Factory
 registrations shipped with tsvrc itself, merged with each world's own `TsConfig` at generate
 time." The observable effect of that merge is what matters here: without it, using
 `PlayerTracker` in your own code would need the same round trip registering one of your own
 project's types does, open Configure, add it to the Pools tab, then come back to write the
 `[WirePool]` field, even though every project that uses `PlayerTracker` needs it registered
-the exact same way, with no project-specific choice to make. Merging Core's own
+the exact same way, with no project-specific choice to make. Merging the Core
 registrations in ahead of a project's own removes that step for these eight types
 specifically, without changing anything about how a project registers its *own* types.
 
@@ -47,7 +47,7 @@ the two groups. The real split comes from how each generator produces an instanc
 - **A factory method clones its prefab at the moment you call it**, via an actual
   `Instantiate()` inside the generated `CreateX(parent)` method. See [the pooling
   pattern](./pooling-pattern) for why that specific operation, a runtime `Instantiate`
-  call, is exactly what VRChat's own networking model can't synchronize. That's a hard
+  call, is exactly what the VRChat networking model can't synchronize. That's a hard
   constraint on every factory-created object, not a convention: no factory-created
   instance could correctly participate in networked gameplay regardless of what it is,
   which is exactly why [`FactoryModule`](../codegen/modules/factory-module) documents that
@@ -58,7 +58,7 @@ the two groups. The real split comes from how each generator produces an instanc
 That difference also explains why `PlayerTracker`, `ReadyCheckProcess`,
 `AutoPlayerTracker`, `TsvrcTimer`, `DataTransferer`, and `RankedGameSession` couldn't have
 been factory entries instead, independent of whether they sync. `RankedGameSession` and
-several of the others declare their own `[WirePool]` fields (`RankedGameSession`'s
+several of the others declare their own `[WirePool]` fields (in `RankedGameSession`,
 `_lobbyTracker`, `_readyCheck`, and so on), and `PoolModule.Wire()` only ever wires
 `[WirePool]` fields on objects that already exist in the scene when it runs, at edit time.
 A factory-cloned instance is created later, during actual gameplay, long after that pass

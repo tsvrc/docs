@@ -26,7 +26,7 @@ Neither one loads anything until `Load` runs.
 ## Members
 
 `Load()` is a coroutine: `yield return scene.Load()`. It loads the scene alongside the scenes
-already loaded, so Unity Test Framework's own test scene stays loaded, and makes it the active
+already loaded, so the Unity Test Framework test scene stays loaded, and makes it the active
 scene. It does nothing when the scene is already loaded.
 
 `Unload()` makes the scene that was active before `Load` active again, then unloads this scene and
@@ -69,7 +69,7 @@ End the session before unloading the scene, the same order `ClientSimTestBase` u
 - Unity drops the operation `LoadSceneInPlayMode` loads with. When the garbage collector finalized
   it as Unity exited, Unity crashed after every test had passed, so `Load` finalizes it right after
   the scene loads, while that's still safe.
-- `Unload` uses Unity's synchronous `SceneManager.UnloadScene`, which Unity marks obsolete because
+- `Unload` uses the synchronous Unity `SceneManager.UnloadScene`, which Unity marks obsolete because
   it's unsafe inside physics callbacks. A test's setup and teardown aren't physics callbacks.
 
 ## TestSceneLifetime

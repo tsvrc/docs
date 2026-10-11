@@ -14,7 +14,7 @@ machine](../how-to/adding-a-screen-state-machine) for a task-oriented walkthroug
 
 ## Getting an instance
 
-`StateManager` ships as one of [Core's own default factory
+`StateManager` ships as one of [the Core default factory
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** `_ts.CreateStateManager(parent)` just works, nothing to register in
@@ -88,6 +88,6 @@ them rather than letting an exception escape into `SetState`.
 
 A registered target whose `GameObject` was destroyed after `RegisterState` is treated the
 same as a `null` target: its dispatch is skipped silently rather than throwing, using the
-same "compare to `null` through Unity's overridden equality" check used elsewhere in the
+same "compare to `null` through the overridden Unity equality" check used elsewhere in the
 framework. A destroyed target for one state doesn't affect dispatch for any other
 registered state.

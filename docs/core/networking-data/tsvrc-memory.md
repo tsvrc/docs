@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # TsvrcMemory
 
-`Tsvrc.Utils.TsvrcMemory` is Core's shared key-value store, reached through `_ts.Memory`.
+`Tsvrc.Utils.TsvrcMemory` is the shared key-value store in Core, reached through `_ts.Memory`.
 Its generated shadow class is `TsMemory`. It holds every key in exactly one of three
 isolated tiers, ephemeral, persistent, or synced, and the tier is a per-key decision you
 make once, before you ever write a value. See [Persist a value across
@@ -16,7 +16,7 @@ visits](../how-to/persisting-a-value) for a task-oriented walkthrough.
 
 - **Ephemeral** (the default). Local to this client only, and gone when the player leaves
   the world. Any key you never call `Register` on lives here.
-- **Persistent.** Backed by VRChat's `PlayerData`, so it survives across sessions for the
+- **Persistent.** Backed by VRChat `PlayerData`, so it survives across sessions for the
   local player. Declared with `Register(key, persist: true, synced: false)`.
 - **Synced.** Replicated to every player over the network. Declared with
   `Register(key, persist: false, synced: true)`.
@@ -61,7 +61,7 @@ TsvrcMemory.OnSyncedChangedEvent, nameof(YourCallback))`. That event fires only 
 network-driven deserialization, never for your own local `Set` calls.
 
 Writing to a synced key you don't currently own transfers ownership to the local player
-first (`Networking.SetOwner`), matching VRChat's networking model where only the owner of an
+first (`Networking.SetOwner`), matching the VRChat networking model where only the owner of an
 object can push synced-variable updates for it.
 
 If `_syncedJson` ever fails to parse as a JSON object, whether from malformed data or a JSON
@@ -71,7 +71,7 @@ them.
 
 ## PlayerData constraints (persistent tier)
 
-These come from VRChat's own [persistence system](https://creators.vrchat.com/worlds/udon/persistence/player-data),
+These come from the VRChat [persistence system](https://creators.vrchat.com/worlds/udon/persistence/player-data),
 not from Core:
 
 - VRChat allows [100 KB of PlayerData per player per
@@ -85,7 +85,7 @@ not from Core:
 - [Persistent data is scoped to this
   world](https://creators.vrchat.com/worlds/udon/persistence/#limitations); it isn't shared
   with any other world.
-- A persistent key can't actually be deleted from PlayerData: [VRChat's own API reference
+- A persistent key can't actually be deleted from PlayerData: [the VRChat API reference
   says the same](https://creators.vrchat.com/worlds/udon/persistence/player-data/#mutators)
   ("Keys cannot be deleted after being written."). `Remove` only clears the local
   in-memory cache, and logs a warning saying so.

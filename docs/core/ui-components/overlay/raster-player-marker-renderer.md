@@ -11,7 +11,7 @@ sidebar_position: 3
 texture displayed on a `RawImage`: a minimap-style overlay. It owns all the texture and
 pixel-buffer plumbing, the world-to-pixel coordinate mapping, and a flush-only-when-dirty
 optimization; you only override `DrawMarker` to decide what gets painted at each player's
-projected pixel position, typically using [`TextureGraphics2D`](../texture-graphics-2d)'s
+projected pixel position, typically using the [`TextureGraphics2D`](../texture-graphics-2d)
 drawing primitives. A separate public `MarkerShape` enum (`Circle`/`Triangle`) ships
 alongside this class for a subclass's own use when labeling marker styles; the class itself
 never reads it.

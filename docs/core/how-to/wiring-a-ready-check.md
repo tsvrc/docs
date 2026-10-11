@@ -12,7 +12,7 @@ How to block an action until every present player has confirmed they're ready, u
 
 ## Steps
 
-1. Declare a `[WirePool]` field for each. Both ship as [Core's own default pool
+1. Declare a `[WirePool]` field for each. Both ship as [the Core default pool
    entries](../explanations/builtin-registrations), so there's nothing to register on the
    Configure window first, and codegen calls `TsConstruct` for you at wire time:
 

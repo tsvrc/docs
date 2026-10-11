@@ -47,7 +47,7 @@ modules want the same name: the higher-precedence module keeps it, others drop i
 exact tie strips the name from every claimant, since a tie at the same precedence is a
 genuine, unresolvable collision. `ReservedFieldNamePrecedence` (`int.MaxValue`) marks a name
 that's unconditionally present in generated code regardless of any user config, for example
-`InstanceModule`'s own `Instance` property, so a config entry that happens to auto-derive
+the `Instance` property of `InstanceModule`, so a config entry that happens to auto-derive
 the same name is caught as an exclusion instead of silently producing a duplicate-member
 compile error.
 

@@ -15,12 +15,12 @@ for a task-oriented walkthrough.
 
 ## What it adds
 
-Four public event constants that simply forward `DataSenderReceiver`'s reception-focused
+Four public event constants that simply forward the reception-focused `DataSenderReceiver`
 events under transfer-focused names (`OnTransferStartedEvent`, `OnTransferStoppedEvent`,
 `OnTransferCompletedEvent`, `OnTransferChunkEvent`), plus one small piece of defensive
 history: `DataTransferer` still overrides `OnOwnerAbandonedProcess`, but the override's body
-is now just a call to `base`. The base chain (`ChunkedTransferSession`'s
-`OnOwnerAbandonedProcess`, inherited unchanged through `DataSender`, `DataChunkReceiver`, and
+is now just a call to `base`. The base chain
+(`ChunkedTransferSession.OnOwnerAbandonedProcess`, inherited unchanged through `DataSender`, `DataChunkReceiver`, and
 `DataSenderReceiver`) already calls `StopReadyCheck()` and fully cleans up transfer state
 during a handover. The override exists to carry a comment warning against re-adding an
 earlier version's extra `CancelDataTransfer()` call here, which would run against an
@@ -28,7 +28,7 @@ already-stopped process and log a spurious warning.
 
 ## Getting an instance
 
-`DataTransferer` ships as one of [Core's own default pool
+`DataTransferer` ships as one of [the Core default pool
 entries](../../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in

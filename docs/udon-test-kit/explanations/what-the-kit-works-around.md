@@ -12,12 +12,12 @@ This page lists each one and what the kit does about it.
 
 ## Play Mode runs that never finish
 
-When Play Mode starts, the VRChat SDK's `UnityEventFilter` strips every persistent UnityEvent
-listener whose type it doesn't allow, and a stripped listener is never called. Unity Test
-Framework's Play Mode runner reports results through listeners of four such types. Without them, a
+When Play Mode starts, the VRChat SDK `UnityEventFilter` strips every persistent UnityEvent
+listener whose type it doesn't allow, and a stripped listener is never called. The Unity Test
+Framework Play Mode runner reports results through listeners of four such types. Without them, a
 Play Mode run never reports its results, and a batch-mode run never exits.
 
-The kit adds those four types to the SDK's allowlist whenever the Editor loads it, before any test
+The kit adds those four types to the SDK allowlist whenever the Editor loads it, before any test
 runs. Nothing needs turning on. The allowlist is internal to the SDK, so if a future SDK moves it,
 the kit logs a warning starting with `[UdonTestKit] UnityEventFilterAllowlist:` instead of failing.
 
@@ -55,12 +55,12 @@ the owner can't be tested. `ClientSimSession.SetOwner` gives any GameObject an o
 
 ClientSim also hands a leaving player's GameObjects to the master only when it tracks their owner,
 so an owner added without telling ClientSim would stay with a player who has left. The kit
-registers the owner it adds the same way ClientSim registers `VRCObjectSync`'s, so the master takes
+registers the owner it adds the same way ClientSim registers a `VRCObjectSync`, so the master takes
 over, as in VRChat. See [ClientSimSession](../reference/clientsim-session#ownership).
 
 ## A test scene with no scene descriptor
 
-ClientSim refuses to start without a scene descriptor, and Unity Test Framework's test scene has
+ClientSim refuses to start without a scene descriptor, and the Unity Test Framework test scene has
 none. `ClientSimSession.Start` adds one when no loaded scene has one.
 
 VRChat Worlds SDK versions before 3.8.2 also stop Play Mode outright when the scene has no

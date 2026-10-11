@@ -27,8 +27,8 @@ every chunk in sequence: this is the actual "send this chunk" signal a subclass 
 networking).
 
 If every tracked player leaves or gets suspended while a chunk's ready check is active, the
-check itself can't auto-complete: [`ReadyCheckProcess`](../../players-tracking/ready-check-process)'s
-own completion poll returns early on an empty tracked list rather than treating "nobody
+check itself can't auto-complete: the completion poll in
+[`ReadyCheckProcess`](../../players-tracking/ready-check-process) returns early on an empty tracked list rather than treating "nobody
 left to wait on" as "everyone's ready." `ChunkedTransferSession` overrides `OnProcessUpdate`
 to detect exactly that (an active process with zero tracked players) and calls
 `CancelDataTransfer()` itself, so a transfer with no remaining targets doesn't stall
@@ -36,8 +36,8 @@ forever waiting for a ready check that can never complete on its own.
 
 ## The inter-chunk gap
 
-Between chunks, the underlying `Process` is briefly not running: a `ReadyCheckProcess`'s
-"stopped" state doesn't distinguish "the whole transfer is done" from "this chunk's check
+Between chunks, the underlying `Process` is briefly not running: the "stopped" state of a
+`ReadyCheckProcess` doesn't distinguish "the whole transfer is done" from "this chunk's check
 finished, the next one hasn't started yet." `ChunkedTransferSession` tracks that window
 itself with an internal, synced `_pendingNextChunk` flag, deferring the actual start of the
 next ready check to the following frame (`SendCustomEventDelayedSeconds(...,0f)`) so the
@@ -53,7 +53,7 @@ false during the gap.
 
 Transfer state (`_dataChunks`, chunk indices) is deliberately **not** synced: only the
 owner needs it, and keeping it off the wire means the remaining message text is never
-re-sent as a side effect of `Process`'s own [periodic
+re-sent as a side effect of the `Process` [periodic
 auto-resync](../../core-concepts/process#the-tick-loop-and-auto-resync), which re-broadcasts
 every synced field every 5 seconds while a process runs. That means a new owner, promoted
 after the old one leaves, starts with empty chunk state no matter where in the transfer the

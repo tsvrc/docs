@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Run tests in a scene of their own
 
-By default, every Play Mode test runs in Unity Test Framework's own test scene, which the whole run
+By default, every Play Mode test runs in the Unity Test Framework test scene, which the whole run
 shares, so whatever one test leaves behind is still there in the next. Give a test class a scene of
 its own by passing a [`TestScene`](../reference/test-scene) to `ClientSimTestBase`.
 

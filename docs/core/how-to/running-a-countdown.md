@@ -11,7 +11,7 @@ How to run a countdown every client sees identically, using
 
 ## Steps
 
-1. Declare a `[WirePool]` field. `TsvrcTimer` ships as [one of Core's own default pool
+1. Declare a `[WirePool]` field. `TsvrcTimer` ships as [one of the Core default pool
    entries](../explanations/builtin-registrations), so there's nothing to register on the
    Configure window first:
 
@@ -73,7 +73,7 @@ protected override void TsStart()
 
 ## Why this shape
 
-See [`TsvrcTimer`'s reference page](../networking-data/tsvrc-timer) for the full event
+See the [`TsvrcTimer` reference page](../networking-data/tsvrc-timer) for the full event
 table, how pausing interacts with the timer's own auto-complete check, and the two sharp
 edges around detecting a late joiner or a stop-then-restart landing in the same network
 packet.

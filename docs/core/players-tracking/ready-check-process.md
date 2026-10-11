@@ -14,14 +14,14 @@ walkthrough.
 
 ## Getting an instance
 
-`ReadyCheckProcess` ships as one of [Core's own default pool
+`ReadyCheckProcess` ships as one of [the Core default pool
 entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
 
 - **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
   Configure first, and codegen calls `TsConstruct` for you at wire time.
 - **Manual:** skip pooling entirely. Drag the shipped `ReadyCheckProcess` prefab into your
   scene and call `TsConstruct` on it yourself before calling anything else on it. Skipping
-  construction leaves [`Process`'s cached local-player ID](../core-concepts/process) at
+  construction leaves the [cached `Process` local-player ID](../core-concepts/process) at
   its default, which makes `IsProcessOwner()` report `false` even for the actual owner.
 
 ## Usage
@@ -61,7 +61,7 @@ public class LoadingGate : TsBehaviour
 ## Why SetReady doesn't just check IsProcessRunning
 
 `SetReady` gates on an internal `_readyCheckActive` flag instead of `IsProcessRunning()`.
-The reason is a real ordering gap: VRChat's manual sync only serializes and delivers
+The reason is a real ordering gap: VRChat manual sync only serializes and delivers
 synced fields once its own rate limit allows, on a timeline independent of discrete
 network events, so calling `SetReady` from inside a network event handler can run before
 the synced `_isRunning` field has actually arrived, even though the corresponding
@@ -93,7 +93,7 @@ individual ready/unready changes the way there is for the tracked set, so
 otherwise kept current. `SetReady` mutates directly when called on the owner and forwards to
 the owner via `BroadcastAddReadyPlayer`/`BroadcastRemoveReadyPlayer` (each
 `[NetworkCallable]`, rate-limited to 2/second: VRChat [recommends keeping
-caller-invocable methods' rate as low as the use case
+caller-invocable methods rate as low as the use case
 allows](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting), and
 toggling ready a couple of times per check is all that's ever actually needed) otherwise.
 Both broadcast targets check that the caller is only ever marking *themselves* ready or
@@ -120,7 +120,7 @@ already validated the target player through other means.
   untracked player's ready status would otherwise never actually influence completion,
   with no indication why.
 - Removing several tracked players at once (`OnTrackingPlayersRemoved`, which can remove
-  up to 79 players in one call via `OnOwnerAbandonedProcess`, one below [VRChat's 80-player
+  up to 79 players in one call via `OnOwnerAbandonedProcess`, one below [the VRChat 80-player
   hard cap per
   instance](https://wiki.vrchat.com/wiki/Special:MyLanguage/Instances)) batches the
   corresponding ready-list removal into one pass and one array allocation rather than one

@@ -19,7 +19,7 @@ Regenerate**, when a watched asset changes, or automatically after every recompi
 - **A watched asset changes** (`TsAssetWatcher`) — any asset path a module declared via
   `WatchedAssets()` being imported, deleted, or moved schedules a rerun. A scene hierarchy
   change a module cares about, or a property edit on a watched component type, schedules one
-  too, through `TsGenerator`'s own hierarchy-changed and Undo-postprocess hooks rather than
+  too, through the hierarchy-changed and Undo-postprocess hooks in `TsGenerator` rather than
   through `TsAssetWatcher` itself.
 - **Before a VRChat world build** (`TsBuildCompile`) — see below.
 
@@ -72,14 +72,14 @@ runaway recursion. Real, well-behaved modules converge in one extra pass, since
 
 ## Before a build
 
-`TsBuildCompile` (a VRChat SDK build callback, ordered to run before UdonSharp's own build
+`TsBuildCompile` (a VRChat SDK build callback, ordered to run before the UdonSharp build
 pass) forces a generation pass before every scene build, so generated files and scene wiring
 can't go stale relative to what's about to ship. It checks `TsLinkedScene.IsConfiguredButNotLoaded`
 *before* `HasBootstrapSignal()` specifically because the bootstrap signal's own
 any-Instance-subclass-anywhere fallback can't distinguish "the correct scene is open" from
 "some unrelated scene is open"; only the linked-scene check can catch that. If nothing has
 ever been set up at all, it offers to cancel the build rather than silently shipping a world
-where every `TsvrcBehaviour`'s `_ts` reference would be `null` at runtime.
+where the `_ts` reference of every `TsvrcBehaviour` would be `null` at runtime.
 
 ## Why this exists, briefly
 

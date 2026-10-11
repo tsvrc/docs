@@ -41,7 +41,7 @@ The visual mesh is built in two passes: sources are first merged per-material in
 meshes, then those per-material meshes are combined again as separate submeshes. This is
 what keeps material boundaries intact in the final multi-material result rather than losing
 per-source materials. A submesh index past the end of its source's material array reuses
-that array's last material, matching how Unity's own `MeshRenderer` handles the same
+that array's last material, matching how the Unity `MeshRenderer` handles the same
 mismatch. Colliders follow their own rules:
 
 - A **solid `MeshCollider`** merges into one combined collision mesh.
@@ -81,7 +81,7 @@ letting a combine "succeed" and produce a broken or invisible result:
 Every combine groups its GameObject-level changes (the new GameObject, recreated collider
 children, source deactivation) under one Undo name, so a single Ctrl+Z reverses all of them
 at once rather than requiring several undo steps. The saved mesh asset(s) on disk aren't
-part of that: Unity's `Undo` system doesn't track `AssetDatabase.CreateAsset`, so undoing a
+part of that: the Unity `Undo` system doesn't track `AssetDatabase.CreateAsset`, so undoing a
 combine leaves the `.asset` file (and the `_Collider.asset` file, if one was created) in
 place. Delete those manually if you undo a combine you don't want to keep.
 

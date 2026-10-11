@@ -7,7 +7,7 @@ sidebar_position: 6
 # Persist a value across visits
 
 How to save a value for the local player that's still there the next time they load your
-world, using [`TsvrcMemory`](../networking-data/tsvrc-memory)'s persistent tier. No
+world, using the persistent tier of [`TsvrcMemory`](../networking-data/tsvrc-memory). No
 registration or pooling is needed to reach it at all: it's always available as `_ts.Memory`.
 
 ## Steps
@@ -89,7 +89,7 @@ piling every key into one root class as the world grows.
 
 ## Why this shape
 
-See [`TsvrcMemory`'s reference page](../networking-data/tsvrc-memory) for the full
+See the [`TsvrcMemory` reference page](../networking-data/tsvrc-memory) for the full
 contract: the three isolated tiers (ephemeral/persistent/synced), why `Add` and `Set`
-behave differently, VRChat's own PlayerData size and timing limits, and what happens if
+behave differently, the VRChat PlayerData size and timing limits, and what happens if
 you register the same key twice or write to it before it's restored.

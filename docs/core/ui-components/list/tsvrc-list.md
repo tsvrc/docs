@@ -15,7 +15,7 @@ walkthrough.
 
 ## Setup
 
-Wire up in the inspector: `_itemContainer` (typically a `ScrollRect`'s `Content` transform)
+Wire up in the inspector: `_itemContainer` (typically the `Content` transform of a `ScrollRect`)
 and `_itemPrefab` (a prefab carrying a `ListItem` component). Set `_pageSize` to a positive
 number to paginate, or `-1` to load every item on one page with no pagination at all.
 
@@ -37,8 +37,8 @@ pagination controls (`NextPage()`/`PreviousPage()` call `SetPage` for you, and a
 either end of the range).
 
 Each list entry is expected to be a `DataDictionary` token; a non-dictionary entry at a given
-index is silently treated as an empty dictionary rather than causing an error, so a
-`ListItem`'s `_OnBind` override should be written defensively against missing keys either
+index is silently treated as an empty dictionary rather than causing an error, so the
+`_OnBind` override in a `ListItem` should be written defensively against missing keys either
 way.
 
 ## Selection
