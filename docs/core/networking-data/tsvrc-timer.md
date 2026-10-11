@@ -6,130 +6,111 @@ sidebar_position: 2
 
 # TsvrcTimer
 
-`Tsvrc.Timing.TsvrcTimer` is a networked, pausable timer built on top of
-[Process](../core-concepts/process). Its generated shadow is `TsTimer`. All clients share
-[server time](https://udonsharp.docs.vrchat.com/vrchat-api/#methods-4) anchors and compute
-elapsed time locally, so a running timer needs no discrete network message per tick,
-beyond the periodic `Process` [auto-resync
-heartbeat](../core-concepts/process#the-tick-loop-and-auto-resync). See [Run a synced
+`Tsvrc.Timing.TsvrcTimer` is a networked, pausable timer built on [Process](../core-concepts/process).
+Its generated shadow is `TsTimer`. All clients share [server
+time](https://udonsharp.docs.vrchat.com/vrchat-api/#methods-4) anchors and compute elapsed time
+locally, so a running timer sends nothing per tick beyond the periodic [resync of
+`Process`](../core-concepts/process#the-tick-loop). See [Run a synced
 countdown](../how-to/running-a-countdown) for a task-oriented walkthrough.
 
 ## Getting an instance
 
-`TsvrcTimer` ships as one of [the Core default pool
-entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
+`TsvrcTimer` is one of the [builtin pool entries](../explanations/builtin-registrations), so a
+`[WirePool]` field of this type resolves with nothing to register, and codegen calls `TsConstruct`
+on it. If you place the shipped `TsTimer` prefab in your scene yourself instead, call
+[`TsConstruct`](../core-concepts/tsvrc-behaviour#construction) on it before using it.
 
-- **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
-  Configure first, and codegen calls `TsConstruct` for you at wire time:
-  ```csharp
-  public class RoundClock : TsBehaviour
-  {
-      [WirePool][SerializeField] private TsvrcTimer _timer;
+## Usage
 
-      protected override void TsStart()
-      {
-          _timer.TsSubscribe(this, TsvrcTimer.OnTimerCompletedEvent, nameof(_OnRoundEnded));
-          _timer.StartTimer(60_000); // 60-second round
-      }
+```csharp
+public class RoundClock : TsBehaviour
+{
+    [WirePool][SerializeField] private TsvrcTimer _timer;
 
-      public void _OnRoundEnded() => LogInfo("Round timer finished.");
-  }
-  ```
-- **Manual:** skip pooling entirely. Drag the shipped `TsTimer` prefab into your scene and
-  reference it directly, but then call `TsConstruct` on it yourself before calling
-  anything else on it. Skipping that leaves the [cached `Process` local-player
-  ID](../core-concepts/process) at its default, which makes `IsProcessOwner()` report
-  `false` even for the actual owner, so `StartTimer`/`StopTimer`/`PauseTimer` all behave
-  as if called by a non-owner.
+    protected override void TsStart()
+    {
+        _timer.TsSubscribe(this, TsvrcTimer.OnTimerCompletedEvent, nameof(_OnRoundEnded));
+        _timer.StartTimer(60_000); // 60-second round
+    }
 
-Anything displaying the countdown reads `_timer.GetRemainingSeconds()` on its own update
-loop rather than waiting for `OnTimerUpdatedEvent`: that event exists for reacting to state
-changes, not for driving a per-frame UI redraw.
+    public void _OnRoundEnded() => LogInfo("Round timer finished.");
+}
+```
+
+To show the countdown, read `_timer.GetRemainingSeconds()` from your own update loop.
+`OnTimerUpdatedEvent` is for reacting to state changes, not for redrawing a UI every frame.
 
 ## Starting, stopping, pausing
 
-- **`StartTimer()`** — open-ended, counts up indefinitely (`DurationMs` stays `0`).
-- **`StartTimer(int durationMilliseconds)`** — auto-completes once elapsed time reaches the
-  given duration. A negative value is coerced to `0` (open-ended) rather than rejected.
-  Calling either overload while already running is a silent no-op that leaves the current
-  run's duration untouched: it does not restart the timer or change its duration mid-run.
-- **`StopTimer()`** / inherited `CompleteProcess()` — stop before or at completion. Forwards
-  to the owner over the network if called by a non-owner, [same as
-  `Process`](../core-concepts/process#lifecycle).
-- **`PauseTimer()`** / **`ResumeTimer()`** — freeze and unfreeze elapsed time. Pausing
-  extends the effective run time: the auto-complete check in `OnProcessUpdate` uses
-  `GetElapsedMilliseconds()`, which returns the frozen offset while paused, so a duration is
-  always fully observed regardless of how long a pause lasts. Both forward to the owner when
-  called by a non-owner, through their own [`[NetworkCallable]`](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting)
-  targets (`RequestPauseTimer`/`RequestResumeTimer`, rate-limited to 2/second), the same
-  [dual-authority pattern](../core-concepts/process#ownership-and-authority) `Process`
-  itself uses for stop/complete.
+- **`StartTimer()`** counts up with no end. `DurationMs` stays `0`.
+- **`StartTimer(int durationMilliseconds)`** completes once elapsed time reaches the duration. A
+  negative value counts as `0`, a timer with no end.
+
+Either overload makes the calling player the owner first, so the timer runs on the player who
+starts it. Calling either one while the timer runs does nothing: it doesn't restart the timer or
+change its duration.
+
+- **`StopTimer()`** and the inherited `CompleteProcess()` end the timer early or complete it. Both
+  [send the call to the owner](../core-concepts/process#lifecycle) when another player makes it.
+- **`PauseTimer()`** and **`ResumeTimer()`** freeze and unfreeze elapsed time. A pause extends the
+  run: the completion check in `OnProcessUpdate` uses `GetElapsedMilliseconds()`, which stays frozen
+  while paused, so the full duration always runs. Another player calling either one sends it to the
+  owner through `RequestPauseTimer` or `RequestResumeTimer`, both
+  [`[NetworkCallable]`](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting)
+  and limited to two calls per second.
 
 ## Reading elapsed and remaining time
 
-`GetElapsedMilliseconds()`/`GetElapsedSeconds()` compute from the synced server-time anchor
-while running, or return the frozen offset while stopped or paused. `GetRemainingMilliseconds()`/
-`GetRemainingSeconds()` derive from `DurationMs - GetElapsedMilliseconds()`, clamped to `0`
-for an open-ended timer, a timer already past its duration, or a completed timer.
-`LastElapsedMilliseconds` holds the last value the behaviour itself computed. Read that
-instead of calling `GetElapsedMilliseconds()` yourself if you just need "what the timer
-last reported": it's refreshed on every start, stop, pause, resume, and deserialization,
-and, while running and unpaused, on every tick of a local 0.25s loop, the same one that
-drives `OnTimerUpdatedEvent`.
+`GetElapsedMilliseconds()` and `GetElapsedSeconds()` compute from the synced server-time anchor
+while running, and return the frozen offset while stopped or paused. `GetRemainingMilliseconds()`
+and `GetRemainingSeconds()` return `DurationMs - GetElapsedMilliseconds()`, and `0` for a timer
+with no end, one past its duration, or a completed one.
+
+`LastElapsedMilliseconds` holds the last value the timer computed. Read it when you need what the
+timer last reported: it updates on every start, stop, pause, resume and deserialization, and every
+0.25 seconds while running and not paused, from the same local loop that drives
+`OnTimerUpdatedEvent`.
 
 ## Events
 
-Two names for essentially the same thing: a `protected virtual` hook to override in a
-subclass, and a public string constant to subscribe to via `TsSubscribe` from anywhere
-else. Both fire on every client, hook before event, for the matching transition:
+Each transition has a `protected virtual` hook to override in a subclass and a string constant to
+pass to `TsSubscribe`. Both fire on every client, the hook first:
 
 | Hook | Event constant | Fires when |
 |---|---|---|
-| `OnTimerStarted` | `OnTimerStartedEvent` | Timer starts, including a late joiner observing an already-running timer |
-| `OnTimerStopped` | `OnTimerStoppedEvent` | Timer stops before completion |
-| `OnTimerCompleted` | `OnTimerCompletedEvent` | Timer completes (duration reached, or `CompleteProcess` called) |
-| `OnTimerPaused` | `OnTimerPausedEvent` | Timer pauses (including a late joiner discovering the timer is already paused) |
-| `OnTimerResumed` | `OnTimerResumedEvent` | Timer resumes |
-| `OnTimerUpdated` | `OnTimerUpdatedEvent` | The locally observed elapsed time, running state, or paused state actually changed |
-| `OnTimerDeserialization` | `OnTimerDeserializationEvent` | Every `OnDeserialization` call, regardless of whether anything changed |
+| `OnTimerStarted` | `OnTimerStartedEvent` | The timer starts, including when a late joiner finds it running |
+| `OnTimerStopped` | `OnTimerStoppedEvent` | The timer stops before completion |
+| `OnTimerCompleted` | `OnTimerCompletedEvent` | The timer completes: duration reached, or `CompleteProcess` called |
+| `OnTimerPaused` | `OnTimerPausedEvent` | The timer pauses, including when a late joiner finds it paused |
+| `OnTimerResumed` | `OnTimerResumedEvent` | The timer resumes |
+| `OnTimerUpdated` | `OnTimerUpdatedEvent` | The elapsed time, running state or paused state seen locally changed |
+| `OnTimerDeserialization` | `OnTimerDeserializationEvent` | Every `OnDeserialization` call, whether or not anything changed |
 
-## How non-owner clients detect transitions
+## How other players detect transitions
 
-The owner gets its lifecycle hooks called directly from
-`OnProcessStarted`/`Stopped`/`Completed` in `Process`. A non-owner has no such direct call: it derives
-the same events by diffing synced state inside `OnDeserialization`, comparing the newly
-received running/paused flags against what it last observed. This diffing approach has two
-sharp edges worth knowing if you're relying on exact event sequencing:
+On the owner, the `OnProcessStarted`, `Stopped` and `Completed` hooks of `Process` call the timer
+hooks directly. Other players compare the running and paused flags in each packet against what they
+saw last, inside `OnDeserialization`. Two cases matter if you rely on the exact order of events:
 
-- **A late joiner arriving mid-run** sees running go from "never observed" to `true` in one
-  packet. That's treated the same as a fresh start: `OnTimerStarted` fires, and if the timer
-  happens to already be paused, `OnTimerPaused` fires right after it in the same
-  deserialization call. The joiner doesn't need to separately poll `_isPaused`.
-- **A stop-then-restart lands in one packet.** VRChat manual sync doesn't send
-  immediately on `RequestSerialization`; it [waits until its own rate limit allows,
-  then sends whatever the synced fields currently
-  hold](https://creators.vrchat.com/worlds/udon/networking/network-details/#manual-synchronization).
-  A listener that reacts to `OnTimerStopped`/`OnTimerCompleted` by synchronously starting a
-  new run (possible because [`SendCustomNetworkEvent(All, ...)` fires inline on the
-  sender](https://creators.vrchat.com/worlds/udon/networking/events/#event-targeting)) can
-  therefore produce a single outbound packet where a remote client's view of "is it
-  running" never actually toggled to `false` in between. A plain running-state diff would
-  see no transition at all and silently drop the entire stop-then-restart. `TsvrcTimer`
-  detects this case with an internal run counter (`_runId`, incremented on every
-  `OnProcessStarted`): if the running flag stayed `true` across a packet but the run ID
-  changed, it treats it as a fresh start for event purposes. The old run's actual
-  stopped-vs-completed outcome isn't recoverable at that point, since it was already
-  overwritten before the packet was even sent. Only the new run's start (and pause state,
-  if applicable) gets surfaced.
+- **A late joiner arriving mid-run** sees the timer go from never seen to running in one packet.
+  That counts as a start: `OnTimerStarted` fires, and `OnTimerPaused` right after it if the timer
+  is paused.
+- **A stop and a restart in one packet.** Manual sync doesn't send on `RequestSerialization` right
+  away. It [waits for its rate limit and sends whatever the synced fields hold at that
+  moment](https://creators.vrchat.com/worlds/udon/networking/network-details/#manual-synchronization).
+  A listener that starts a new run from `OnTimerStopped` or `OnTimerCompleted` (possible because
+  [`SendCustomNetworkEvent(All, ...)` runs on the sender right
+  away](https://creators.vrchat.com/worlds/udon/networking/events/#event-targeting)) can produce one
+  packet in which the timer never stopped. `TsvrcTimer` counts runs in `_runId`, increased in every
+  `OnProcessStarted`. When the timer stays running across a packet but `_runId` changed, the timer
+  treats it as a new start. Whether the old run stopped or completed is lost by then, so only the
+  start of the new run (and its pause, if any) fires.
 
-## Edge cases worth knowing
+## Edge cases
 
-- All the numeric read accessors return sane zero defaults on a timer that's never been
-  started. None of them throw on an unstarted timer.
-- Elapsed-time arithmetic is clamped to never go negative, including in the specific case
-  of `_elapsedOffsetMs + delta` overflowing `int`: it clamps to `0` rather than wrapping
-  into a negative value.
-- `OnProcessCleanup` (inherited from `Process`) preserves the final run's server-time
-  anchors rather than clearing them, specifically so a non-owner can still display the
-  correct final elapsed time after the timer stops. Those anchors are only reset in
-  `OnProcessStarted`, at the beginning of the *next* run, not at cleanup time.
+- The read methods return `0` on a timer that never started, and none of them throw.
+- Elapsed time never goes negative. If `_elapsedOffsetMs + delta` overflows `int`, it becomes `0`
+  instead of wrapping to a negative value.
+- `OnProcessCleanup` keeps the server-time anchors of the last run, so other players can still
+  show the final elapsed time after the timer stops. `OnProcessStarted` resets them at the start of
+  the next run.

@@ -12,11 +12,9 @@ instance", using [`PlayerTracker`](../players-tracking/player-tracker) directly 
 
 ## When to use which
 
-Reach for `AutoPlayerTracker` first if the roster really is "every player currently in
-the instance": it needs no add/remove calls of your own. Use a bare `PlayerTracker`
-instead when the roster is a subset you decide, players entering a specific area,
-opting into a queue, being invited to a team, since `AutoPlayerTracker` always tracks
-everyone and can't be told to track less.
+Use `AutoPlayerTracker` when the roster is every player in the instance: it needs no add or remove
+calls of your own. Use a plain `PlayerTracker` when the roster is a subset you decide, such as
+players in an area, in a queue or on a team, since `AutoPlayerTracker` always tracks everyone.
 
 ## Steps
 
@@ -58,13 +56,12 @@ everyone and can't be told to track less.
    A player who leaves the instance or gets suspended is removed automatically; you never
    need to handle that yourself.
 
-3. Read the roster from `LastPlayerIds` inside any `OnTracking*` callback. It's a synced,
-   owner-managed set: a non-owner's `AddTrackedPlayers`/`RemoveTrackedPlayers` calls
-   forward to the current owner over the network rather than applying locally.
+3. Read the roster from `LastPlayerIds` inside any `OnTracking*` callback. The owner manages the
+   set: `AddTrackedPlayers` and `RemoveTrackedPlayers` called by another player go to the owner
+   over the network.
 
 ## Why this shape
 
-See the [`PlayerTracker` reference page](../players-tracking/player-tracker) for the full
-event table, exactly when a `Notify*` broadcast fires versus when `LastPlayerIds` itself
-updates, and the three separate paths that remove a player automatically (leaving,
-suspending, or the tracker's own owner abandoning it).
+See the [`PlayerTracker` reference page](../players-tracking/player-tracker) for the events, when a
+`Notify*` broadcast fires compared to when `LastPlayerIds` updates, and the three cases that remove
+a player automatically: leaving, being suspended, or a new owner taking over the tracker.

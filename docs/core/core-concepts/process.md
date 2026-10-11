@@ -45,7 +45,9 @@ gameRound.CompleteProcess();
 `OnProcessStarted`, sends the synced state and starts the [tick loop](#the-tick-loop). On any other
 player it sends `RequestStartProcess` to the owner and changes nothing locally. It never changes who
 owns the object. A subclass that should run on the player who starts it calls `SetProcessOwner`
-first, as `TsvrcTimer.StartTimer` and `PlayerTracker.StartPlayerTracking` do.
+first, as `TsvrcTimer.StartTimer` and `PlayerTracker.StartPlayerTracking` do. If two players start
+such a subclass at the same time, both can take ownership and start a run before either sees the
+other, and only one stays the owner, so start it from one player when that can happen.
 
 `StopProcess()` ends a run early and `CompleteProcess()` ends it successfully. The owner acts on
 them directly, and any other player sends `RequestStopProcess` or `RequestCompleteProcess` to the

@@ -6,42 +6,32 @@ sidebar_position: 3
 
 # AutoPlayerTracker
 
-`Tsvrc.Tracking.AutoPlayerTracker` is a [PlayerTracker](./player-tracker) that tracks
-every player in the instance automatically: no explicit player list to manage. Its
-generated shadow is `TsAutoPlayerTracker`. See [Track a custom group of
-players](../how-to/tracking-a-group-of-players) for when to reach for this over a bare
-`PlayerTracker`, or [Gate something on all players being
-ready](../how-to/wiring-a-ready-check) for a common pairing with `ReadyCheckProcess`.
+`Tsvrc.Tracking.AutoPlayerTracker` is a [PlayerTracker](./player-tracker) that tracks every player in
+the instance, with no player list to manage. Its generated shadow is `TsAutoPlayerTracker`. See
+[Track a custom group of players](../how-to/tracking-a-group-of-players) for when to use it instead
+of a plain `PlayerTracker`, or [Gate something on all players being
+ready](../how-to/wiring-a-ready-check) for pairing it with `ReadyCheckProcess`.
 
 ## Getting an instance
 
-`AutoPlayerTracker` ships as one of [the Core default pool
-entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
-
-- **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
-  Configure first, and codegen calls `TsConstruct` for you at wire time.
-- **Manual:** skip pooling entirely. Drag the shipped `AutoPlayerTracker` prefab into your
-  scene and call `TsConstruct` on it yourself before calling anything else on it. Skipping
-  construction leaves the [cached `Process` local-player ID](../core-concepts/process) at
-  its default, which makes `IsProcessOwner()` report `false` even for the actual owner.
+`AutoPlayerTracker` is one of the [builtin pool entries](../explanations/builtin-registrations), so a
+`[WirePool]` field of this type resolves with nothing to register, and codegen calls `TsConstruct`
+on it. If you place the shipped `AutoPlayerTracker` prefab in your scene yourself instead, call
+[`TsConstruct`](../core-concepts/tsvrc-behaviour#construction) on it before using it.
 
 ## Usage
 
-Call `StartAutoTracking()` instead of `StartPlayerTracking`. The base method is
-overridden to redirect to the automatic snapshot regardless of what's passed to it, and
-both of its parameters (`playerIds`, `useProcessUpdate`) are ignored entirely;
-`AutoPlayerTracker` never uses the process-update loop.
-`StopAutoTracking()`/`CompleteAutoTracking()` are thin renames of the base
-`StopPlayerTracking`/`CompletePlayerTracking`.
+Call `StartAutoTracking()`. Like `StartPlayerTracking` on the base class, it makes the calling player
+the owner first. `StartPlayerTracking` itself is overridden to do the same as `StartAutoTracking`
+and ignores both of its parameters, since `AutoPlayerTracker` never uses the process update.
+`StopAutoTracking()` and `CompleteAutoTracking()` call `StopPlayerTracking` and
+`CompletePlayerTracking`.
 
-From there, it's genuinely automatic: on the process owner, every `OnPlayerJoined` while
-the process is running adds that player. VRChat player references [can be
-invalid](https://creators.vrchat.com/worlds/udon/players/#isvalid), and accessing one
-that is has been reported to throw and crash the behaviour, so the join is skipped
-whenever the reference fails that check. Every departure or suspension is removed
-through the same paths `PlayerTracker` already provides. Non-owners don't act on
-`OnPlayerJoined` at all: there's no local add to forward, since only the owner's copy of
-the tracked set is authoritative.
+While tracking runs, the owner adds each player who joins in `OnPlayerJoined`. A join is skipped
+when the player reference [isn't valid](https://creators.vrchat.com/worlds/udon/players/#isvalid),
+since accessing an invalid reference has been reported to crash the behaviour. Players who leave or
+are suspended are removed the same way as in `PlayerTracker`. Other players ignore `OnPlayerJoined`,
+because only the owner changes the tracked set.
 
 ```csharp
 public class InstanceRoster : TsBehaviour
@@ -59,36 +49,25 @@ public class InstanceRoster : TsBehaviour
 }
 ```
 
-No add/remove calls of your own: join and leave are handled entirely by the base
-`PlayerTracker` machinery once `StartAutoTracking()` has run.
+## When the first list is read
 
-## The initial-snapshot timing
+`StartAutoTracking` reads the player list when it's called, not in `OnPlayerJoined`. [Joining an
+instance fires `OnPlayerJoined` for every player already
+present](https://creators.vrchat.com/worlds/udon/graph/event-nodes/#onplayerjoined), the local
+player included, and that wave fires before any of your code runs. The tracker isn't running yet,
+so it drops all of those events, and the list read at start is what covers those players.
 
-The player list `StartAutoTracking` captures is read at the moment `StartAutoTracking`
-is called, not inside `OnPlayerJoined`. This matters because of how VRChat handles the
-local player's own join: [joining an instance fires `OnPlayerJoined` for every player
-already present, including
-yourself](https://creators.vrchat.com/worlds/udon/graph/event-nodes/#onplayerjoined).
-That entire wave fires before any of your own code has run, so `IsProcessRunning()` is
-still `false` for all of it, and every one of those events is dropped. By the time
-`StartAutoTracking` actually runs, that wave is long gone; reading the live player list
-at that instant is what captures everyone who's genuinely present. A player who is
-still mid-join at that exact instant hasn't fired their own `OnPlayerJoined` yet. It
-fires afterward, once the process is live, and gets picked up normally through the
-ordinary join path. Because UdonSharp runs on the single Unity main thread, no
-`OnPlayerJoined` can interleave between reading that snapshot and the process actually
-going live, so there's no window where a joining player is missed by both paths.
+A player still joining at that moment fires `OnPlayerJoined` later, once tracking runs, and is added
+then. UdonSharp runs on the Unity main thread only, so no `OnPlayerJoined` can run between reading
+the list and the start of tracking, and no joining player is missed.
 
-The snapshot itself excludes any player already suspended at that instant. A player
-who's suspended before tracking even starts has no suspend *transition* left to
-produce, and the suspend-handling in `PlayerTracker` only reacts to that transition, so a
-pre-suspended player must never enter the tracked set in the first place.
+The first list leaves out players who are already suspended. `PlayerTracker` removes a player when
+they become suspended, so a player who is suspended before tracking starts would never be removed.
 
 ## Events
 
-Same six lifecycle names as `PlayerTracker`, renamed with an `Auto` prefix
-(`OnAutoTrackingStarted`, `...Stopped`, `...Completed`, `...Deserialization`,
-`...PlayersAdded`, `...PlayersRemoved`) and their matching `OnAutoTracking*Event`
-constants. Each is just the base `OnTracking*` hook overridden to emit the renamed
-event. The underlying data (`LastPlayerIds`, `LastAddedPlayerIds`,
-`LastRemovedPlayerIds`) is identical to that of `PlayerTracker`.
+The same six events as `PlayerTracker`, with an `Auto` prefix: `OnAutoTrackingStarted`, `Stopped`,
+`Completed`, `Deserialization`, `PlayersAdded` and `PlayersRemoved`, each with an
+`OnAutoTracking*Event` constant. Each one overrides the matching `OnTracking*` hook to emit the
+renamed event. Read `LastPlayerIds`, `LastAddedPlayerIds` and `LastRemovedPlayerIds` as on
+`PlayerTracker`.

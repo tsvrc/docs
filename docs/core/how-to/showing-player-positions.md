@@ -13,12 +13,10 @@ How to render a live minimap-style overlay of tracked players, using
 
 ## Steps
 
-1. Add a `PlayerPositionOverlay` to your scene and register it as a construct. It's a
-   [`PlayerTracker`](../players-tracking/player-tracker) underneath, so it needs
-   `TsConstruct` to run before anything on it works. The renderer doesn't: neither
-   `PlayerMarkerRenderer` nor `RasterPlayerMarkerRenderer` overrides `TsStart` or touches
-   `_ts`, so it's safe to just drop one into the scene and assign it, no registration
-   needed.
+1. Add a `PlayerPositionOverlay` to your scene and register it as a construct, so codegen calls
+   `TsConstruct` on it at startup. The renderer needs no registration: neither
+   `PlayerMarkerRenderer` nor `RasterPlayerMarkerRenderer` uses `TsStart` or `_ts`, so drop one
+   into the scene and assign it.
 2. Subclass `RasterPlayerMarkerRenderer` to decide what a marker looks like:
 
    ```csharp
@@ -33,7 +31,7 @@ How to render a live minimap-style overlay of tracked players, using
    }
    ```
 
-3. Wire the renderer's output texture to a `RawImage` in your UI, then configure and start
+3. Wire the output texture of the renderer to a `RawImage` in your UI, then configure and start
    the overlay:
 
    ```csharp
@@ -52,8 +50,8 @@ How to render a live minimap-style overlay of tracked players, using
    }
    ```
 
-4. Add or remove players while it runs with the overlay's own (inherited) tracking methods,
-   `_overlay.AddTrackedPlayers(playerIds)`/`RemoveTrackedPlayers(playerIds)`. The renderer
+4. Add or remove players while it runs with the tracking methods the overlay inherits,
+   `_overlay.AddTrackedPlayers(playerIds)` and `RemoveTrackedPlayers(playerIds)`. The renderer
    picks up the change on its next tick with no extra wiring.
 
 If only a subset of players should ever appear (not everyone in the instance), start the
@@ -77,8 +75,8 @@ public override void DrawMarker(Color32[] pixelBuffer, int textureWidth, int tex
 
 If you're not drawing to a texture at all (driving 3D world-space marker objects instead,
 for example), implement [`PlayerMarkerRenderer`](../ui-components/overlay/player-marker-renderer)
-directly rather than its raster subclass. `PlayerPositionOverlay` only ever talks to the
-base class's two methods.
+directly instead of its raster subclass. `PlayerPositionOverlay` only calls the two methods of the
+base class.
 
 ## Why this shape
 

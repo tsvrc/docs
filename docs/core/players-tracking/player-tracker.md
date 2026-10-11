@@ -6,24 +6,18 @@ sidebar_position: 2
 
 # PlayerTracker
 
-`Tsvrc.Tracking.PlayerTracker` is a [Process](../core-concepts/process) that maintains a
-networked, owner-managed set of tracked players, identified by
-[`TsPlayer`](./ts-player) ID strings rather than live `VRCPlayerApi` references.
-Its generated shadow is `TsPlayerTracker`. It's the base of `AutoPlayerTracker` and
-`ReadyCheckProcess`. See [Track a custom group of
+`Tsvrc.Tracking.PlayerTracker` is a [Process](../core-concepts/process) that keeps a networked set
+of tracked players, managed by its owner and identified by [`TsPlayer`](./ts-player) ID strings
+instead of live `VRCPlayerApi` references. Its generated shadow is `TsPlayerTracker`. It's the base
+of `AutoPlayerTracker` and `ReadyCheckProcess`. See [Track a custom group of
 players](../how-to/tracking-a-group-of-players) for a task-oriented walkthrough.
 
 ## Getting an instance
 
-`PlayerTracker` ships as one of [the Core default pool
-entries](../explanations/builtin-registrations) (`TsBuiltinConfig`).
-
-- **Default:** a `[WirePool]` field of this type just resolves, nothing to register in
-  Configure first, and codegen calls `TsConstruct` for you at wire time.
-- **Manual:** skip pooling entirely. Drag the shipped `PlayerTracker` prefab into your
-  scene and call `TsConstruct` on it yourself before calling anything else on it. Skipping
-  construction leaves the [cached `Process` local-player ID](../core-concepts/process) at
-  its default, which makes `IsProcessOwner()` report `false` even for the actual owner.
+`PlayerTracker` is one of the [builtin pool entries](../explanations/builtin-registrations), so a
+`[WirePool]` field of this type resolves with nothing to register, and codegen calls `TsConstruct`
+on it. If you place the shipped `PlayerTracker` prefab in your scene yourself instead, call
+[`TsConstruct`](../core-concepts/tsvrc-behaviour#construction) on it before using it.
 
 ## Usage
 
@@ -45,88 +39,72 @@ public class SpectatorRoster : TsBehaviour
 }
 ```
 
-If every player should be tracked automatically instead of an explicit list you manage,
-use [`AutoPlayerTracker`](./auto-player-tracker) instead. Don't reimplement join/leave
-handling on top of `PlayerTracker` directly.
+To track every player in the instance, use [`AutoPlayerTracker`](./auto-player-tracker) instead of
+handling joins and leaves on top of `PlayerTracker`.
 
 ## Starting and reading the tracked set
 
-`StartPlayerTracking(playerIds, useProcessUpdate)` starts the process with an initial set.
-The list is sanitized before use: `null` entries are stripped and duplicates are
-collapsed, so the "no ID appears twice" invariant holds from the very first broadcast, not
-just for later additions. Calling it while already running is a no-op inherited from
-`Process.StartProcess`, and deliberately leaves the pending initial-list field untouched in
-that case, so a rejected start can never corrupt the *next* legitimate start's initial set.
+`StartPlayerTracking(playerIds, useProcessUpdate)` starts the process with an initial set. A player
+who isn't the owner takes ownership first, so the tracker runs on the player who starts it. The list
+is cleaned before use: `null` entries are removed and duplicates collapsed, so no ID appears twice
+from the first broadcast on. Calling it while the tracker runs logs a warning and leaves both the
+run and the pending initial list alone, so a rejected start can't change the set of the next one.
 
-`LastPlayerIds` is the tracked set as of the last received broadcast or deserialization.
-Read it inside any `OnTracking*` callback for an accurate snapshot. `IsTrackedPlayer` (a
-`protected` helper for subclasses) checks membership directly against the synced field
-instead, which on a non-owner client can lag slightly behind a `Notify*` callback that just
-fired; prefer `LastPlayerIds` inside those callbacks specifically for that reason.
+`LastPlayerIds` is the tracked set as of the last received broadcast or deserialization. Read it
+inside an `OnTracking*` callback. `IsTrackedPlayer`, a `protected` helper for subclasses, reads the
+synced field instead, which on a non-owner can lag behind a `Notify*` callback that just fired.
 
 ## Adding and removing players while running
 
-`AddTrackedPlayers`/`RemoveTrackedPlayers` are the public entry points. On the owner, they
-apply directly; on a non-owner, they forward to the owner via
-`SendCustomNetworkEvent(Owner, ...)`. The actual mutation happens in
-`BroadcastAddTrackedPlayers`/`BroadcastRemoveTrackedPlayers`, both `[NetworkCallable]`, both
-reachable directly by any player in the instance since VRChat can't restrict network-callable
-callers, and both re-validate `IsProcessRunning() && IsProcessOwner()` themselves rather than
-trusting that only the intended path reaches them. `BroadcastAddTrackedPlayers` also checks a
-`CanAcceptTrackedPlayerAdditions()` hook (`true` by default): override it to reject
-additions under some condition. It's the single interception point for *both* the owner's
-local fast path and a non-owner's remote call, because a
-[`[NetworkCallable]`](https://creators.vrchat.com/worlds/udon/networking/events/#defining-an-event)
-method itself can't be `virtual`.
+`AddTrackedPlayers` and `RemoveTrackedPlayers` apply directly on the owner and send the call to the
+owner from any other player. The change itself happens in `BroadcastAddTrackedPlayers` and
+`BroadcastRemoveTrackedPlayers`. Both are `[NetworkCallable]`, so any player in the instance can
+call them directly, and both check `IsProcessRunning() && IsProcessOwner()` themselves.
 
-Both broadcast methods silently ignore IDs that don't apply (already tracked, for add; not
-currently tracked, for remove) rather than erroring, and both deduplicate their payload
-independently of the caller, so passing the same ID twice in one call never produces a
-duplicate broadcast or a duplicate tracked entry.
+`BroadcastAddTrackedPlayers` also asks the `CanAcceptTrackedPlayerAdditions()` hook, `true` by
+default. Override it to reject additions. It's the one place that sees both the local call on the
+owner and a call from another player, since a
+[`[NetworkCallable]`](https://creators.vrchat.com/worlds/udon/networking/events/#defining-an-event)
+method can't be `virtual`.
+
+Both broadcast methods skip IDs that don't apply (already tracked for an add, not tracked for a
+remove) without an error, and remove duplicates from their own input, so passing the same ID twice
+in one call never tracks or broadcasts it twice.
 
 ## Automatic removal
 
-Three separate paths remove a player without an explicit `RemoveTrackedPlayers` call, each
-covering a different way a tracked player can stop being reachable:
+The owner removes a tracked player without a `RemoveTrackedPlayers` call in three cases:
 
-- **`OnPlayerLeft`** — if the process is running and the departing player was tracked, the
-  current owner removes them immediately.
-- **`OnPlayerSuspendChanged`** — a suspended player can't run Udon code or respond to any
-  network event, so leaving them tracked would permanently block any subclass logic waiting
-  on a response from every tracked player. The current owner removes them on the transition
-  to suspended; waking up needs no action, since the player was already removed on the way
-  in.
-- **`OnOwnerAbandonedProcess`** — covers the case where the *tracker's owner itself* leaves
-  or suspends. The new owner (promoted by the `Process` ownership recovery) scans the
-  entire tracked set against the current, non-suspended player list and removes anyone
-  who's gone or suspended. This is what catches a tracked player who suspended while the
-  process owner was the one who couldn't act on it (all non-owner clients skip that
-  specific suspend-removal because they aren't the owner at the time).
+- **`OnPlayerLeft`**: the player left while the tracker runs.
+- **`OnPlayerSuspendChanged`**: the player was suspended. A suspended player can't run Udon or
+  answer network events, so subclass logic that waits for every tracked player would block
+  forever. Waking up needs nothing, since the player was already removed.
+- **`OnBecameProcessOwner`**: the tracker changed owner during a run, for example because the
+  previous owner left or was suspended. Only the owner removes players, so a tracked player who
+  left or was suspended while the previous owner couldn't act is still in the set. The new owner
+  checks the whole set against the players who are present and not suspended, and removes the
+  rest.
 
 ## Events
 
-Six `OnTracking*` hooks (`protected virtual`, all no-ops by default) paired with matching
-`OnTracking*Event` string constants for `TsSubscribe`: `Started`, `Stopped`, `Completed`,
-`Deserialization`, `PlayersAdded`, `PlayersRemoved`. Each hook's doc comment says which
-`Last*Ids` property to read inside it. All the broadcast `Notify*` network-callable methods
-that trigger these events are rate-limited at a uniform 100 events/second specifically so a
-fast sequence of adds/removes can never overtake or fall behind a start/stop/complete
-broadcast on a remote client. VRChat only guarantees [relative ordering between two event
-types from the same sender when neither hits its own rate
-limit](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting), so
-keeping all of them at the same limit is what makes that guarantee actually apply here.
+Six `OnTracking*` hooks, `protected virtual` and empty by default, each paired with an
+`OnTracking*Event` constant for `TsSubscribe`: `Started`, `Stopped`, `Completed`, `Deserialization`,
+`PlayersAdded` and `PlayersRemoved`. The doc comment of each hook says which `Last*Ids` property to
+read inside it.
 
-## Edge cases worth knowing
+The `Notify*` methods behind these events all allow 100 calls per second. VRChat keeps the order of
+events from one sender [only while none of them hits its rate
+limit](https://creators.vrchat.com/worlds/udon/networking/events/#rate-limiting), so a run of adds
+and removes can't overtake a start, stop or complete broadcast on another client.
 
-- A network-callable `Notify*` method re-sanitizes its payload (null-strip, then dedupe)
-  independently of what the sender already sanitized, and re-validates that the caller is
-  actually the current owner (bypassed only for the owner's own inline broadcast, tracked
-  by the internal `_isBroadcasting` flag). Any player can invoke a `[NetworkCallable]`
-  method directly, not just through the intended call path.
-- Serialization packets and discrete network events travel over separate delivery paths
-  with independent timing: [manual sync only sends once its own rate limit
+## Edge cases
+
+- Each `Notify*` method cleans its own input again (removes `null` entries, then duplicates) and
+  checks that the caller is the current owner, since any player can call a `[NetworkCallable]`
+  method directly. The owner skips that caller check during its own broadcast, tracked by the
+  internal `_isBroadcasting` flag.
+- Synced fields and network events travel separately: [manual sync sends only when its own rate
+  limit
   allows](https://creators.vrchat.com/worlds/udon/networking/network-details/#manual-synchronization),
-  regardless of how often `RequestSerialization` is called, so nothing guarantees one
-  arrives before or after the other. `NotifyTrackedPlayersAdded` accounts for this by only
-  adding IDs to `LastPlayerIds` that aren't already present, rather than assuming a clean
-  delta.
+  however often `RequestSerialization` is called, so either can arrive first.
+  `NotifyTrackedPlayersAdded` adds to `LastPlayerIds` only the IDs it doesn't already hold.
