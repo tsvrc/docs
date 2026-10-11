@@ -6,85 +6,73 @@ sidebar_position: 2
 
 # ChunkedTransferSession
 
-`Tsvrc.DataTransfer.ChunkedTransferSession` sequences delivery of a
-[DataChunker](./data-chunker)-split message: each chunk runs its own
-[ready check](../../players-tracking/ready-check-process) (every target player must acknowledge it)
-before the next chunk starts. It has no networking of its own yet: that's added by
-`DataSender` above it. This layer only owns the chunk-by-chunk sequencing state machine. You
-never call it directly. See [DataTransferer](./data-transferer) for the type a consumer
-actually uses.
+`Tsvrc.DataTransfer.ChunkedTransferSession` sends a message split by [DataChunker](./data-chunker)
+one chunk at a time: each chunk runs its own [ready
+check](../../players-tracking/ready-check-process), in which every target player acknowledges it,
+before the next chunk starts. It has no networking of its own, which `DataSender` adds on top. This
+layer only owns the chunk sequence. You never call it directly. See
+[DataTransferer](./data-transferer) for the type you use.
 
-## The sequencing loop
+## The sequence
 
-`TransferData(data, playerIds)` stores the data and starts a ready check over the target
-players. Each completed ready check (`OnProcessCompleted`) either starts the next chunk's
-ready check or, on the last chunk, fires `OnChunkSequenceCompleted`. Four `protected virtual`
-hooks mark the transitions a subclass overrides to broadcast lifecycle events:
-`OnChunkSequenceStarted` (chunk index 1 about to send), `OnChunkSequenceStopped` (cancelled,
-or all targets departed), `OnChunkSequenceCompleted` (last chunk's ready check completed),
-and `OnDataChunkSendRequested(dataChunk, chunkIndex, totalChunks, playerIds)` (fired for
-every chunk in sequence: this is the actual "send this chunk" signal a subclass hooks to do
-networking).
+`TransferData(data, playerIds)` stores the data and starts a ready check over the target players.
+Each completed ready check (`OnProcessCompleted`) starts the ready check of the next chunk, or, after
+the last chunk, fires `OnChunkSequenceCompleted`. A subclass overrides four `protected virtual` hooks
+to broadcast the transitions:
 
-If every tracked player leaves or gets suspended while a chunk's ready check is active, the
-check itself can't auto-complete: the completion poll in
-[`ReadyCheckProcess`](../../players-tracking/ready-check-process) returns early on an empty tracked list rather than treating "nobody
-left to wait on" as "everyone's ready." `ChunkedTransferSession` overrides `OnProcessUpdate`
-to detect exactly that (an active process with zero tracked players) and calls
-`CancelDataTransfer()` itself, so a transfer with no remaining targets doesn't stall
-forever waiting for a ready check that can never complete on its own.
+- `OnChunkSequenceStarted`: chunk 1 is about to go out.
+- `OnChunkSequenceStopped`: the transfer was cancelled, or every target left.
+- `OnChunkSequenceCompleted`: the ready check of the last chunk completed.
+- `OnDataChunkSendRequested(dataChunk, chunkIndex, totalChunks, playerIds)`: fires for every chunk,
+  and is where a subclass sends it over the network.
 
-## The inter-chunk gap
+If every tracked player leaves or is suspended during a ready check, the check can't complete:
+[`ReadyCheckProcess`](../../players-tracking/ready-check-process) doesn't treat an empty tracked
+list as everyone being ready. `ChunkedTransferSession` overrides `OnProcessUpdate` to find a running
+process with no tracked players and calls `CancelDataTransfer()`, so the transfer doesn't wait
+forever.
 
-Between chunks, the underlying `Process` is briefly not running: the "stopped" state of a
-`ReadyCheckProcess` doesn't distinguish "the whole transfer is done" from "this chunk's check
-finished, the next one hasn't started yet." `ChunkedTransferSession` tracks that window
-itself with an internal, synced `_pendingNextChunk` flag, deferring the actual start of the
-next ready check to the following frame (`SendCustomEventDelayedSeconds(...,0f)`) so the
-previous chunk's tick loop fully exits first. Synced, so a new owner (see below) can detect
-being mid-gap rather than mistaking it for "no transfer active."
+## Between chunks
 
-At the start of the next ready check, the target player list is re-filtered against
-currently active, non-suspended players. `OnPlayerLeft`/`OnPlayerSuspendChanged` don't fire
-this filtering themselves between chunks, since both guard on `IsProcessRunning()`, which is
-false during the gap.
+Between two chunks, the underlying `Process` isn't running, and a stopped `ReadyCheckProcess` looks
+the same whether the transfer ended or the next chunk hasn't started yet. `ChunkedTransferSession`
+marks that gap with the synced `_pendingNextChunk` flag, and starts the next ready check one frame
+later (`SendCustomEventDelayedSeconds(..., 0f)`) so the tick loop of the previous chunk ends first.
+The flag is synced so a new owner can tell it took over in the gap.
 
-## Ownership handover mid-transfer
+When the next ready check starts, the list of targets is filtered down to players who are present
+and not suspended. `OnPlayerLeft` and `OnPlayerSuspendChanged` don't remove anyone during the gap,
+since both check `IsProcessRunning()`.
 
-Transfer state (`_dataChunks`, chunk indices) is deliberately **not** synced: only the
-owner needs it, and keeping it off the wire means the remaining message text is never
-re-sent as a side effect of the `Process` [periodic
-auto-resync](../../core-concepts/process#the-tick-loop-and-auto-resync), which re-broadcasts
-every synced field every 5 seconds while a process runs. That means a new owner, promoted
-after the old one leaves, starts with empty chunk state no matter where in the transfer the
-old owner was. `OnOwnerAbandonedProcess` handles this by stopping any in-flight ready check
-outright (a false "all chunks equal, transfer complete" read on zeroed indices would
-otherwise be possible) and, if the handover happened during the inter-chunk gap,
-broadcasting the stopped event so receivers clean up rather than waiting forever for a
-chunk that will never come. `OnDeserialization` adds two more narrow-race recoveries for
-stale-packet orderings specific to this handover: a late "still in the gap" packet arriving
-after the takeover already resolved it, and a "zombie" state where a stale packet
-resurrects `_isRunning=true` with no actual chunk data behind it. Both are documented in
-detail in the source's own inline comments if you're debugging a handover edge case
-specifically.
+## A new owner during a transfer
+
+Transfer state (`_dataChunks` and the chunk indices) isn't synced. Only the owner needs it, and
+keeping it off the network means the [periodic resync](../../core-concepts/process#the-tick-loop)
+never sends the rest of the message again. A new owner therefore starts with no chunk state.
+
+`OnBecameProcessOwner` handles that. If a ready check is running, it stops it, since a check on
+zeroed indices could otherwise read as a completed transfer. If the handover happened in the gap
+between chunks, it broadcasts the stopped event so receivers clean up instead of waiting for a chunk
+that won't come.
+
+`OnDeserialization` handles two late packets from the previous owner. A packet that says the
+transfer is between chunks, arriving after the new owner already handled the gap, is turned into a
+stop. A packet that marks the process running again with no chunk data behind it stops the ready
+check. The comments in the source describe both orderings.
 
 ## Cancellation
 
-`CancelDataTransfer()` is safe to call at any point, including mid-gap, and is a no-op if no
-transfer is active. Its behavior depends on exactly where the transfer currently is: during
-the gap it resets state and fires the stopped hook immediately; in the narrow window after a
-chunk's ready check has completed but cleanup hasn't run yet, it can't act immediately
-(`StopReadyCheck` would no-op there) so it sets an internal flag that the next
-`OnProcessCleanup` reads to abort instead of advancing to the next chunk. That same window
-also covers the moment right after the *last* chunk's ready check completes: cancelling
-there is a no-op too, since the transfer is already finishing on its own by that point.
+`CancelDataTransfer()` can be called at any point, including between chunks, and does nothing when
+no transfer is active. Between chunks it resets the state and fires the stopped hook right away.
+After a ready check completed but before its cleanup ran, `StopReadyCheck` would do nothing, so it
+sets an internal flag that the next `OnProcessCleanup` reads to stop instead of starting the next
+chunk. After the ready check of the last chunk, cancelling does nothing, since the transfer is
+already completing.
 
-## Edge case worth knowing
+## Adding players during a transfer
 
-`CanAcceptTrackedPlayerAdditions` is overridden here to reject adding tracked players
-mid-transfer (once `_currentChunkIndex > 0`, spanning both in-flight chunks and inter-chunk
-gaps). A player added after the first chunk already broadcast would fail every subsequent
-chunk's own player-list check, be unable to ever call `SetReady`, and stall the ready check
-permanently. Rejecting the addition outright, with a warning, is safer than letting that
-happen silently. Removing a tracked player mid-transfer has no equivalent restriction: that's
-the ordinary departure path, already handled by the mechanisms above.
+`CanAcceptTrackedPlayerAdditions` rejects new tracked players with a warning once
+`_currentChunkIndex > 0`, which covers chunks in flight and the gaps between them. A player added
+after the first chunk would fail the player-list check of every later chunk, could never call
+`SetReady`, and would block the ready check forever. Removing a tracked player during a transfer is
+allowed, since that's how departures are handled.
