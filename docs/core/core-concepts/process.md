@@ -8,8 +8,7 @@ sidebar_position: 4
 
 `Tsvrc.Core.Process` is the base class for networked work that one player runs at a time: it
 starts, runs, then stops or completes. That player is the owner, and another player takes over if
-the owner leaves or is suspended. Its generated shadow is `TsProcess`. `PlayerTracker`,
-`AutoPlayerTracker`, `ReadyCheckProcess`, `TsvrcTimer` and the `DataTransferer` chain all extend it.
+the owner leaves or is suspended. Its generated shadow is `TsProcess`.
 
 ## Usage
 
@@ -45,9 +44,9 @@ gameRound.CompleteProcess();
 `OnProcessStarted`, sends the synced state and starts the [tick loop](#the-tick-loop). On any other
 player it sends `RequestStartProcess` to the owner and changes nothing locally. It never changes who
 owns the object. A subclass that should run on the player who starts it calls `SetProcessOwner`
-first, as `TsvrcTimer.StartTimer` and `PlayerTracker.StartPlayerTracking` do. If two players start
-such a subclass at the same time, both can take ownership and start a run before either sees the
-other, and only one stays the owner, so start it from one player when that can happen.
+before `StartProcess`. If two players start such a subclass at the same time, both can take
+ownership and start a run before either sees the other, and only one stays the owner, so start it
+from one player when that can happen.
 
 `StopProcess()` ends a run early and `CompleteProcess()` ends it successfully. The owner acts on
 them directly, and any other player sends `RequestStopProcess` or `RequestCompleteProcess` to the

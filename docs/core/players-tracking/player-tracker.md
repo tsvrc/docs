@@ -8,9 +8,8 @@ sidebar_position: 2
 
 `Tsvrc.Tracking.PlayerTracker` is a [Process](../core-concepts/process) that keeps a networked set
 of tracked players, managed by its owner and identified by [`TsPlayer`](./ts-player) ID strings
-instead of live `VRCPlayerApi` references. Its generated shadow is `TsPlayerTracker`. It's the base
-of `AutoPlayerTracker` and `ReadyCheckProcess`. See [Track a custom group of
-players](../how-to/tracking-a-group-of-players) for a task-oriented walkthrough.
+instead of live `VRCPlayerApi` references. Its generated shadow is `TsPlayerTracker`. See [Track a
+custom group of players](../how-to/tracking-a-group-of-players) for a task-oriented walkthrough.
 
 ## Getting an instance
 
@@ -38,9 +37,6 @@ public class SpectatorRoster : TsBehaviour
     public void _OnRosterChanged() => LogInfo(_spectators.LastPlayerIds.Length + " spectators.");
 }
 ```
-
-To track every player in the instance, use [`AutoPlayerTracker`](./auto-player-tracker) instead of
-handling joins and leaves on top of `PlayerTracker`.
 
 ## Starting and reading the tracked set
 

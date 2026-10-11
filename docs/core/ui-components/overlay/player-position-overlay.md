@@ -7,7 +7,7 @@ sidebar_position: 1
 # PlayerPositionOverlay
 
 `Tsvrc.UI.PlayerPositionOverlay` is a [PlayerTracker](../../players-tracking/player-tracker) that
-periodically reports each tracked player's world position on a blinking show/hide cycle:
+periodically reports the world position of each tracked player on a blinking show/hide cycle:
 think a radar sweep or a minimap that pulses rather than staying static. Its generated
 shadow is `TsPlayerPositionOverlay`. It's a pure backend: it never draws anything itself,
 only reports positions to a pluggable [`PlayerMarkerRenderer`](./player-marker-renderer).
@@ -45,13 +45,12 @@ quaternion-to-Euler conversion) so a renderer that never uses heading never pays
 
 The local player is the one exception to "everything comes from the cache": it's re-read
 fresh at blink-show time from `Networking.LocalPlayer`, rather than through the cached
-remote-tick snapshot, since the local player's own position is essentially free to read and
+remote-tick snapshot, since the position of the local player costs almost nothing to read and
 benefits from being as current as possible.
 
 ## Stale-tick discarding
 
-Both tick loops use `SendCustomEventDelayedSeconds`, which (like elsewhere in the codebase)
-can't be canceled once scheduled. Each maintains its own counter, incremented on every
+Both tick loops use `SendCustomEventDelayedSeconds`, which can't be canceled once scheduled. Each maintains its own counter, incremented on every
 schedule and decremented on every fire; a tick only actually runs its body if its counter has
 returned to zero, meaning no newer tick of the same kind is already queued behind it. This is
 what makes `StartOverlay`/`StopOverlay`/`OnTrackingDeserialization` restarting the loop
@@ -65,8 +64,6 @@ sized to 82, the [worst-case absolute maximum instance
 size](https://wiki.vrchat.com/wiki/Special:MyLanguage/Instances) (80 is the VRChat
 configurable hard cap; the world author and instance creator can each still join on top of
 that), allocated once, lazily, on first use, and reused every tick rather than reallocated.
-`_ResolveTrackedPlayers` is zero-allocation
-by design: matching happens by comparing each tracked ID's parsed numeric suffix directly
-against `VRCPlayerApi.playerId`, never by calling
-[`TsPlayer.GetPlayerID`](../../players-tracking/ts-player) to build a comparison string per player. A
-malformed tracked ID (no parseable numeric suffix) is skipped rather than causing an error.
+`_ResolveTrackedPlayers` allocates nothing: it compares the number after the last `#` of each
+tracked ID with `VRCPlayerApi.playerId`, without building an ID string per player. A malformed
+tracked ID, with no number after a `#`, is skipped without an error.

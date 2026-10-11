@@ -9,8 +9,7 @@ sidebar_position: 3
 `Tsvrc.Tracking.AutoPlayerTracker` is a [PlayerTracker](./player-tracker) that tracks every player in
 the instance, with no player list to manage. Its generated shadow is `TsAutoPlayerTracker`. See
 [Track a custom group of players](../how-to/tracking-a-group-of-players) for when to use it instead
-of a plain `PlayerTracker`, or [Gate something on all players being
-ready](../how-to/wiring-a-ready-check) for pairing it with `ReadyCheckProcess`.
+of a plain `PlayerTracker`.
 
 ## Getting an instance
 
@@ -21,16 +20,17 @@ on it. If you place the shipped `AutoPlayerTracker` prefab in your scene yoursel
 
 ## Usage
 
-Call `StartAutoTracking()`. Like `StartPlayerTracking` on the base class, it makes the calling player
-the owner first. `StartPlayerTracking` itself is overridden to do the same as `StartAutoTracking`
-and ignores both of its parameters, since `AutoPlayerTracker` never uses the process update.
+Call `StartAutoTracking()`. It makes the calling player the owner first, so tracking runs on the
+player who starts it. `StartPlayerTracking` is overridden to do the same as `StartAutoTracking` and
+ignores both of its parameters, since `AutoPlayerTracker` never uses the process update.
 `StopAutoTracking()` and `CompleteAutoTracking()` call `StopPlayerTracking` and
 `CompletePlayerTracking`.
 
 While tracking runs, the owner adds each player who joins in `OnPlayerJoined`. A join is skipped
 when the player reference [isn't valid](https://creators.vrchat.com/worlds/udon/players/#isvalid),
 since accessing an invalid reference has been reported to crash the behaviour. Players who leave or
-are suspended are removed the same way as in `PlayerTracker`. Other players ignore `OnPlayerJoined`,
+are suspended are [removed by the base class](./player-tracker#automatic-removal). Other players
+ignore `OnPlayerJoined`,
 because only the owner changes the tracked set.
 
 ```csharp
@@ -61,8 +61,9 @@ A player still joining at that moment fires `OnPlayerJoined` later, once trackin
 then. UdonSharp runs on the Unity main thread only, so no `OnPlayerJoined` can run between reading
 the list and the start of tracking, and no joining player is missed.
 
-The first list leaves out players who are already suspended. `PlayerTracker` removes a player when
-they become suspended, so a player who is suspended before tracking starts would never be removed.
+The first list leaves out players who are already suspended. The base class [removes a
+player](./player-tracker#automatic-removal) when they become suspended, so a player who is suspended
+before tracking starts would never be removed.
 
 ## Events
 
