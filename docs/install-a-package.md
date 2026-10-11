@@ -37,30 +37,4 @@ In a project that uses the Creator Companion for other packages, use it for this
 and dependencies of a hand-imported package are yours to track.
 
 </TabItem>
-<TabItem value="git" label="Git (to change the code)">
-
-Use this only to change the package's own code, such as to fix a bug or to contribute. To use the
-package as it is, install it with the Creator Companion.
-
-1. Remove the package from your project if it's already installed. A project can hold only one
-   copy.
-2. Put the package's GitHub repository in your project's `Assets` folder, in the folder its
-   `CONTRIBUTING.md` names, such as `Assets/Tsvrc` for Core. If your project is a Git repository,
-   add the package as a submodule, so your project tracks which commit of the package it uses:
-
-   ```powershell
-   git submodule add <repository-url> Assets/<folder>
-   git submodule update --init --recursive
-   ```
-
-   Otherwise, clone it:
-
-   ```powershell
-   git clone --recurse-submodules <repository-url> Assets/<folder>
-   ```
-
-To send your changes back, fork the repository first and use your fork's URL. The repository's
-`CONTRIBUTING.md` covers running its tests and opening a pull request.
-
-</TabItem>
 </Tabs>
