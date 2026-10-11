@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'TsVRC',
-  tagline: 'A community-maintained framework for building VRChat worlds',
+  tagline: 'Open-source tools for building VRChat worlds',
   favicon: 'img/tsvrc-logo.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -28,7 +28,21 @@ const config: Config = {
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: [
+    '@docusaurus/theme-mermaid',
+    [
+      // Builds the search index at build time, so search works on GitHub Pages with no
+      // external service.
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        language: ['en', 'es'],
+        indexBlog: false,
+        explicitSearchResultPath: true,
+        highlightSearchTermsOnTargetPage: true,
+      },
+    ],
+  ],
 
   i18n: {
     defaultLocale: 'en',
@@ -70,11 +84,6 @@ const config: Config = {
       },
       items: [
         {
-          to: '/framework',
-          position: 'left',
-          label: 'Framework',
-        },
-        {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
@@ -100,12 +109,8 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          label: 'Framework',
-          to: '/framework',
-        },
-        {
           label: 'Docs',
-          to: '/docs/tsvrc/intro',
+          to: '/docs/core/intro',
         },
         {
           label: 'GitHub',

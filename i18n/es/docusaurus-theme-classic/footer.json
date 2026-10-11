@@ -1,11 +1,7 @@
 {
-  "link.item.label.Framework": {
-    "message": "Framework",
-    "description": "The label of footer link with label=Framework linking to /framework"
-  },
   "link.item.label.Docs": {
     "message": "Documentación",
-    "description": "The label of footer link with label=Docs linking to /docs/tsvrc/intro"
+    "description": "The label of footer link with label=Docs linking to /docs/core/intro"
   },
   "link.item.label.GitHub": {
     "message": "GitHub",

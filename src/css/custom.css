@@ -36,6 +36,16 @@ html {
   --ts-danger-fg: #d1242f;
   --ts-attention-fg: #9a6700;
 
+  /* The logo's own tile: charcoal, near-white and one blue. Used for the homepage intro band,
+     which keeps these colors in both themes, as the logo does. */
+  --ts-brand-bg: #161b22;
+  --ts-brand-fg: #f0f6fc;
+  --ts-brand-muted: #9198a1;
+  --ts-brand-accent: #58a6ff;
+  --ts-brand-dot: rgba(240, 246, 252, 0.08);
+  --ts-section: #f6f8fa;
+  --ts-surface: #ffffff;
+
   --ifm-color-primary: #0969da;
   --ifm-color-primary-dark: #085ec4;
   --ifm-color-primary-darker: #0758b9;
@@ -64,6 +74,9 @@ html {
   --ts-danger-fg: #f85149;
   --ts-attention-fg: #d29922;
 
+  --ts-section: #0d1117;
+  --ts-surface: #161b22;
+
   --ifm-color-primary: #58a6ff;
   --ifm-color-primary-dark: #3994ff;
   --ifm-color-primary-darker: #298cff;
@@ -87,8 +100,20 @@ html {
   --color-success: var(--ts-success-fg);
   --color-danger: var(--ts-danger-fg);
   --color-attention: var(--ts-attention-fg);
+  --color-brand: var(--ts-brand-bg);
+  --color-brand-fg: var(--ts-brand-fg);
+  --color-brand-muted: var(--ts-brand-muted);
+  --color-brand-accent: var(--ts-brand-accent);
+  --color-section: var(--ts-section);
+  --color-surface: var(--ts-surface);
 
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'IBM Plex Sans', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* A faint dot grid, like a scene view's grid, behind the homepage intro. */
+.ts-dot-grid {
+  background-image: radial-gradient(var(--ts-brand-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
 }

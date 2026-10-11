@@ -69,7 +69,7 @@ export const TAB_CONFIG: Record<RegistryTabKey, RegistryTabConfig> = {
       "Register any scene object or component as a named field on _ts. After compiling, access it from any " +
       "TsvrcBehaviour via _ts.FieldName. Example: drag your GameManager here, then use _ts.GameManager from any " +
       "behaviour. Groups are organizational by default; toggle 'Namespace with group name' on a group to prefix " +
-      "its entries' member names (e.g. _ts.EnemiesSpawner).",
+      "its entries member names (e.g. _ts.EnemiesSpawner).",
     emptyHint: 'No globals registered yet. Add a scene object here to expose it as a field on TsGenerated.',
     showNames: true,
     entryIcon: 'script',
