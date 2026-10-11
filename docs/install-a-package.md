@@ -31,7 +31,7 @@ it depends on, and resolves the VRChat Worlds SDK version it needs.
 2. With your project open, double-click the file, or use **Assets > Import Package > Custom
    Package**, and import everything.
 
-The package goes in your project's `Assets` folder. A `.unitypackage` can't install the packages it
+The package goes in your project's `Packages` folder. A `.unitypackage` can't install the packages it
 depends on or check your VRChat Worlds SDK version, so import those and check the version yourself.
 In a project that uses the Creator Companion for other packages, use it for this one too: updates
 and dependencies of a hand-imported package are yours to track.

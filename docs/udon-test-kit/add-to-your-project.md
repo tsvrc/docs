@@ -26,7 +26,7 @@ You'll know it worked when the Unity menu bar has **Tools > TsVRC > Udon Test Ki
 :::warning
 A project can hold only one copy of the kit. Two copies mean two assemblies named `Tsvrc.UdonTestKit`,
 which stop the whole project compiling. Don't import the `.unitypackage` into a project that
-already has the kit in `Packages`, including a copy another package installed as its dependency.
+already has the kit, including a copy another package installed as its dependency.
 :::
 
 ## Create your test assemblies

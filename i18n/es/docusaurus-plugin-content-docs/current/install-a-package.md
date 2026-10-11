@@ -31,7 +31,7 @@ paquetes de los que depende, y resuelve la versión del VRChat Worlds SDK que ne
 2. Con tu proyecto abierto, haz doble clic en el archivo, o usa **Assets > Import Package > Custom
    Package**, e importa todo.
 
-El paquete queda en la carpeta `Assets` de tu proyecto. Un `.unitypackage` no puede instalar los
+El paquete queda en la carpeta `Packages` de tu proyecto. Un `.unitypackage` no puede instalar los
 paquetes de los que depende ni comprobar tu versión del VRChat Worlds SDK, así que importa esos
 paquetes y comprueba la versión tú mismo. En un proyecto que usa el Creator Companion para otros
 paquetes, úsalo también para este: las actualizaciones y dependencias de un paquete importado a
