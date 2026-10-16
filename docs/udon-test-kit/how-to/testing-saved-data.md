@@ -53,7 +53,5 @@ yield return Session.Start();
 ```
 
 `DeleteSavedData` deletes what ClientSim saved for the active scene, for every player. In your
-world's own scene, those files are also the ones you get when you press Play.
-
-Unity Test Framework names its test scene differently on every run, so each run leaves a few files
-in `ClientSimStorage` that no later run reads. Delete them whenever you like.
+world's own scene, those files are also the ones you get when you press Play. What tests save in
+the Unity Test Framework test scene, the kit deletes when the run ends.

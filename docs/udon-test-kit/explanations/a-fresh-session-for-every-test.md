@@ -8,8 +8,8 @@ sidebar_position: 2
 
 [`ClientSimTestBase`](../reference/clientsim-test-base) ends its ClientSim session after every
 test, and the next test starts its own. A session ends completely: `End` leaves nothing of
-ClientSim running. The one thing that carries over is saved data, and the kit never deletes it
-unless a test asks.
+ClientSim running. The one thing that carries over is saved data, and within a run the kit never
+deletes it unless a test asks.
 
 ## Why tests don't share a session
 
@@ -24,10 +24,11 @@ order of tests.
 
 ## Why saved data carries over
 
-Carrying over is what saved data is for, and ClientSim keeps it in files, not in the session. The
-kit never deletes those files on its own. In your world's own scene, they're your ClientSim data,
-and some worlds want them to carry over between tests. `ClientSimSession.DeleteSavedData` is there
-for a test that needs none.
+Carrying over is what saved data is for, and ClientSim keeps it in files, not in the session. In
+your world's own scene, they're your ClientSim data, and some worlds want them to carry over
+between tests. `ClientSimSession.DeleteSavedData` is there for a test that needs none. The one set
+of files the kit deletes on its own is that of the Unity Test Framework test scene, and only once
+the run has ended, so test runs don't fill the project folder.
 
 ## Alternatives considered
 

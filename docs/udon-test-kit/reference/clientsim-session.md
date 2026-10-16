@@ -48,7 +48,9 @@ If ClientSim isn't ready within 10 seconds, `Start` throws a `TimeoutException`.
 
 `SpawnRemotePlayer(string displayName)` spawns a remote player and returns it. The player is in
 the player list by the time the call returns, so a test can assert on it in the same frame. The
-returned player is looked up by display name, so give every player its own.
+session finds the new player by its display name, so it throws an `ArgumentException` for an empty
+name or one a player in the session has already, the local player included. The name of a removed
+player can be used again.
 
 `RemovePlayer(VRCPlayerApi player)` removes a player, also within the call.
 
@@ -99,9 +101,10 @@ ClientSim saves each player's data in your project folder, one file per player a
 - `ClientSimStorage/PlayerObjects/PlayerObject_<playerId>_<scene>.json`
 
 `ClientSimSession.DeleteSavedData()` is static and deletes both kinds of file for the active scene,
-for every player. Nothing else in the kit deletes saved data: in your world's own scene, those
-files are your ClientSim data. [Check that saved data survives a rejoin](../how-to/testing-saved-data)
-uses both.
+for every player. [Check that saved data survives a rejoin](../how-to/testing-saved-data) uses
+both.
 
-Unity Test Framework gives its test scene a new name on every run, so each run leaves a few files
-in `ClientSimStorage` that no later run reads. You can delete them whenever you like.
+When a test run ends, the kit deletes the files of the scene Unity Test Framework runs Play Mode
+tests in, named `InitTestScene` and digits, so test runs don't fill `ClientSimStorage`. It deletes
+nothing else on its own: the files of your world's own scene are your ClientSim data, and the files
+of a [`TestScene`](./test-scene) stay too.

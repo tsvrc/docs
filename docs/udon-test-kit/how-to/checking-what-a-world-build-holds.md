@@ -57,5 +57,5 @@ The build holds each program as UdonSharp last compiled it for the Editor, becau
 compile for upload. To check that compile too, see
 [Check that your world compiles for upload](./checking-your-world-compiles-for-upload).
 
-The scene has to be one the VRChat SDK can build, with a scene descriptor. Outside batch mode, the
-SDK shows a dialog for a scene without one, and the test waits for a click.
+The scene has to be saved and have exactly one scene descriptor, or the VRChat SDK builds nothing.
+`FromOpenScene` checks both first and throws an error that says which.

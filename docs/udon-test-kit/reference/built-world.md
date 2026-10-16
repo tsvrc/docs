@@ -53,10 +53,14 @@ the Editor. To check the compile for upload, use
 
 ## Failure modes
 
-- The open scene has to be one the VRChat SDK can build, with a scene descriptor. In batch mode,
-  building a scene without one throws an `InvalidOperationException`:
-  `The world exporter of the VRChat SDK didn't build the open scene.` Outside batch mode, the
-  exporter shows a dialog instead and waits for a click.
+- The world exporter of the VRChat SDK builds only a saved scene with exactly one scene
+  descriptor. It asks about the descriptors with a dialog, and on Windows about a scene never
+  saved too, and outside batch mode a dialog waits for a click. `FromOpenScene` checks both first
+  and throws an `InvalidOperationException` instead, in every mode:
+  - `The open scene has 0 scene descriptors. The world exporter of the VRChat SDK builds a scene with exactly one.`
+    An inactive descriptor counts, as it does for the exporter.
+  - `The open scene was never saved. The world exporter of the VRChat SDK builds only a saved scene.`
+    Unsaved changes to a saved scene don't matter: the exporter builds it as it is.
 - `HoldsProgramOf` throws the same errors as [`UdonHost.Create`](./udon-host#creating-behaviours)
   for a class without a program asset, or in an assembly that player builds leave out.
 
