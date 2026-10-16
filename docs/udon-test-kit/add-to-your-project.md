@@ -10,9 +10,10 @@ Install the kit in a VRChat world project, then create the test assemblies your 
 
 ## Requirements
 
-- **Unity 2022.3.**
-- **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) 3.8.2 or later**, which includes
-  UdonSharp and ClientSim.
+- **Unity 2022.3**, on Windows, or on Linux with the Windows build target, in the Editor and in
+  batch mode.
+- **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) 3.8.2 or a later 3.x version**,
+  which includes UdonSharp and ClientSim.
 - **Unity Test Framework**, which new Unity projects already include.
 
 ## Install the package
@@ -37,7 +38,7 @@ You get a `Tests` folder with three assemblies, each with an example that works:
   own. Both test assemblies reference it.
 
 They reference the kit, UdonSharp, the VRChat SDK, ClientSim and every assembly definition of yours
-under `Assets`, and like the kit, they're left out of your world's builds.
+under `Assets`, and they're left out of your world's builds.
 [TestAssemblyCreator](./reference/test-assembly-creator) describes each one.
 
 If your scripts have no assembly definition, the menu item logs a warning, and Play Mode tests

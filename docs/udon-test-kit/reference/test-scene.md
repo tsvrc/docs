@@ -29,9 +29,10 @@ Neither one loads anything until `Load` runs.
 already loaded, so the Unity Test Framework test scene stays loaded, and makes it the active
 scene. It does nothing when the scene is already loaded.
 
-`Unload()` makes the scene that was active before `Load` active again, then unloads this scene and
-everything in it. It finishes before it returns, so it also works where a test can't wait, such as
-in `[OneTimeTearDown]`. It does nothing when the scene isn't loaded.
+`Unload()` unloads this scene and everything in it. When this scene is the active one, it first
+makes the scene that was active before `Load` active again, if that scene is still loaded. It
+finishes before it returns, so it also works where a test can't wait, such as in
+`[OneTimeTearDown]`. It does nothing when the scene isn't loaded.
 
 `IsLoaded` is true between a `Load` that finished and the next `Unload`.
 

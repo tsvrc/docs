@@ -32,14 +32,18 @@ de Unity lo explican con más detalle.
 - Darle un dueño a cualquier GameObject, para probar lo que ve un jugador que no es su dueño.
 - Conservar los datos guardados entre sesiones, como un jugador que sale y vuelve a entrar.
 - Registrar las llamadas que tu código hace por nombre, como con `SendCustomEvent`.
+- Ejecutar tus behaviours como sus programas de Udon compilados, para ver qué hace Udon con tu
+  código.
+- Comprobar que tu mundo compila para subirlo, y qué programas lleva su build.
 - Ejecutar cada test en una escena propia, vacía o la de tu mundo.
 - Crear desde un elemento de menú los assemblies de test que necesita tu mundo.
 
-El kit solo se compila para los tests, así que nada de él llega a la build de tu mundo.
+El kit se queda fuera de la build de tu mundo: todo menos un espía de Udon se compila solo para los
+tests, y ese espía llega a un mundo solo cuando una escena tiene uno.
 
-También incluye `Invoke-UnityTests.ps1`, un script de PowerShell independiente que ejecuta los
-tests de un proyecto con un solo comando y muestra solo lo que falló. Funciona en cualquier
-proyecto de Unity, con o sin el kit.
+También incluye dos scripts independientes que ejecutan los tests de un proyecto con un solo
+comando y muestran solo lo que falló: `Invoke-UnityTests.ps1` para PowerShell en Windows y
+`run_unity_tests.sh` para Bash en Linux. Funcionan en cualquier proyecto de Unity, con o sin el kit.
 
 ## Empieza aquí
 
@@ -51,6 +55,8 @@ proyecto de Unity, con o sin el kit.
 - [Ejecutar tests en una escena propia](./how-to/running-tests-in-their-own-scene)
 - [Probar qué pasa con un jugador que no es el dueño](./how-to/testing-a-player-who-isnt-the-owner)
 - [Comprobar que los datos guardados sobreviven al volver a entrar](./how-to/testing-saved-data)
+- [Ejecutar tus behaviours como Udon](./how-to/running-behaviours-as-udon)
+- [Comprobar que tu mundo compila para subirlo](./how-to/checking-your-world-compiles-for-upload)
 - [Ejecutar tests desde la línea de comandos](./how-to/running-tests-from-the-command-line)
 
 ## Referencia y contexto

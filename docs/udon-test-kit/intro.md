@@ -29,14 +29,17 @@ go into more depth.
 - Give any GameObject an owner, to test what a player who doesn't own it sees.
 - Keep saved data between sessions, like a player who leaves and rejoins.
 - Record the calls your code makes by name, such as with `SendCustomEvent`.
+- Run your behaviours as their compiled Udon programs, to see what Udon does with your code.
+- Check that your world compiles for upload, and which programs its build holds.
 - Run each test in a scene of its own, empty or your world's.
 - Create the test assemblies your world needs from one menu item.
 
-The kit only compiles for tests, so nothing from it ends up in your world's build.
+The kit stays out of your world build: everything but one Udon spy compiles only for tests, and
+that spy reaches a world only when a scene has one.
 
-It also includes `Invoke-UnityTests.ps1`, a standalone PowerShell script that runs a project's
-tests in one command and prints only what failed. It works in any Unity project, with or without
-the kit.
+It also includes two standalone scripts that run the tests of a project in one command and print
+only what failed: `Invoke-UnityTests.ps1` for PowerShell on Windows and `run_unity_tests.sh` for
+Bash on Linux. They work in any Unity project, with or without the kit.
 
 ## Get started
 
@@ -48,6 +51,8 @@ the kit.
 - [Run tests in a scene of their own](./how-to/running-tests-in-their-own-scene)
 - [Test what happens for a player who isn't the owner](./how-to/testing-a-player-who-isnt-the-owner)
 - [Check that saved data survives a rejoin](./how-to/testing-saved-data)
+- [Run your behaviours as Udon](./how-to/running-behaviours-as-udon)
+- [Check that your world compiles for upload](./how-to/checking-your-world-compiles-for-upload)
 - [Run tests from the command line](./how-to/running-tests-from-the-command-line)
 
 ## Reference and background

@@ -97,4 +97,6 @@ what they did. The how-to guides cover the usual next steps:
 - [Test what happens for a player who isn't the owner](./how-to/testing-a-player-who-isnt-the-owner).
 - [Check that saved data survives a rejoin](./how-to/testing-saved-data).
 - [Check the calls your code makes by name](./how-to/checking-calls-made-by-name).
+- [Run your behaviours as Udon](./how-to/running-behaviours-as-udon), to test what Udon does with
+  your code.
 - [Run tests from the command line](./how-to/running-tests-from-the-command-line).

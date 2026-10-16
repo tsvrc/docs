@@ -21,8 +21,8 @@ function useProjects(): Project[] {
       description: translate({
         id: 'homepage.projects.udonTestKit.description',
         message:
-          'Automated tests for VRChat worlds: Play Mode tests run your UdonSharp behaviours in a ' +
-          'real ClientSim session, with real players.',
+          'Unity Test Framework tests for VRChat worlds, with your UdonSharp behaviours running in ' +
+          'a real ClientSim session.',
       }),
       docsHref: '/docs/udon-test-kit/intro',
       repo: 'tsvrc/udon-test-kit',
