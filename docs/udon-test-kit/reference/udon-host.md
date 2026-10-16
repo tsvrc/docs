@@ -70,7 +70,7 @@ explains the upload compile.
 as it halts the behaviour:
 
 ```csharp
-yield return UdonHost.ExpectUdonException(() => door.SendCustomEvent(nameof(Door.Break)));
+yield return UdonHost.ExpectUdonException(() => door.SendCustomEvent(nameof(Door.Unlock)));
 ```
 
 UdonSharp logs a copy of that error on a later frame, which would fail the next test.

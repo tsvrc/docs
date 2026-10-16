@@ -24,7 +24,8 @@ Doubles that run as Udon go in a player assembly of their own:
    no define constraints, so it stays in player builds.
 3. Next to it, create a U# assembly definition (**Assets > Create > U# Assembly Definition**) and
    set its source assembly to the assembly definition from step 2.
-4. Add the new assembly to the references of your Play Mode test assembly.
+4. Add the new assembly to the references of your Play Mode test assembly, if it isn't listed
+   already. Test assemblies created after it reference it from the start.
 
 The assembly compiles into the player builds of your world, but a world holds the program of a
 double only when one of its scenes has that double.

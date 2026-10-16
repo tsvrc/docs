@@ -50,15 +50,15 @@ unless the test expects it. Expect it with `UdonHost.ExpectUdonException`, from 
 
 ```csharp
 [UnityTest]
-public IEnumerator Open_NoFrameAssigned_HaltsTheDoor()
+public IEnumerator Unlock_NoKeyAssigned_HaltsTheDoor()
 {
     UdonBehaviour door = Udon.Create<Door>("Door");
 
-    yield return UdonHost.ExpectUdonException(() => door.SendCustomEvent(nameof(Door.Open)));
+    yield return UdonHost.ExpectUdonException(() => door.SendCustomEvent(nameof(Door.Unlock)));
 }
 ```
 
-The test fails if `Open` doesn't throw.
+The test fails if `Unlock` doesn't throw.
 
 ## Behaviours that need players
 
