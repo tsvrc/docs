@@ -1,7 +1,7 @@
 ---
 id: test-assembly-creator
 title: TestAssemblyCreator
-sidebar_position: 8
+sidebar_position: 13
 ---
 
 # TestAssemblyCreator
@@ -32,16 +32,21 @@ or symbols. A name that ends up empty, or starts with a digit, becomes `World`. 
 When assemblies with those names already exist, the new ones get a number, such as
 `MyWorld2.Tests.EditMode`. Two assemblies with the same name stop a project compiling.
 
-Each assembly references the kit, UdonSharp, the VRChat SDK, ClientSim, and every assembly
-definition of yours with scripts under `Assets`, other than test assemblies. The two test assemblies
-also reference the doubles assembly and Unity Test Framework. All three compile only when Unity
-Test Framework includes tests, so none of them reaches a world build, and none is referenced
-automatically by other assemblies.
+Each assembly references both kit assemblies, `Tsvrc.UdonTestKit` and
+`Tsvrc.UdonTestKit.UdonSpies`, along with UdonSharp, the VRChat SDK with Udon, ClientSim, and every
+assembly definition of yours with scripts under `Assets`, other than test assemblies. The two test
+assemblies also reference the doubles assembly and Unity Test Framework. All three compile only
+when Unity Test Framework includes tests, so none of them reaches a world build, and none is
+referenced automatically by other assemblies.
 
 The `Doubles` assembly is for behaviours your tests add to GameObjects, such as
 [`CallbackSpy`](./callback-spy-and-call-log) subclasses. It has no NUnit reference. Unity won't add
 a behaviour from the Editor-only Edit Mode assembly to a GameObject, and Unity requires Edit Mode
 and Play Mode tests to be in separate assemblies, so behaviours both kinds of test use go here.
+
+Test doubles that run as Udon, through [`UdonHost`](./udon-host), can't go in the `Doubles`
+assembly. UdonSharp compiles only player assemblies for a world upload, and `Doubles` compiles only
+for tests, so `UdonHost` refuses them. They need a player assembly of their own.
 
 Each example compiles and passes as created.
 

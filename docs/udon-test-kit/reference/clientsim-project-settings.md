@@ -1,7 +1,7 @@
 ---
 id: clientsim-project-settings
 title: ClientSimProjectSettings
-sidebar_position: 7
+sidebar_position: 12
 ---
 
 # ClientSimProjectSettings

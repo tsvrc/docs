@@ -1,7 +1,7 @@
 ---
 id: callback-spy-and-call-log
 title: CallbackSpy and CallLog
-sidebar_position: 4
+sidebar_position: 6
 ---
 
 # CallbackSpy and CallLog
@@ -63,10 +63,12 @@ Editor-only assembly to a GameObject, and an Edit Mode test assembly is Editor-o
 
 ## Calls by name outside Udon
 
-Tests run your UdonSharpBehaviours as plain C#, not as Udon. In that mode, `SendCustomEvent`
-calls a public method with no parameters and exactly the given name. Any other name does nothing
-and raises no error, so a misspelled callback name passes silently: check what the log recorded,
-not just that nothing failed.
+A `CallbackSpy`, like any behaviour a test adds with `AddComponent`, runs as plain C#, not as Udon.
+To record calls made by code that runs as Udon, use [`UdonCallLog`](./udon-call-log) instead.
+
+As plain C#, `SendCustomEvent` calls a public method with no parameters and exactly the given name.
+Any other name does nothing and raises no error, so a misspelled callback name passes silently:
+check what the log recorded, not just that nothing failed.
 
 `SendCustomEventDelayedSeconds` and `SendCustomEventDelayedFrames` don't call anything outside
 Udon. Code under test that relies on them needs its delayed method called directly from the test.
