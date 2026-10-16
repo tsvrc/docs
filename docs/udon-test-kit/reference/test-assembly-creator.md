@@ -46,7 +46,8 @@ and Play Mode tests to be in separate assemblies, so behaviours both kinds of te
 
 Test doubles that run as Udon, through [`UdonHost`](./udon-host), can't go in the `Doubles`
 assembly. UdonSharp compiles only player assemblies for a world upload, and `Doubles` compiles only
-for tests, so `UdonHost` refuses them. They need a player assembly of their own.
+for tests, so `UdonHost` refuses them. They need a player assembly of their own, as in
+[Check the calls Udon code makes](../how-to/checking-calls-made-from-udon#create-an-assembly-for-udon-test-doubles).
 
 Each example compiles and passes as created.
 

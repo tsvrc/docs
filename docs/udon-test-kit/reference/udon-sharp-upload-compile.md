@@ -18,7 +18,8 @@ public void UploadCompile_EveryProgram_LogsNoErrors()
 }
 ```
 
-Use it in an Edit Mode test.
+Use it in an Edit Mode test, as in
+[Check that your world compiles for upload](../how-to/checking-your-world-compiles-for-upload).
 
 ## Run
 

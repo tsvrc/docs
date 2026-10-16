@@ -8,7 +8,8 @@ sidebar_position: 4
 
 `Tsvrc.UdonTestKit.UdonHost` runs UdonSharp behaviours in a Play Mode test as their compiled Udon
 programs, the way VRChat runs them, instead of as their C# classes. Disposing it destroys the
-GameObjects it created. [`UdonTestBase`](./udon-test-base) gives every test one.
+GameObjects it created. [`UdonTestBase`](./udon-test-base) gives every test one, and
+[Run your behaviours as Udon](../how-to/running-behaviours-as-udon) walks through using it.
 
 ```csharp
 using var udon = new UdonHost();
@@ -46,7 +47,8 @@ activates it. Udon runs the `Start` of a program on a later frame, so a test tha
 
 The second case covers the `Doubles` assembly that
 [`TestAssemblyCreator`](./test-assembly-creator) creates, which compiles only for tests. Test
-doubles that run as Udon need an assembly of their own.
+doubles that run as Udon need an assembly of their own, as in
+[Check the calls Udon code makes](../how-to/checking-calls-made-from-udon#create-an-assembly-for-udon-test-doubles).
 [What the kit works around](../explanations/what-the-kit-works-around#udon-code-that-compiles-for-the-editor-but-not-for-upload)
 explains the upload compile.
 

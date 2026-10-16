@@ -36,6 +36,9 @@ listener.SetProgramVariable(nameof(RoundListenerDouble.Log), log);
 Assert.That(UdonHost.Calls(log), Is.EqualTo(new[] { "Listener.OnRoundEnded" }));
 ```
 
+[Check the calls Udon code makes](../how-to/checking-calls-made-from-udon) walks through it,
+including where the double goes.
+
 ## Members
 
 - `Add(string call)` records a call, such as `"Listener.OnRoundEnded"`: the GameObject name, a dot

@@ -1,7 +1,7 @@
 ---
 id: testing-scripts-without-an-assembly-definition
 title: Test scripts that have no assembly definition
-sidebar_position: 10
+sidebar_position: 14
 ---
 
 # Test scripts that have no assembly definition

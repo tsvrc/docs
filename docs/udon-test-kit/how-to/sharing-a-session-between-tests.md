@@ -1,7 +1,7 @@
 ---
 id: sharing-a-session-between-tests
 title: Share one session between the tests in a class
-sidebar_position: 5
+sidebar_position: 7
 ---
 
 # Share one session between the tests in a class

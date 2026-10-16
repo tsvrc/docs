@@ -1,7 +1,7 @@
 ---
 id: adding-your-worlds-own-setup
 title: Add your world's own test setup
-sidebar_position: 6
+sidebar_position: 8
 ---
 
 # Add your world's own test setup

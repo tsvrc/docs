@@ -32,6 +32,8 @@ public class WorldBuildTests
 
 Use it in an Edit Mode test. A build takes a while, so build once per fixture, in
 `[OneTimeSetUp]`, and check the result in each test.
+[Check which programs your world build holds](../how-to/checking-what-a-world-build-holds) walks
+through it.
 
 ## Members
 

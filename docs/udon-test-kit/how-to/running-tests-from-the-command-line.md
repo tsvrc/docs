@@ -1,7 +1,7 @@
 ---
 id: running-tests-from-the-command-line
 title: Run tests from the command line
-sidebar_position: 8
+sidebar_position: 12
 ---
 
 import Tabs from '@theme/Tabs';

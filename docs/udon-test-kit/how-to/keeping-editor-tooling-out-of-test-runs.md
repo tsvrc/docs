@@ -1,7 +1,7 @@
 ---
 id: keeping-editor-tooling-out-of-test-runs
 title: Keep editor tooling from reacting to a test run
-sidebar_position: 7
+sidebar_position: 9
 ---
 
 # Keep editor tooling from reacting to a test run
