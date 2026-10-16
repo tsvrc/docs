@@ -71,7 +71,8 @@ Any other name does nothing and raises no error, so a misspelled callback name p
 check what the log recorded, not just that nothing failed.
 
 `SendCustomEventDelayedSeconds` and `SendCustomEventDelayedFrames` don't call anything outside
-Udon. Code under test that relies on them needs its delayed method called directly from the test.
+Udon. Code under test that relies on them needs its delayed method called directly from the test,
+or has to run as Udon, through [`UdonHost`](./udon-host#edge-cases).
 
 ## Failure modes
 

@@ -60,6 +60,25 @@ public IEnumerator Unlock_NoKeyAssigned_HaltsTheDoor()
 
 The test fails if `Unlock` doesn't throw.
 
+## Wait for delayed events
+
+When your code delays an event with `SendCustomEventDelayedFrames` or
+`SendCustomEventDelayedSeconds`, Udon runs it on a later frame, once the delay passed, and never
+during the call that delays it. Wait for it in a `[UnityTest]`, longer than the delay:
+
+```csharp
+[UnityTest]
+public IEnumerator OpenInASecond_AfterTheSecond_OpensTheDoor()
+{
+    UdonBehaviour door = Udon.Create<Door>("Door");
+
+    door.SendCustomEvent(nameof(Door.OpenInASecond));
+    yield return new WaitForSeconds(1.5f);
+
+    Assert.That(door.GetProgramVariable(nameof(Door.IsOpen)), Is.EqualTo(true));
+}
+```
+
 ## Behaviours that need players
 
 `UdonTestBase` extends `ClientSimTestBase`, so start the session first, as in any ClientSim test:
@@ -69,5 +88,5 @@ yield return Session.Start();
 UdonBehaviour door = Udon.Create<Door>("Door");
 ```
 
-To run these tests in a scene of their own, see
-[UdonTestBase](../reference/udon-test-base#scenes).
+To run these tests in a scene of their own, pass a [`TestScene`](../reference/test-scene) to the
+[`UdonTestBase` constructor](../reference/udon-test-base#constructors).

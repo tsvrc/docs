@@ -86,6 +86,10 @@ the test. Like any coroutine, it does nothing until the test yields it.
 
 - Use it in Play Mode tests. A behaviour created with it doesn't need ClientSim, so start a
   [`ClientSimSession`](./clientsim-session) only when the behaviour needs players.
+- Udon runs the events a program delays with `SendCustomEventDelayedFrames` and
+  `SendCustomEventDelayedSeconds` on a later frame, once the delay passed, never during the call
+  that delays them. A test waits for them in a `[UnityTest]`, as in
+  [Run your behaviours as Udon](../how-to/running-behaviours-as-udon#wait-for-delayed-events).
 - It runs each program as UdonSharp last compiled it, normally the compile for the Editor, which
   keeps the code inside `#if UNITY_EDITOR`. To check the compile for upload, use
   [`UdonSharpUploadCompile`](./udon-sharp-upload-compile).

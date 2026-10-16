@@ -29,6 +29,27 @@ public class DoorTests : UdonTestBase
 Everything from `ClientSimTestBase` is there too. A test that needs players starts the session with
 `yield return Session.Start()`, and the session ends after every test.
 
+## Constructors
+
+`UdonTestBase` has the two constructors of
+[`ClientSimTestBase`](./clientsim-test-base#constructors) and passes their arguments on:
+
+- `UdonTestBase()` runs every test in the Unity Test Framework test scene, which the whole run
+  shares.
+- `UdonTestBase(TestScene scene, TestSceneLifetime lifetime = TestSceneLifetime.PerTest)` runs every
+  test in `scene`, so the GameObjects `Udon` creates go into it.
+
+Pass the scene from the constructor of your fixture:
+
+```csharp
+public class LobbyTests : UdonTestBase
+{
+    public LobbyTests() : base(TestScene.Empty("Lobby"))
+    {
+    }
+}
+```
+
 ## Lifecycle
 
 `UdonTestBase` adds two methods to those of `ClientSimTestBase`:
@@ -38,27 +59,3 @@ Everything from `ClientSimTestBase` is there too. A test that needs players star
   `ClientSimTestBase` ends the session, so your `[UnityTearDown]` runs once both are gone.
 
 [ClientSimTestBase](./clientsim-test-base#lifecycle) lists the rest of the order.
-
-## Scenes
-
-`UdonTestBase` has only a parameterless constructor, so its tests run in the Unity Test Framework
-test scene, which the whole run shares. To run tests that use Udon in a
-[`TestScene`](./test-scene) of their own, extend `ClientSimTestBase` with the scene instead, and
-create an `UdonHost` in each test:
-
-```csharp
-public class LobbyTests : ClientSimTestBase
-{
-    public LobbyTests() : base(TestScene.Empty("Lobby"))
-    {
-    }
-
-    [Test]
-    public void Open_Closed_OpensTheDoor()
-    {
-        using var udon = new UdonHost();
-        UdonBehaviour door = udon.Create<Door>("Door");
-        // ...
-    }
-}
-```

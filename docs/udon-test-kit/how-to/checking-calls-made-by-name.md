@@ -62,7 +62,8 @@ raises no error, so always assert on what the log recorded, not just that nothin
 
 `SendCustomEventDelayedSeconds` and `SendCustomEventDelayedFrames` never call anything outside
 Udon. When the code under test delays a call that way, call the delayed method directly from the
-test.
+test, or run the code as Udon, where the delayed call arrives, as in
+[Run your behaviours as Udon](./running-behaviours-as-udon#wait-for-delayed-events).
 
 To check the calls of code that runs as Udon, see
 [Check the calls Udon code makes](./checking-calls-made-from-udon).
