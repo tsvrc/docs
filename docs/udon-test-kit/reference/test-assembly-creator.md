@@ -87,7 +87,8 @@ scenes has that double.
 - Scripts without an assembly definition compile into `Assembly-CSharp`, or into
   `Assembly-CSharp-firstpass` from a top-level `Plugins` or `Standard Assets` folder, and an
   assembly definition can't use those. When any script under `Assets` has none, creating the
-  assemblies logs a warning. See
+  assemblies logs a warning. The utility scripts UdonSharp copies into `Assets/UdonSharp` don't
+  count, since they aren't yours. See
   [Test scripts that have no assembly definition](../how-to/testing-scripts-without-an-assembly-definition).
 - `TestAssemblyCreator.Create(string parentFolder = "Assets")` does the same from code, and returns
   the path of the new folder. It takes `Assets` or a folder under it, and throws an

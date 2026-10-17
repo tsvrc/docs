@@ -13,7 +13,8 @@ The [Unity manual](https://docs.unity3d.com/2022.3/Documentation/Manual/ScriptCo
 says: "Classes in assemblies created with an Assembly Definition cannot use types defined in the
 predefined assemblies." That includes the test assemblies
 [`TestAssemblyCreator`](../reference/test-assembly-creator) creates, so creating them logs a
-warning when your project has such scripts.
+warning when your project has such scripts, other than the utility scripts UdonSharp copies into
+`Assets/UdonSharp`.
 
 ## Edit Mode tests
 
