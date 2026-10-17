@@ -19,7 +19,7 @@ public class PlayerCountTests : ClientSimTestBase
     {
         yield return Session.Start();
 
-        VRCPlayerApi remote = Session.SpawnRemotePlayer("Remote");
+        Session.SpawnRemotePlayer("Remote");
 
         Assert.That(VRCPlayerApi.GetPlayerCount(), Is.EqualTo(2));
     }
@@ -37,7 +37,7 @@ a test can choose `localPlayerIsMaster: false`, or do work before ClientSim exis
   every test in `scene`. With `PerTest`, the scene is loaded fresh for each test and unloaded after
   it. With `PerFixture`, it's loaded for the first test and unloaded after the last one.
 
-Pass the scene from your fixture's own constructor:
+Pass the scene from the constructor of your fixture:
 
 ```csharp
 public class LobbyTests : ClientSimTestBase
@@ -63,8 +63,8 @@ order:
 6. Your `[UnityTearDown]`, after ClientSim has ended and before the scene unloads.
 7. `[UnityTearDown]` `UnloadPerTestScene` unloads a `PerTest` scene, destroying everything in it.
 
-After the fixture's last test, `[OneTimeTearDown]` `UnloadPerFixtureScene` unloads a `PerFixture`
-scene.
+After the last test of the fixture, `[OneTimeTearDown]` `UnloadPerFixtureScene` unloads a
+`PerFixture` scene.
 
 `Session.End()` runs after every test, even when the test failed or never started the session,
 because ending a session that isn't running does nothing.

@@ -10,8 +10,8 @@ import TabItem from '@theme/TabItem';
 # Run tests from the command line
 
 [`Invoke-UnityTests.ps1`](../reference/invoke-unity-tests) on Windows and
-[`run_unity_tests.sh`](../reference/run-unity-tests) on Linux run a Unity project's tests from the
-command line and print only what needs your attention: the tests that didn't pass, with their
+[`run_unity_tests.sh`](../reference/run-unity-tests) on Linux run the tests of a Unity project from
+the command line and print only what needs your attention: the tests that didn't pass, with their
 messages, and a count of the rest. They're generic scripts, independent of the kit: copy one into
 any Unity project to use it there, whether or not that project has the kit.
 
@@ -21,7 +21,7 @@ any Unity project to use it there, whether or not that project has the kit.
 <TabItem value="windows" label="Windows" default>
 
 1. Get the script: `Scripts~/Invoke-UnityTests.ps1` in the
-   [kit's repository](https://github.com/tsvrc/udon-test-kit). If you installed the kit through the
+   [kit repository](https://github.com/tsvrc/udon-test-kit). If you installed the kit through the
    Creator Companion, it's also in `Packages/com.tsvrc.udon-test-kit/Scripts~`. A `.unitypackage`
    can't carry it.
 2. Copy it into your project, such as its root folder. It finds the project by looking up from its
@@ -40,7 +40,7 @@ with `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 <TabItem value="linux" label="Linux">
 
 1. Get the script: `Scripts~/run_unity_tests.sh` in the
-   [kit's repository](https://github.com/tsvrc/udon-test-kit), or in
+   [kit repository](https://github.com/tsvrc/udon-test-kit), or in
    `Packages/com.tsvrc.udon-test-kit/Scripts~` of a project that has the kit installed as a package.
    A `.unitypackage` can't carry it.
 2. Copy it into your project, such as its root folder, and make the copy executable with
@@ -59,7 +59,7 @@ mode, Unity opens a project it hasn't imported yet on the Linux build target unl
 </TabItem>
 </Tabs>
 
-Each script runs your project's Edit Mode tests, then its Play Mode tests, each mode in its own
+Each script runs the Edit Mode tests of your project, then its Play Mode tests, each mode in its own
 batch-mode Unity process, and exits with 1 when a test failed or was inconclusive, or a run didn't
 finish. That makes either one usable as a build step as it is.
 

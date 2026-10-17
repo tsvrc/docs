@@ -27,16 +27,17 @@ input systems, the value the ClientSim settings window asks for.
 
 ## Members
 
-- `Fix()` is the menu item. It applies the change for each setting that fails the ClientSim check and
-  logs the ones it changed, or that they were already correct. Settings that pass are left alone.
-- `FixMenuPath` is the menu item's path,
+- `Fix()` is the menu item. It applies the change for each setting that fails the ClientSim check
+  and logs the ones it changed, or that they were already correct. Settings that pass are left
+  alone.
+- `FixMenuPath` is the path of the menu item,
   `"Tools/TsVRC/Udon Test Kit/Fix ClientSim Project Settings"`, for tooling that runs it with
   `EditorApplication.ExecuteMenuItem`.
 
 ## When it matters
 
-[`ClientSimSession.Start`](./clientsim-session) runs the ClientSim check before ClientSim starts. When
-the check fails, `Start` fails the test with a message such as:
+[`ClientSimSession.Start`](./clientsim-session) runs the ClientSim check before ClientSim starts.
+When the check fails, `Start` fails the test with a message such as:
 
 ```
 The ClientSim project settings check fails on: input type, collision matrix. Fix them with Tools > TsVRC > Udon Test Kit > Fix ClientSim Project Settings.

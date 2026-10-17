@@ -23,8 +23,8 @@ if (TestRun.IsActive || EditorApplication.isPlayingOrWillChangePlaymode)
 
 - from the moment a run reports its start until it reports its end or an error, whether it was
   started from the Test Runner window or from the command line, and
-- for the whole life of a batch-mode Unity process started with `-runTests`, from before the first
-  test is found.
+- for the whole life of a Unity process started with `-runTests`, from before the first test is
+  found.
 
 The start and end come from the public Unity Test Framework callbacks, which the kit registers again
 on every domain load, since registered callbacks don't survive a reload. The flag between them
@@ -39,6 +39,6 @@ as well, as in the example above.
 
 ## Using it
 
-`TestRun` uses Editor APIs, so call it from Editor code. It's in the kit's `Tsvrc.UdonTestKit` assembly:
-scripts without an assembly definition can use it directly, and code in an assembly definition
-needs a reference to `Tsvrc.UdonTestKit`.
+`TestRun` uses Editor APIs, so call it from Editor code. It's in the
+`Tsvrc.UdonTestKit` assembly of the kit: scripts without an assembly definition can use it
+directly, and code in an assembly definition needs a reference to `Tsvrc.UdonTestKit`.

@@ -6,7 +6,7 @@ sidebar_position: 3
 
 # Check that saved data survives a rejoin
 
-ClientSim saves each player's PlayerData and PlayerObjects to files in your project. Ending a
+ClientSim saves the PlayerData and PlayerObjects of each player to files in your project. Ending a
 session stops it from saving, so the next session in the same scene starts from what the last one
 saved, like a player who leaves and rejoins. That lets one test check that data survives a rejoin.
 
@@ -39,8 +39,10 @@ saved, like a player who leaves and rejoins. That lets one test check that data 
    Assert.That(coins, Is.EqualTo("10"));
    ```
 
-Keep the whole rejoin inside one test. NUnit doesn't promise an order between tests, so a test that
-saves and a later test that reads would pass or fail depending on that order.
+Keep the whole rejoin inside one test. For tests without an `[Order]` attribute,
+[NUnit says](https://docs.nunit.org/articles/nunit/writing-tests/attributes/order.html) "execution
+order is indeterminate", so a test that saves and a later test that reads would pass or fail
+depending on that order.
 
 ## Starting from no saved data
 
@@ -53,5 +55,5 @@ yield return Session.Start();
 ```
 
 `DeleteSavedData` deletes what ClientSim saved for the active scene, for every player. In your
-world's own scene, those files are also the ones you get when you press Play. What tests save in
+world scene, those files are also the ones you get when you press Play. What tests save in
 the Unity Test Framework test scene, the kit deletes when the run ends.

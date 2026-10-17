@@ -32,8 +32,8 @@ internal static class MyGenerator
 ```
 
 `TestRun.IsActive` is true from when a run reports its start until it reports its end, across the
-domain reloads in between, and for the whole of a batch-mode process started with `-runTests`. A
+domain reloads in between, and for the whole of a Unity process started with `-runTests`. A
 Play Mode run reports its start only after the domain reload into Play Mode, so tooling that runs
 on that reload also checks `EditorApplication.isPlayingOrWillChangePlaymode`.
 
-If your tooling's code is in an assembly definition, add `Tsvrc.UdonTestKit` to its references.
+If the code of your tooling is in an assembly definition, add `Tsvrc.UdonTestKit` to its references.

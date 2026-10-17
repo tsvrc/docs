@@ -1,14 +1,14 @@
 ---
 id: adding-your-worlds-own-setup
-title: Add your world's own test setup
+title: Share your test setup in a base class
 sidebar_position: 8
 ---
 
-# Add your world's own test setup
+# Share your test setup in a base class
 
-When every test needs the same setup, such as your world's scene, a running session and the
-objects your tests look up, put it in a base class of your own that extends `ClientSimTestBase`,
-and extend that in your test classes.
+When every test needs the same setup, such as your world scene, a running session and the objects
+your tests look up, put it in a base class of your own that extends `ClientSimTestBase`, and extend
+that in your test classes.
 
 ```csharp
 public abstract class MyWorldTestBase : ClientSimTestBase
@@ -40,8 +40,8 @@ public class ScoreboardTests : MyWorldTestBase
 }
 ```
 
-Use NUnit attributes in your base class as you would in a test class. NUnit runs a base class's
-setup before yours and its teardown after yours, so with `ClientSimTestBase` underneath:
+Use NUnit attributes in your base class as you would in a test class. NUnit runs the setup of a
+base class before yours and its teardown after yours, so with `ClientSimTestBase` underneath:
 
 - your `[UnitySetUp]` and `[SetUp]` run with the test scene already loaded and active,
 - your `[TearDown]` runs while the session is still running, and

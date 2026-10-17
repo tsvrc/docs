@@ -6,9 +6,9 @@ sidebar_position: 6
 
 # CallbackSpy and CallLog
 
-`Tsvrc.UdonTestKit.CallbackSpy` is a test spy for code that calls methods on an UdonSharpBehaviour by
-name, such as with `SendCustomEvent`. `Tsvrc.UdonTestKit.CallLog` creates spies and records every call
-they receive, in order, as `"GameObjectName.CallbackName"`.
+`Tsvrc.UdonTestKit.CallbackSpy` is a test spy for code that calls methods on an UdonSharpBehaviour
+by name, such as with `SendCustomEvent`. `Tsvrc.UdonTestKit.CallLog` creates spies and records
+every call they receive, in order, as `"GameObjectName.CallbackName"`.
 
 ```csharp
 using var calls = new CallLog();
@@ -31,8 +31,8 @@ Both work in Edit Mode and Play Mode tests.
 - `CreateSpy(string name = "Spy")` creates a GameObject with that name in the active scene, adds a
   `CallbackSpy` to it, and returns the spy.
 - `CreateSpy<TSpy>(string name)` does the same with your own subclass of `CallbackSpy`.
-- `Clear()` forgets the calls recorded so far, such as the ones a test's setup caused. It doesn't
-  destroy any spy.
+- `Clear()` forgets the calls recorded so far, such as the ones the setup of a test caused. It
+  doesn't destroy any spy.
 - `Dispose()` destroys the GameObject of every spy it created, skipping any already destroyed.
   `using var calls = new CallLog();` is all the cleanup a test needs.
 
@@ -41,8 +41,9 @@ checks both how many calls each spy got and their order across spies.
 
 ## CallbackSpy
 
-`CallbackSpy` is an `UdonSharpBehaviour` with two callbacks, `CallbackA()` and `CallbackB()`, which
-cover most tests. Each call is recorded under the spy's GameObject name at the time of the call.
+`CallbackSpy` is an `UdonSharpBehaviour` with two callbacks, `CallbackA()` and `CallbackB()`, for
+tests where the name of the callback doesn't matter. Each call is recorded under the name the
+GameObject of the spy has at the time of the call.
 
 For callbacks named after what your code calls, subclass it and call `Record()` from each method.
 `Record` takes the name of the method that called it:
@@ -66,9 +67,9 @@ Editor-only assembly to a GameObject, and an Edit Mode test assembly is Editor-o
 A `CallbackSpy`, like any behaviour a test adds with `AddComponent`, runs as plain C#, not as Udon.
 To record calls made by code that runs as Udon, use [`UdonCallLog`](./udon-call-log) instead.
 
-As plain C#, `SendCustomEvent` calls a public method with no parameters and exactly the given name.
-Any other name does nothing and raises no error, so a misspelled callback name passes silently:
-check what the log recorded, not just that nothing failed.
+As plain C#, `SendCustomEvent` calls only a public method with the given name and no parameters.
+Any other name does nothing and raises no error, so a misspelled callback name passes silently.
+Assert on what the log recorded.
 
 `SendCustomEventDelayedSeconds` and `SendCustomEventDelayedFrames` don't call anything outside
 Udon. Code under test that relies on them needs its delayed method called directly from the test,

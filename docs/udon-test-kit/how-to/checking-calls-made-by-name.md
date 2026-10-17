@@ -57,8 +57,9 @@ Mode tests can use it: Unity won't add a behaviour from the Edit Mode test assem
 ## What to watch for
 
 A spy, and code a test adds with `AddComponent`, runs as plain C#. There, a call by name reaches
-only a public method with no parameters and exactly that name. A misspelled name does nothing and
-raises no error, so always assert on what the log recorded, not just that nothing failed.
+only a public method with that name and no parameters. A misspelled name does nothing and raises no
+error, so assert on what the log recorded: a test that only checks that nothing failed passes with
+a misspelled name.
 
 `SendCustomEventDelayedSeconds` and `SendCustomEventDelayedFrames` never call anything outside
 Udon. When the code under test delays a call that way, call the delayed method directly from the

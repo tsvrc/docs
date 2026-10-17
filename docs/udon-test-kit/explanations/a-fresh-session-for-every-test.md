@@ -25,21 +25,21 @@ order of tests.
 ## Why saved data carries over
 
 Carrying over is what saved data is for, and ClientSim keeps it in files, not in the session. In
-your world's own scene, they're your ClientSim data, and some worlds want them to carry over
-between tests. `ClientSimSession.DeleteSavedData` is there for a test that needs none. The one set
+your world scene, they're your ClientSim data, and some worlds want them to carry over between
+tests. `ClientSimSession.DeleteSavedData` is there for a test that needs none. The one set
 of files the kit deletes on its own is that of the Unity Test Framework test scene, and only once
 the run has ended, so test runs don't fill the project folder.
 
 ## Alternatives considered
 
-- **One session for a whole test class** — faster, since ClientSim starts once, but every test
+- **One session for a whole test class:** faster, since ClientSim starts once, but every test
   then shares whatever the earlier ones changed: players, owners, saved data and every object in
-  the scene. That's xUnit Test Patterns shared fixture, and its known cost is tests that depend on
-  each other. It stays possible for tests that only read, by starting the session in a
+  the scene. That's the shared fixture of xUnit Test Patterns, and its known cost is tests that
+  depend on each other. It stays possible for tests that only read, by starting the session in a
   `[UnitySetUp]` when it isn't running yet and ending it in `[OneTimeTearDown]`.
-- **Deleting saved data after every test** — every test would start clean, but tests run in the
-  world's own scene would delete the developer's ClientSim data, and a test of data carrying over
-  couldn't be written.
+- **Deleting saved data after every test:** every test would start clean, but tests run in the
+  world scene would delete your own ClientSim data, and a test of data carrying over couldn't be
+  written.
 
 ## Scenes follow the same rule
 
