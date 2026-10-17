@@ -6,16 +6,21 @@ sidebar_position: 14
 
 # Test scripts that have no assembly definition
 
-Scripts without an assembly definition compile into `Assembly-CSharp`, which no assembly
-definition can reference, including the test assemblies
-[`TestAssemblyCreator`](../reference/test-assembly-creator) creates. Creating them logs a warning
-when your project has such scripts.
+Scripts without an assembly definition compile into `Assembly-CSharp`, or into
+`Assembly-CSharp-firstpass` when they're in a top-level `Plugins` or `Standard Assets` folder
+(the Unity manual on [script compilation order](https://docs.unity3d.com/2022.3/Documentation/Manual/ScriptCompileOrderFolders.html)).
+The [Unity manual](https://docs.unity3d.com/2022.3/Documentation/Manual/ScriptCompilationAssemblyDefinitionFiles.html)
+says: "Classes in assemblies created with an Assembly Definition cannot use types defined in the
+predefined assemblies." That includes the test assemblies
+[`TestAssemblyCreator`](../reference/test-assembly-creator) creates, so creating them logs a
+warning when your project has such scripts.
 
 ## Edit Mode tests
 
-Put the tests in any folder named `Editor` that has no assembly definition. Unity compiles them
-into `Assembly-CSharp-Editor`, which can use your scripts, NUnit and the kit without any
-references set up. The Unity Test Runner finds them there, and so do the scripts that
+Put the tests in any folder named `Editor` that has no assembly definition and isn't inside a
+top-level `Plugins` or `Standard Assets` folder. Unity compiles them into `Assembly-CSharp-Editor`,
+which can use your scripts, NUnit and the kit without any references set up. The Unity Test Runner
+finds them there, and so do the scripts that
 [run tests from the command line](./running-tests-from-the-command-line).
 
 ## Play Mode tests
@@ -29,5 +34,5 @@ Play Mode tests need an assembly definition of their own, so the scripts they te
 3. Create a U# assembly definition next to it (**Assets > Create > U# Assembly Definition**) and
    set its source assembly to the one you created, so UdonSharp keeps compiling those scripts for
    Udon.
-4. Add its name to the references of your Play Mode test assembly, or delete the test assemblies
-   and create them again, which picks it up.
+4. Run **Tools > TsVRC > Udon Test Kit > Update Test Assembly References**, which adds it to the
+   references of your test assemblies.

@@ -1,21 +1,21 @@
 ---
 id: invoke-unity-tests
 title: Invoke-UnityTests.ps1
-sidebar_position: 14
+sidebar_position: 15
 ---
 
 # Invoke-UnityTests.ps1
 
-`Invoke-UnityTests.ps1` runs a Unity project's tests from PowerShell on Windows and prints a short
-report. It's a single, standalone file: it doesn't use the kit or anything else beyond Unity Test
-Framework, and it's meant to be copied into any Unity project that wants it, with or without the
-kit. [Run tests from the command line](../how-to/running-tests-from-the-command-line) walks through
-using it, and [`run_unity_tests.sh`](./run-unity-tests) does the same from Bash on Linux.
+`Invoke-UnityTests.ps1` runs the tests of a Unity project from PowerShell on Windows and prints a
+short report. It's a single, standalone file: it doesn't use the kit or anything else beyond Unity
+Test Framework, and it's meant to be copied into any Unity project that wants it, with or without
+the kit. [Run tests from the command line](../how-to/running-tests-from-the-command-line) walks
+through using it, and [`run_unity_tests.sh`](./run-unity-tests) does the same from Bash on Linux.
 
 ## Getting it
 
 The script is `Scripts~/Invoke-UnityTests.ps1` in the
-[kit's repository](https://github.com/tsvrc/udon-test-kit). A Creator Companion install also has
+[kit repository](https://github.com/tsvrc/udon-test-kit). A Creator Companion install also has
 it on disk, under `Packages/com.tsvrc.udon-test-kit/Scripts~`. Unity doesn't import folders ending
 in `~`, so a `.unitypackage` of the kit can't include it.
 
@@ -62,8 +62,8 @@ The Unity manual lists them under
 
 ## What it does
 
-Each test mode starts Unity once, in batch mode, with `-runTests`. Unity writes the mode's results
-to `<mode>.xml` and its log to `<mode>.log` in the results folder.
+Each test mode starts Unity once, in batch mode, with `-runTests`. Unity writes the results of the
+mode to `<mode>.xml` and its log to `<mode>.log` in the results folder.
 
 For each mode, the script prints every test that didn't pass, with its result and message, then a
 count:
@@ -81,8 +81,8 @@ An inconclusive test is an `Assume` that didn't hold, so it proved nothing.
 ## Exit code
 
 The script exits with 1 when Unity reported a failed or inconclusive test, or a run that errored
-out, and when a mode wrote no results, in which case it prints the log's path. Otherwise it exits
-with 0, so a build server can use it as a step that fails the build.
+out, and when a mode wrote no results, in which case it prints the path of the log. Otherwise it
+exits with 0, so a build server can use it as a step that fails the build.
 
 It also exits with 1, without starting Unity, when it finds no project or no Unity, or can't create
 the results folder, such as when `-ResultsPath` names a file. Its message says which.
@@ -95,4 +95,4 @@ If PowerShell refuses to run the script because of its execution policy, allow l
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 
-It's been run with Windows PowerShell 5.1, which comes with Windows.
+It runs on Windows PowerShell 5.1, which comes with Windows.

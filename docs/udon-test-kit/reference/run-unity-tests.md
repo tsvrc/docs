@@ -1,14 +1,15 @@
 ---
 id: run-unity-tests
 title: run_unity_tests.sh
-sidebar_position: 15
+sidebar_position: 16
 ---
 
 # run_unity_tests.sh
 
-`run_unity_tests.sh` runs a Unity project's tests from Bash on Linux and prints a short report. It's
-a single, standalone file: it doesn't use the kit or anything else beyond Unity Test Framework, and
-it's meant to be copied into any Unity project that wants it, with or without the kit.
+`run_unity_tests.sh` runs the tests of a Unity project from Bash on Linux and prints a short
+report. It's a single, standalone file: it doesn't use the kit or anything else beyond Unity Test
+Framework, and it's meant to be copied into any Unity project that wants it, with or without the
+kit.
 [Run tests from the command line](../how-to/running-tests-from-the-command-line) walks
 through using it, and [`Invoke-UnityTests.ps1`](./invoke-unity-tests) does the same from PowerShell
 on Windows.
@@ -16,7 +17,7 @@ on Windows.
 ## Getting it
 
 The script is `Scripts~/run_unity_tests.sh` in the
-[kit's repository](https://github.com/tsvrc/udon-test-kit). An installed kit package also has it on
+[kit repository](https://github.com/tsvrc/udon-test-kit). An installed kit package also has it on
 disk, under `Packages/com.tsvrc.udon-test-kit/Scripts~`, unless it came from a `.unitypackage`:
 Unity doesn't import folders ending in `~`, so a `.unitypackage` can't include it.
 

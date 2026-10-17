@@ -11,26 +11,11 @@ run as Udon too, and have each double record the calls it gets in an
 [`UdonCallLog`](../reference/udon-call-log). For code that runs as plain C#, a `CallbackSpy` does
 this instead, as in [Check the calls your code makes by name](./checking-calls-made-by-name).
 
-## Create an assembly for Udon test doubles
-
-Do this once per project. The `Doubles` assembly that the kit creates compiles only for tests, and
-UdonSharp compiles only player assemblies for a world upload, so `UdonHost` refuses doubles in it.
-Doubles that run as Udon go in a player assembly of their own:
-
-1. Create a folder for them, such as `Tests/UdonDoubles`.
-2. In it, create an assembly definition (**Assets > Create > Assembly Definition**), such as
-   `MyWorld.Tests.UdonDoubles`. Add `Tsvrc.UdonTestKit.UdonSpies` and `UdonSharp.Runtime` to its
-   references, plus any assembly of yours that its doubles use. Leave it on **Any Platform**, with
-   no define constraints, so it stays in player builds.
-3. Next to it, create a U# assembly definition (**Assets > Create > U# Assembly Definition**) and
-   set its source assembly to the assembly definition from step 2.
-4. Add the new assembly to the references of your Play Mode test assembly, if it isn't listed
-   already. Test assemblies created after it reference it from the start.
-
-The assembly compiles into the player builds of your world, but a world holds the program of a
-double only when one of its scenes has that double.
-
 ## Write a double
+
+Doubles that run as Udon go in the `Tests/UdonDoubles` folder that
+[Test Assemblies](../reference/test-assembly-creator#the-doubles-assemblies) creates, next to
+`ExampleUdonDouble`. Its assembly compiles into player builds, as the compile for upload needs.
 
 In that folder, create the double with **Assets > Create > U# Script**, which also creates its
 program asset. Give it a field for the log and a method for each call your code makes, which adds
@@ -50,6 +35,9 @@ public class RoundListenerDouble : UdonSharpBehaviour
     }
 }
 ```
+
+UdonSharp compiles every U# script of a project together, so no other U# class can have the same
+namespace and name as the double.
 
 ## Check the calls
 

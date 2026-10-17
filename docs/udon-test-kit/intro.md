@@ -31,11 +31,12 @@ go into more depth.
 - Record the calls your code makes by name, such as with `SendCustomEvent`.
 - Run your behaviours as their compiled Udon programs, to see what Udon does with your code.
 - Check that your world compiles for upload, and which programs its build holds.
-- Run each test in a scene of its own, empty or your world's.
+- Run each test in a scene of its own, empty or your world scene.
 - Create the test assemblies your world needs from one menu item.
 
 The kit stays out of your world build: everything but one Udon spy compiles only for tests, and
-that spy reaches a world only when a scene has one.
+that spy reaches a world only when a scene has one. So do the test doubles you write to run as
+Udon.
 
 It also includes two standalone scripts that run the tests of a project in one command and print
 only what failed: `Invoke-UnityTests.ps1` for PowerShell on Windows and `run_unity_tests.sh` for

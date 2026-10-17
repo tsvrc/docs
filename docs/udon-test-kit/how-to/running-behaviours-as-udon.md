@@ -12,7 +12,7 @@ code, such as halting a behaviour that throws, run it as its compiled Udon progr
 
 The behaviour needs a program asset, which a script made with **Assets > Create > U# Script** has.
 Its assembly has to be in player builds and referenced by your Play Mode test assembly, as the
-assembly definitions of your world are.
+assembly definitions of your world and the `UdonDoubles` assembly the kit creates are.
 
 ## Steps
 

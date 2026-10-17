@@ -15,8 +15,9 @@ an Edit Mode test with a spy. You need the test assemblies from
 1. Open **Window > General > Test Runner**.
 2. In the **PlayMode** tab, select `ExamplePlayModeTests` and click **Run Selected**.
 
-Unity enters Play Mode, ClientSim starts with a local player, the test spawns a second player, and
-the test passes.
+Unity enters Play Mode and runs its two tests. In the first, ClientSim starts with a local player
+and the test spawns a second player. The second runs an example test double as Udon and checks the
+call it logged. Both pass.
 
 If it fails before ClientSim starts, with a message naming project settings, run
 **Tools > TsVRC > Udon Test Kit > Fix ClientSim Project Settings** once and run the test again. See
@@ -93,7 +94,7 @@ To test your own behaviours, add them to GameObjects in a Play Mode test, drive 
 what they did. The how-to guides cover the usual next steps:
 
 - [Run tests in a scene of their own](./how-to/running-tests-in-their-own-scene), including your
-  world's scene.
+  world scene.
 - [Test what happens for a player who isn't the owner](./how-to/testing-a-player-who-isnt-the-owner).
 - [Check that saved data survives a rejoin](./how-to/testing-saved-data).
 - [Check the calls your code makes by name](./how-to/checking-calls-made-by-name).
