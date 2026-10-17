@@ -43,8 +43,8 @@ including where the double goes.
 
 - `Add(string call)` records a call, such as `"Listener.OnRoundEnded"`: the GameObject name, a dot
   and the method.
-- `Calls` holds the calls recorded so far as one string, each followed by `;`. `UdonHost.Calls`
-  splits it into an array, so a recorded call can't contain `;`.
+- `Calls` holds the calls recorded so far, in order, as a `string[]`. A test reads a copy of it with
+  `UdonHost.Calls`.
 
 Its sync mode is None, so nothing it records is synced.
 

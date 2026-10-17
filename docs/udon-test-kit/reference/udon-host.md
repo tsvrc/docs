@@ -47,8 +47,8 @@ activates it. Udon runs the `Start` of a program on a later frame, so a test tha
 
 The second case covers the `Doubles` assembly that
 [`TestAssemblyCreator`](./test-assembly-creator) creates, which compiles only for tests. Test
-doubles that run as Udon need an assembly of their own, as in
-[Check the calls Udon code makes](../how-to/checking-calls-made-from-udon#create-an-assembly-for-udon-test-doubles).
+doubles that run as Udon go in the `UdonDoubles` assembly it creates for them, as in
+[Check the calls Udon code makes](../how-to/checking-calls-made-from-udon).
 [What the kit works around](../explanations/what-the-kit-works-around#udon-code-that-compiles-for-the-editor-but-not-for-upload)
 explains the upload compile.
 
@@ -61,7 +61,8 @@ explains the upload compile.
 
 `UdonHost.Calls(UdonBehaviour log)` is static and returns the calls an
 [`UdonCallLog`](./udon-call-log) recorded, in the order they arrived. Pass the `UdonBehaviour` that
-`Create<UdonCallLog>` returned.
+`Create<UdonCallLog>` returned. It returns a new array on each call, so a test that changes it
+leaves the log as it was.
 
 ## Expecting an Udon exception
 
@@ -74,7 +75,7 @@ yield return UdonHost.ExpectUdonException(() => door.SendCustomEvent(nameof(Door
 ```
 
 UdonSharp logs a copy of that error on a later frame, which would fail the next test.
-`ExpectUdonException` waits up to 10 frames for the copy and expects it too, once it came.
+`ExpectUdonException` waits up to 10 frames for the copy and expects it too if it comes.
 UdonSharp doesn't always log the copy, as
 [What the kit works around](../explanations/what-the-kit-works-around#an-udon-exception-that-fails-the-next-test)
 explains.
@@ -87,7 +88,7 @@ the test. Like any coroutine, it does nothing until the test yields it.
 - Use it in Play Mode tests. A behaviour created with it doesn't need ClientSim, so start a
   [`ClientSimSession`](./clientsim-session) only when the behaviour needs players.
 - Udon runs the events a program delays with `SendCustomEventDelayedFrames` and
-  `SendCustomEventDelayedSeconds` on a later frame, once the delay passed, never during the call
+  `SendCustomEventDelayedSeconds` on a later frame, once the delay has passed, never during the call
   that delays them. A test waits for them in a `[UnityTest]`, as in
   [Run your behaviours as Udon](../how-to/running-behaviours-as-udon#wait-for-delayed-events).
 - It runs each program as UdonSharp last compiled it, normally the compile for the Editor, which
