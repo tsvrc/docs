@@ -66,10 +66,10 @@ display name, or `null` when there's none.
 `SetOwner(VRCPlayerApi player, GameObject obj)` makes `player` the owner of `obj`, the way
 `Networking.SetOwner` does in VRChat.
 
-ClientSim tracks an owner only for GameObjects with `VRCObjectSync` or `VRCObjectPool`. The master
-owns every other GameObject, including one holding an UdonSharpBehaviour, and
-`Networking.SetOwner` leaves it unchanged. In VRChat, the owner of every networked GameObject can
-change, so code that takes ownership can't be tested against ClientSim as it is.
+ClientSim tracks an owner only for GameObjects with `VRCObjectSync` or `VRCObjectPool`, and the
+master owns every other one whatever `Networking.SetOwner` asks, as
+[What the kit works around](../explanations/what-the-kit-works-around#owners-that-never-change)
+explains.
 
 `SetOwner` gives such a GameObject an owner of its own. It adds a hidden component that ClientSim
 reads and writes ownership through, starting from the current owner of the GameObject, the master,
@@ -87,15 +87,15 @@ shows it in a test.
 
 ## Ending
 
-`End()` stops ClientSim, stops it saving player data, and removes the scene descriptor `Start`
-added, if it added one. It's safe to call when no session is running, so a teardown can call it
-unconditionally.
+`End()` stops ClientSim, destroys the hidden object that saves the data of its players, and removes
+the scene descriptor `Start` added, if it added one. It's safe to call when no session is running,
+so a teardown can call it unconditionally.
 
-ClientSim keeps the saved data of each player on a hidden object that its own teardown never
-destroys. That object keeps rewriting the save file of the player after ClientSim stops, and
-overwrites whatever a later session in the same scene saves. `End` destroys it. With nothing left
-running, the next session in the same scene starts from the data the last one saved, the way a
-player who leaves and rejoins does.
+ClientSim leaves that object running when it stops, where it would overwrite what a later session
+saves, as
+[What the kit works around](../explanations/what-the-kit-works-around#saved-data-a-finished-session-overwrites)
+explains. With nothing left running, the next session in the same scene starts from the data the
+last one saved, the way a player who leaves and rejoins does.
 
 ## Saved data
 
