@@ -73,9 +73,9 @@ a class without a program asset, or in an assembly that player builds leave out.
 ## Edge cases
 
 - The exporter records the world file in `EditorPrefs`, which every Unity project of the same user
-  shares, as the last build, the one **Test Last Build** and **Reload Last Build** in the VRChat SDK
-  control panel use. It also deletes the world files of earlier builds. `FromWorldScene` keeps those
-  files and puts back what the SDK recorded before the build, so both still use your own last build.
+  shares, as the last build, the one Test Last Build and Reload Last Build in the VRChat SDK control
+  panel use. It also deletes the world files of earlier builds. `FromWorldScene` keeps those files
+  and puts back what the SDK recorded before the build, so both still use your own last build.
 - Each Unity process reads back the path its own build recorded, so two projects can build at the
   same time.
 - It reads the world in a new folder under the `Temp` folder of the project and deletes the folder
