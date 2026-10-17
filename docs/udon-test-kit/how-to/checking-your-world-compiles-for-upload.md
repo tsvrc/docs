@@ -30,9 +30,9 @@ upload.
    ```
 
 2. Run it from the **EditMode** tab of the Test Runner. It compiles every UdonSharp program in the
-   project for upload, then for the Editor again, so it takes longer than most tests.
+   project for the Editor, for upload, and for the Editor again, so it takes longer than most tests.
 
-When a program fails, the test fails with the error UdonSharp logged.
+When a program fails, the assertion fails and lists the errors UdonSharp logged.
 
 ## What makes the compile fail
 
