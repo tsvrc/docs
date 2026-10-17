@@ -63,10 +63,6 @@ over, as in VRChat. See [ClientSimSession](../reference/clientsim-session#owners
 ClientSim refuses to start without a scene descriptor, and the Unity Test Framework test scene has
 none. `ClientSimSession.Start` adds one when no loaded scene has one.
 
-VRChat Worlds SDK versions before 3.8.2 also stop Play Mode outright when the scene has no
-descriptor, before any test code runs, so every Play Mode run hangs. Nothing in a test can work
-around that, which is why the kit requires 3.8.2 or later.
-
 ## A crash after every test passed
 
 `EditorSceneManager.LoadSceneInPlayMode`, which loads a scene asset into a Play Mode test, drops

@@ -12,7 +12,7 @@ Install the kit in a VRChat world project, then create the test assemblies your 
 
 - **Unity 2022.3**, on Windows, or on Linux with the Windows build target, in the Editor and in
   batch mode.
-- **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) 3.8.2 or a later 3.x version**,
+- **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) 3.10.5 or a later 3.x version**,
   which includes UdonSharp and ClientSim.
 - **Unity Test Framework**, which new Unity projects already include.
 
