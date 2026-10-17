@@ -28,7 +28,7 @@ out, build the scene in an Edit Mode test with [`BuiltWorld`](../reference/built
        public void BuildTheWorld()
        {
            EditorSceneManager.OpenScene("Assets/Scenes/MyWorld.unity");
-           _world = BuiltWorld.FromOpenScene();
+           _world = BuiltWorld.FromWorldScene();
        }
    }
    ```
@@ -57,5 +57,6 @@ The build holds each program as UdonSharp last compiled it for the Editor, becau
 compile for upload. To check that compile too, see
 [Check that your world compiles for upload](./checking-your-world-compiles-for-upload).
 
-The scene has to be saved and have exactly one scene descriptor, or the VRChat SDK builds nothing.
-`FromOpenScene` checks both first and throws an error that says which.
+The loaded scenes have to hold exactly one scene descriptor, and the world scene, the one that holds
+it, has to be saved, or the VRChat SDK builds nothing. `FromWorldScene` checks both first and
+throws an error that says which.
