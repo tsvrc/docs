@@ -38,9 +38,8 @@ de Unity lo explican con más detalle.
 - Ejecutar cada test en una escena propia, vacía o la de tu mundo.
 - Crear desde un elemento de menú los assemblies de test que necesita tu mundo.
 
-El kit se queda fuera de la build de tu mundo: todo menos un espía de Udon se compila solo para los
-tests, y ese espía llega a un mundo solo cuando una escena tiene uno. Lo mismo vale para los dobles
-de test que escribes para que se ejecuten como Udon.
+El kit se queda fuera de la build de tu mundo, como explica
+[Código de test en la build de un mundo](./explanations/what-the-kit-works-around#test-code-in-a-world-build).
 
 También incluye dos scripts independientes que ejecutan los tests de un proyecto con un solo
 comando y muestran solo lo que falló: `Invoke-UnityTests.ps1` para PowerShell en Windows y

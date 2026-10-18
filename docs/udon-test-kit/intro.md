@@ -34,9 +34,9 @@ go into more depth.
 - Run each test in a scene of its own, empty or your world scene.
 - Create the test assemblies your world needs from one menu item.
 
-The kit stays out of your world build: everything but one Udon spy compiles only for tests, and
-that spy reaches a world only when a scene has one. So do the test doubles you write to run as
-Udon.
+The kit stays out of your world build, as
+[Test code in a world build](./explanations/what-the-kit-works-around#test-code-in-a-world-build)
+explains.
 
 It also includes two standalone scripts that run the tests of a project in one command and print
 only what failed: `Invoke-UnityTests.ps1` for PowerShell on Windows and `run_unity_tests.sh` for
