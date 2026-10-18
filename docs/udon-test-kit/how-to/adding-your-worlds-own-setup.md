@@ -13,7 +13,7 @@ that in your test classes.
 ```csharp
 public abstract class MyWorldTestBase : ClientSimTestBase
 {
-    protected Scoreboard Board;
+    protected UdonBehaviour Board;
 
     protected MyWorldTestBase() : base(TestScene.FromAsset("Assets/Scenes/MyWorld.unity"))
     {
@@ -23,22 +23,26 @@ public abstract class MyWorldTestBase : ClientSimTestBase
     public IEnumerator StartWorld()
     {
         yield return Session.Start();
-        Board = Object.FindObjectOfType<Scoreboard>();
+        Board = GameObject.Find("Scoreboard").GetComponent<UdonBehaviour>();
     }
 }
 
 public class ScoreboardTests : MyWorldTestBase
 {
     [UnityTest]
-    public IEnumerator AddPoint_ForLocalPlayer_ShowsOnePoint()
+    public IEnumerator AddPoint_Once_CountsOnePoint()
     {
-        Board.AddPoint();
+        Board.SendCustomEvent(nameof(Scoreboard.AddPoint));
         yield return null;
 
-        Assert.That(Board.PointsOf(Networking.LocalPlayer), Is.EqualTo(1));
+        Assert.That(Board.GetProgramVariable(nameof(Scoreboard.Points)), Is.EqualTo(1));
     }
 }
 ```
+
+The world scene runs its UdonSharp behaviours as Udon, so reach one through its `UdonBehaviour`, as
+above. `Object.FindObjectOfType<Scoreboard>()` finds the C# component UdonSharp keeps beside it, and
+a method called on that runs as C#, apart from the program the scene runs.
 
 Use NUnit attributes in your base class as you would in a test class. NUnit runs the setup of a
 base class before yours and its teardown after yours, so with `ClientSimTestBase` underneath:
