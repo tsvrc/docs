@@ -23,6 +23,9 @@
   "homepage.projects.udonTestKit.description": {
     "message": "Tests de Unity Test Framework para mundos de VRChat, con tus behaviours de UdonSharp ejecutándose en una sesión real de ClientSim."
   },
+  "homepage.projects.udonToolsKit.description": {
+    "message": "Herramientas de UdonSharp de bajo nivel para quienes crean mundos de VRChat, cada una pensada para el rendimiento de Udon y utilizable por sí sola."
+  },
   "homepage.projects.github": {
     "message": "{name} en GitHub"
   },

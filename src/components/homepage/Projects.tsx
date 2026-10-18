@@ -16,6 +16,18 @@ function useProjects(): Project[] {
       repo: 'tsvrc/udon-test-kit',
     },
     {
+      name: 'Udon Tools Kit',
+      status: 'available',
+      description: translate({
+        id: 'homepage.projects.udonToolsKit.description',
+        message:
+          'Low-level UdonSharp tools for VRChat world developers, each built for Udon performance ' +
+          'and usable on its own.',
+      }),
+      docsHref: '/docs/udon-tools-kit/intro',
+      repo: 'tsvrc/udon-tools-kit',
+    },
+    {
       name: 'Core',
       status: 'available',
       description: translate({
