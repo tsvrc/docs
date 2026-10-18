@@ -4,6 +4,18 @@ import ProjectCard, { type Project } from '@site/src/components/homepage/Project
 function useProjects(): Project[] {
   return [
     {
+      name: 'Udon Test Kit',
+      status: 'available',
+      description: translate({
+        id: 'homepage.projects.udonTestKit.description',
+        message:
+          'Unity Test Framework tests for VRChat worlds, with your UdonSharp behaviours running in ' +
+          'a real ClientSim session.',
+      }),
+      docsHref: '/docs/udon-test-kit/intro',
+      repo: 'tsvrc/udon-test-kit',
+    },
+    {
       name: 'Core',
       status: 'available',
       description: translate({
@@ -14,18 +26,6 @@ function useProjects(): Project[] {
       }),
       docsHref: '/docs/core/intro',
       repo: 'tsvrc/tsvrc-core',
-    },
-    {
-      name: 'Udon Test Kit',
-      status: 'available',
-      description: translate({
-        id: 'homepage.projects.udonTestKit.description',
-        message:
-          'Automated tests for VRChat worlds: Play Mode tests run your UdonSharp behaviours in a ' +
-          'real ClientSim session, with real players.',
-      }),
-      docsHref: '/docs/udon-test-kit/intro',
-      repo: 'tsvrc/udon-test-kit',
     },
   ];
 }

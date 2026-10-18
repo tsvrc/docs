@@ -1,7 +1,7 @@
 ---
 id: sharing-a-session-between-tests
 title: Share one session between the tests in a class
-sidebar_position: 5
+sidebar_position: 7
 ---
 
 # Share one session between the tests in a class
@@ -40,8 +40,8 @@ public class StartingStateTests
 ```
 
 NUnit uses one instance of the class for all of its tests, so `_started` stays true after the
-first test. Unity Test Framework 1.1 has no setup that runs once per class and can wait for frames,
-which is why the start goes in `[UnitySetUp]`.
+first test. The Unity Test Framework the kit uses has no setup that runs once per class and can
+wait for frames, which is why the start goes in `[UnitySetUp]`.
 
 Tests that share a session also share whatever the earlier ones changed: players, owners, saved
 data and objects in the scene. A test that changes any of them belongs in a class with a fresh

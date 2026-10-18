@@ -6,13 +6,14 @@ sidebar_position: 3
 
 # TestScene
 
-`Tsvrc.UdonTestKit.TestScene` is a scene for Play Mode tests to run in: a new empty scene, or a scene
-asset such as your world's own. Loading it makes it the active scene, so ClientSim and the objects
-a test creates go into it, and unloading it destroys them.
+`Tsvrc.UdonTestKit.TestScene` is a scene for Play Mode tests to run in: a new empty scene, or a
+scene asset such as your world scene. Loading it makes it the active scene, so ClientSim and the
+objects a test creates go into it, and unloading it destroys them.
 
 [`ClientSimTestBase`](./clientsim-test-base) loads and unloads one for you when you pass it to the
-base constructor, as in [Run tests in a scene of their own](../how-to/running-tests-in-their-own-scene).
-You can also use it on its own.
+base constructor, as in
+[Run tests in a scene of their own](../how-to/running-tests-in-their-own-scene). You can also use it
+on its own.
 
 ## Creating one
 
@@ -29,9 +30,10 @@ Neither one loads anything until `Load` runs.
 already loaded, so the Unity Test Framework test scene stays loaded, and makes it the active
 scene. It does nothing when the scene is already loaded.
 
-`Unload()` makes the scene that was active before `Load` active again, then unloads this scene and
-everything in it. It finishes before it returns, so it also works where a test can't wait, such as
-in `[OneTimeTearDown]`. It does nothing when the scene isn't loaded.
+`Unload()` unloads this scene and everything in it. When this scene is the active one, it first
+makes the scene that was active before `Load` active again, if that scene is still loaded. It
+finishes before it returns, so it also works where a test can't wait, such as in
+`[OneTimeTearDown]`. It does nothing when the scene isn't loaded.
 
 `IsLoaded` is true between a `Load` that finished and the next `Unload`.
 
@@ -66,11 +68,14 @@ End the session before unloading the scene, the same order `ClientSimTestBase` u
 - `TestScene` works only in Play Mode tests. `FromAsset` loads through
   `EditorSceneManager.LoadSceneInPlayMode`, which is why the scene doesn't need to be in the build
   settings.
-- Unity drops the operation `LoadSceneInPlayMode` loads with. When the garbage collector finalized
-  it as Unity exited, Unity crashed after every test had passed, so `Load` finalizes it right after
+- Unity drops the operation `LoadSceneInPlayMode` loads with. When the garbage collector finalizes
+  it as Unity exits, Unity can crash after every test has passed, so `Load` finalizes it right after
   the scene loads, while that's still safe.
-- `Unload` uses the synchronous Unity `SceneManager.UnloadScene`, which Unity marks obsolete because
-  it's unsafe inside physics callbacks. A test's setup and teardown aren't physics callbacks.
+- `Unload` uses the synchronous Unity `SceneManager.UnloadScene`, which Unity marks obsolete
+  because it
+  [can't be called](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/SceneManagement.SceneManager.UnloadScene.html)
+  during physics and visibility callbacks such as `OnTriggerEnter`. The setup and teardown of a
+  test are neither.
 
 ## TestSceneLifetime
 

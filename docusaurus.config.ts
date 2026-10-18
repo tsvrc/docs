@@ -110,7 +110,7 @@ const config: Config = {
       links: [
         {
           label: 'Docs',
-          to: '/docs/core/intro',
+          to: '/docs/udon-test-kit/intro',
         },
         {
           label: 'GitHub',

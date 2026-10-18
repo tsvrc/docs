@@ -10,9 +10,10 @@ Install the kit in a VRChat world project, then create the test assemblies your 
 
 ## Requirements
 
-- **Unity 2022.3.**
-- **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) 3.8.2 or later**, which includes
-  UdonSharp and ClientSim.
+- **Unity 2022.3**, on Windows, or on Linux with the Windows build target, in the Editor and in
+  batch mode.
+- **The [VRChat Worlds SDK](https://creators.vrchat.com/worlds/) 3.10.5 or a later 3.x version**,
+  which includes UdonSharp and ClientSim.
 - **Unity Test Framework**, which new Unity projects already include.
 
 ## Install the package
@@ -25,19 +26,22 @@ You'll know it worked when the Unity menu bar has **Tools > TsVRC > Udon Test Ki
 
 ## Create your test assemblies
 
-Unity Test Framework finds tests in test assemblies, and the kit creates the three a world needs.
+Unity Test Framework finds tests in test assemblies, and the kit creates the ones a world needs.
 
 1. In the Project window, select the folder your tests should live in, such as `Assets`.
 2. Choose **Assets > Create > TsVRC > Udon Test Kit > Test Assemblies**.
 
-You get a `Tests` folder with three assemblies, each with an example that works:
+You get a `Tests` folder with four assemblies, each with an example that works:
 
 - `EditMode` and `PlayMode` hold your tests.
 - `Doubles` holds behaviours your tests add to GameObjects, such as spies with callbacks of your
-  own. Both test assemblies reference it.
+  own.
+- `UdonDoubles` holds test doubles that run as Udon.
 
-They reference the kit, UdonSharp, the VRChat SDK, ClientSim and every assembly definition of yours
-under `Assets`, and like the kit, they're left out of your world's builds.
+Both test assemblies reference both doubles assemblies. All four reference UdonSharp, the VRChat
+SDK and the assembly definitions of your world, and the kit or, for `UdonDoubles`, its Udon spy.
+Only `UdonDoubles` compiles into player builds, as UdonSharp needs to compile its doubles for
+upload, and a world holds a double only when one of its scenes has it.
 [TestAssemblyCreator](./reference/test-assembly-creator) describes each one.
 
 If your scripts have no assembly definition, the menu item logs a warning, and Play Mode tests

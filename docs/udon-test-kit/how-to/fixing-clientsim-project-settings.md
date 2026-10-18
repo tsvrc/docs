@@ -1,7 +1,7 @@
 ---
 id: fixing-clientsim-project-settings
 title: Fix the project settings ClientSim rejects
-sidebar_position: 9
+sidebar_position: 13
 ---
 
 # Fix the project settings ClientSim rejects
