@@ -5,8 +5,7 @@
 
 The [Docusaurus](https://docusaurus.io/) site behind [tsvrc.com](https://tsvrc.com), with the docs
 for every TsVRC project. The code of each project lives in its own repository, such as
-[tsvrc/udon-test-kit](https://github.com/tsvrc/udon-test-kit) for Udon Test Kit and
-[tsvrc/tsvrc-core](https://github.com/tsvrc/tsvrc-core) for Core.
+[tsvrc/udon-test-kit](https://github.com/tsvrc/udon-test-kit) for Udon Test Kit.
 
 ## Contributing
 

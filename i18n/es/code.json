@@ -1,13 +1,4 @@
 {
-  "core.notice.title": {
-    "message": "Antes de construir con esto"
-  },
-  "core.notice.vrchat": {
-    "message": "TsVRC no está afiliado a VRChat Inc. ni cuenta con su respaldo."
-  },
-  "core.notice.body": {
-    "message": "Además, sigue siendo un trabajo en curso. Cada parte tiene sus propios tests, y los ejecutamos antes de cada versión, pero no podemos prometer haber cubierto todos los casos. Guarda una copia de seguridad de tu proyecto antes de añadir Core o de actualizarlo, solo por si acaso. Si algo se rompe de tu lado, no podemos arreglarlo por ti, pero nos gustaría mucho saberlo. Abre un issue en GitHub y le echaremos un vistazo."
-  },
   "homepage.hero.greeting": {
     "message": "Hola, soy {name}"
   },
@@ -16,9 +7,6 @@
   },
   "homepage.hero.intro": {
     "message": "Creo herramientas para crear mundos de VRChat. TsVRC es el nombre con el que las publico, y la mayoría son de código abierto."
-  },
-  "homepage.projects.core.description": {
-    "message": "Una forma estructurada de crear mundos de VRChat con UdonSharp: inicio consistente, dependencias ya conectadas y código generado en vez de conectarlo todo a mano."
   },
   "homepage.projects.udonTestKit.description": {
     "message": "Tests de Unity Test Framework para mundos de VRChat, con tus behaviours de UdonSharp ejecutándose en una sesión real de ClientSim."
@@ -52,129 +40,6 @@
   },
   "homepage.meta.description": {
     "message": "Herramientas de código abierto de Toni para crear mundos de VRChat, publicadas como TsVRC."
-  },
-  "core.hero.title": {
-    "message": "Un framework para mundos de VRChat construido sobre UdonSharp"
-  },
-  "core.hero.subtitle": {
-    "message": "Inicialización estructurada, conexión de dependencias y generación de código en el editor, para que tus scripts de mundo hereden de una clase base tipada en vez de conectar referencias a mano cada vez que agregas un behaviour."
-  },
-  "core.hero.cta.docs": {
-    "message": "Leer la documentación"
-  },
-  "core.hero.cta.github": {
-    "message": "Ver en GitHub"
-  },
-  "core.hero.jumpToLabel": {
-    "message": "Ir a:"
-  },
-  "core.hero.jump.why": {
-    "message": "Por qué existe"
-  },
-  "core.hero.jump.blocks": {
-    "message": "Las piezas fundamentales"
-  },
-  "core.hero.jump.start": {
-    "message": "Empezar"
-  },
-  "core.hero.scrollCue": {
-    "message": "Desplázate para saber más"
-  },
-  "core.hero.annotation.behaviour.title": {
-    "message": "TsBehaviour"
-  },
-  "core.hero.annotation.behaviour.description": {
-    "message": "La clase generada de la que hereda cada script. Es lo que le da a este behaviour su referencia _ts."
-  },
-  "core.hero.annotation.globals.title": {
-    "message": "Globals"
-  },
-  "core.hero.annotation.globals.description": {
-    "message": "Cualquier objeto de la escena con nombre, accesible como _ts.Name desde cualquier behaviour, sin arrastrar referencias a mano."
-  },
-  "core.hero.annotation.memory.title": {
-    "message": "Memory"
-  },
-  "core.hero.annotation.memory.description": {
-    "message": "El almacén de clave-valor compartido, accesible como _ts.Memory desde cualquier parte."
-  },
-  "core.hero.annotation.more.title": {
-    "message": "Y eso no es todo"
-  },
-  "core.hero.annotation.more.description": {
-    "message": "Y hay más de donde vino eso. Mira el resto de las piezas fundamentales de Core más abajo."
-  },
-  "core.why.title": {
-    "message": "Por qué existe"
-  },
-  "core.why.paragraph1": {
-    "message": "Cada script de UdonSharp se inicia por su cuenta, sin garantía de en qué orden pasan las cosas y sin una forma fácil de llegar a otro script en tu mundo. La mayoría de los creadores lo resuelve a mano: arrastrando referencias entre objetos en el Inspector, y con la esperanza de que todo siga conectado cuando el mundo carga."
-  },
-  "core.why.paragraph2": {
-    "message": "Core le da a cada script una única referencia compartida, {code}, para llegar a cualquier otra cosa de tu proyecto. La configuración ocurre en un orden que tú controlas, y Core descubre de antemano cuál de tus propias clases usar, en el editor de Unity. Consulta {link} para ver el panorama completo."
-  },
-  "core.why.linkText": {
-    "message": "cómo encaja Core"
-  },
-  "core.features.constructs.title": {
-    "message": "Constructs"
-  },
-  "core.features.constructs.description": {
-    "message": "Registra un TsvrcBehaviour una vez y Core lo inicializa por ti, en un orden fijo, mediante TsStart, en vez de que tengas que encargarte tú de iniciarlo a mano."
-  },
-  "core.features.globals.title": {
-    "message": "Globals"
-  },
-  "core.features.globals.description": {
-    "message": "Señala un objeto de la escena una vez y cualquier behaviour puede leerlo de vuelta por su nombre, en vez de arrastrar la misma referencia a una docena de campos del Inspector."
-  },
-  "core.features.memory.title": {
-    "message": "Memory"
-  },
-  "core.features.memory.description": {
-    "message": "Un almacén de clave-valor compartido con niveles efímero, persistente y sincronizado, para que llevar un valor a todos los jugadores no signifique escribir tu propia capa de red."
-  },
-  "core.features.factories.title": {
-    "message": "Factories"
-  },
-  "core.features.factories.description": {
-    "message": "Instancia un prefab bajo demanda con una llamada _ts.Create... generada, para cualquier cosa que no necesite mantenerse sincronizada entre jugadores."
-  },
-  "core.features.pools.title": {
-    "message": "Pools"
-  },
-  "core.features.pools.description": {
-    "message": "Pre-instancia y conecta exactamente las instancias que un prefab en red necesita, en tiempo de edición, porque VRChat no puede sincronizar un objeto creado mientras el mundo está en ejecución."
-  },
-  "core.features.instance.title": {
-    "message": "Instance"
-  },
-  "core.features.instance.description": {
-    "message": "Un behaviour por proyecto que representa la instancia de mundo en ejecución, encontrado y conectado automáticamente, para que comprobaciones como \"¿soy el master?\" tengan un único lugar obvio."
-  },
-  "core.features.title": {
-    "message": "Las piezas fundamentales"
-  },
-  "core.features.subtitle": {
-    "message": "Seis piezas generadas cubren la mayor parte de lo que necesita un mundo. Registra o señala algo una vez, y luego alcánzalo de la misma forma desde cualquier behaviour."
-  },
-  "core.features.detailsLink": {
-    "message": "Detalles →"
-  },
-  "core.cta.title": {
-    "message": "Empieza a construir"
-  },
-  "core.cta.subtitle": {
-    "message": "Agrega Core mediante VCC y luego sigue la guía de introducción para tener un behaviour funcionando en Play Mode."
-  },
-  "core.cta.button": {
-    "message": "Empezar"
-  },
-  "core.meta.title": {
-    "message": "TsVRC Core"
-  },
-  "core.meta.description": {
-    "message": "TsVRC Core es un framework para crear mundos de VRChat con UdonSharp: inicialización estructurada, conexión de dependencias y generación de código en el editor."
   },
   "support.meta.title": {
     "message": "Apoya a TsVRC"

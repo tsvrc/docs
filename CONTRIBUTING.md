@@ -35,15 +35,15 @@ A page every project shares, such as [Install a TsVRC package](docs/install-a-pa
 the root of `docs/`. Each project install page links to it and adds only what's specific to that
 project: the package name, requirements, and how to check that it worked.
 
-The docs of a project stand on their own. When one project depends on another, as Core does on Udon
-Test Kit, the dependent project links to the other where a reader needs it, and the project
-depended on never mentions its consumers.
+The docs of a project stand on their own. When one project depends on another, the dependent
+project links to the other where a reader needs it, and the project depended on never mentions its
+consumers.
 
 ## Adding a translation
 
 English pages live in `docs/<project>/`. A translation mirrors the same paths and file names under
 `i18n/<locale>/docusaurus-plugin-content-docs/current/<project>/`, so adding a language never
-touches the English files. `docs/core/intro.md` and its Spanish counterpart are a worked example.
+touches the English files.
 Pages in `src/pages/` translate through `@docusaurus/Translate` instead, with their strings in
 `i18n/<locale>/code.json`.
 
