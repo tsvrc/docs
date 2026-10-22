@@ -15,18 +15,6 @@ function useProjects(): Project[] {
       docsHref: '/docs/udon-test-kit/intro',
       repo: 'tsvrc/udon-test-kit',
     },
-    {
-      name: 'Core',
-      status: 'available',
-      description: translate({
-        id: 'homepage.projects.core.description',
-        message:
-          'A structured way to build VRChat worlds with UdonSharp: consistent startup, ' +
-          'wired-up dependencies, and generated code instead of hand-wiring everything yourself.',
-      }),
-      docsHref: '/docs/core/intro',
-      repo: 'tsvrc/tsvrc-core',
-    },
   ];
 }
 
